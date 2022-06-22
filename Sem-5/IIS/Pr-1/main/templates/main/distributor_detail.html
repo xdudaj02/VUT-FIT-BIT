@@ -1,0 +1,59 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Distributor detail{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='distributors' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ distributor_detail.name }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'distributor_edit' distributor_detail.id %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <tr>
+            <th class="line-th">username:</th>
+            <td>{{ distributor_detail.username }}</td>
+        </tr>
+        <tr>
+            <th class="line-th">email:</th>
+            <td>{{ distributor_detail.email }}</td>
+        </tr>
+    </table>
+    <br>
+
+    {% if order_list %}
+        <h3>Orders delivered</h3>
+        <table>
+            <th>ID</th>
+            <th>Created on</th>
+            <th>Created by</th>
+            {% for order in order_list %}
+                <tr>
+                    {% include 'includes/order_list_dist_item.html' with id=order.id created=order.created employee_name=order.employee.name employee_id=order.employee.id distributor_name=order.distributor.name distributor_id=order.distributor.id %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <a id="back-to-list" class="button" href="{% url 'distributor_list' %}">
+        <span>Back to distributors</span>
+    </a>
+{% endblock %}

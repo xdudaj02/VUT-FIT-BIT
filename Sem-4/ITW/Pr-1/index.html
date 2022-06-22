@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <!-- Hlavicka dokumentu -->
+        <title>ITW - tvorba webových stránek</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <header id=header class="wrapper">
+            <div class="content">
+                <h1><a class="page_header" href="#header">ITW</a><br>Tvorba webových stránek</h1>
+            </div>
+        </header>
+
+        <nav id="navigation" class="wrapper">
+            <div class="content">
+                <div id="sticky-menu">
+                    <div class="navbar-index">
+                        <a onclick="scrollSmoothTo('header')"><i class="fas fa-home"></i><span class="nav-desc">Index</span></a>
+                    </div>
+                    <div class="hamburger-menu" onclick="doDropDown()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                <ul id="dropdown-menu" class="dropdown-content">
+                    <li><a onclick="scrollSmoothTo('about'); doDropDown()"><i class="fas fa-info-circle"></i><span class="nav-desc">O předmětu</span></a></li>
+                    <li><a onclick="scrollSmoothTo('lectures'); doDropDown()"><i class="fas fa-tv"></i><span class="nav-desc">Přednášky</span></a></li>
+                    <li><a onclick="scrollSmoothTo('results'); doDropDown()"><i class="fas fa-grin-beam-sweat"></i><span class="nav-desc">Výsledky</span></a></li>
+                    <li><a onclick="scrollSmoothTo('exercises'); doDropDown()"><i class="fas fa-hammer"></i><span class="nav-desc">Cvičení</span></a></li>
+                    <li><a onclick="scrollSmoothTo('contact'); doDropDown()"><i class="fas fa-envelope"></i><span class="nav-desc">Kontakt</span></a></li>
+                    <li><a onclick="scrollSmoothTo('related'); doDropDown()"><i class="fas fa-code-branch"></i><span class="nav-desc">Související</span></a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <section id="about" class="wrapper">
+            <div class="content">
+                <h2>O předmětu ITW - tvorba webových stránek</h2>
+                <p><strong>Pellentesque habitant</strong> morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu <strong>libero</strong> sit amet quam egestas <strong>semper</strong>. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.</p>
+                <p><strong>Pellentesque habitant</strong> morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu <strong>libero</strong> sit amet quam egestas <strong>semper</strong>. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.</p>
+            </div>
+        </section>
+        
+        <section id="core" class="wrapper">
+            <div class="content">
+                <div class="core-section" id="core-left">
+                    <div id="lectures">
+                        <div class="core-content">
+                            <h2>Přednášky</h2>
+                            <div id="lecture-content">
+                                <div class="lecture-column">
+                                    <div class="lecture-item">
+                                        <div class="lecture-image"><img src="icon1.gif" alt="icon1"></div>
+                                        <div class="lecture-desc">
+                                            <div class="lecture-header">
+                                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/prednasky/itw_p01.pdf"> Internet a služba WWW, principy, adresování, umístění dokumentů</a></h3>
+                                            </div>
+                                            <p>Donec non enim in turpis pulvinar facilisis. Ut felis. Donec consequat pharetra ante a cursus. In dui odio, dictum quis lectus id, gravida suscipit nisl.</p>
+                                        </div>
+                                    </div>
+                                    <div class="lecture-item">
+                                        <div class="lecture-image"><img src="icon2.gif" alt="icon2"><br></div>
+                                        <div class="lecture-desc">
+                                            <div class="lecture-header">
+                                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/prednasky/itw_p02.pdf">Základy jazyka HTML</a></h3>
+                                            </div>
+                                            <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Cras pretium odio ipsum, eget semper diam suscipit eget.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lecture-column">
+                                    <div class="lecture-item">
+                                        <div class="lecture-image"><img src="icon3.gif" alt="icon3"><br></div>
+                                        <div class="lecture-desc">
+                                            <div class="lecture-header">
+                                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/prednasky/itw_p03.pdf">Úvod do kaskádových stylů (CSS)</a></h3>
+                                            </div>
+                                            <p>Aliquam erat volutpat. Morbi porta eros non lacus eleifend, at porttitor neque viverra. Proin eu bibendum ante, id varius augue.</p>
+                                        </div>
+                                    </div>
+                                    <div class="lecture-item">
+                                        <div class="lecture-image"><img src="icon4.gif" alt="icon4"><br></div>
+                                        <div class="lecture-desc">
+                                            <div class="lecture-header">
+                                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/prednasky/itw_p04.pdf">CSS – základní principy: kaskáda a dědičnost</a></h3>
+                                            </div>
+                                            <p>Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Praesent non dignissim sapien. Fusce iaculis augue vitae nulla commodo.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="results">
+                        <div class="core-content">
+                            <h2 id="h2_3">Přehled výsledků</h2>
+                            <table>
+                                <tr>
+                                    <th rowspan="3">Jméno</th>
+                                    <th colspan="6">Body</th>
+                                </tr><tr>
+                                    <th colspan="2">2010</th>
+                                    <th colspan="2">2011</th>
+                                    <th colspan="2">2012</th>
+                                </tr><tr>
+                                    <th>Pulsem.</th>
+                                    <th>Zk.</th>
+                                    <th>Pulsem.</th>
+                                    <th>Zk</th>
+                                    <th>Pulsem.</th>
+                                    <th>Zk</th>
+                                </tr>
+                                <tr>
+                                    <td>Jan Novák</td>
+                                    <td>18</td>
+                                    <td>72</td>
+                                    <td>20</td>
+                                    <td>80</td>
+                                    <td>10</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Zuzana Černá</td>
+                                    <td>10</td>
+                                    <td>50</td>
+                                    <td>20</td>
+                                    <td>75</td>
+                                    <td>25</td>
+                                    <td>99</td>
+                                </tr>
+                            </table><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="core-right" class="core-section">
+                    <div id="exercises">
+                        <div id="exercise-content" class="core-content">
+                            <h2>Cvičení</h2>
+                            <div class="exercise-item" id="first-exercise">
+                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/cviceni/.cs#c1">DNS a HTTP</a></h3>
+                                <div class="exercise-in">
+                                    <div><img src="icon1.gif" alt="icon1"></div>
+                                    <span>Donec non enim in turpis pulvinar facilisis. Ut felis. Donec consequat pharetra ante a cursus.</span>
+                                </div>
+                            </div>
+                            <div class="exercise-item">
+                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/cviceni/.cs#c2">Jazyk HTML</a></h3>
+                                <div class="exercise-in">
+                                    <div><img src="icon2.gif" alt="icon2"></div>
+                                    <span>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.</span>
+                                </div>
+                            </div>
+                            <div class="exercise-item">
+                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/cviceni/.cs#c3">Styl textu</a></h3>
+                                <div class="exercise-in">
+                                    <div><img src="icon3.gif" alt="icon3"></div>
+                                    <span>Aliquam erat volutpat. Morbi porta eros non lacus eleifend, at porttitor neque viverra.</span>
+                                </div>
+                            </div>
+                            <div class="exercise-item">
+                                <h3><a target="_blank" href="https://www.fit.vutbr.cz/study/courses/ITW/private/cviceni/.cs#c4">CSS rozložení stránky</a></h3>
+                                <div class="exercise-in">
+                                    <div><img src="icon4.gif" alt="icon4"></div>
+                                    <span>Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Praesent non dignissim sapien.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+         
+        <section id="information" class="wrapper">
+            <div class="content">
+                <div id="contact" class="information-item">
+                    <h2>Kontaktujte nás</h2>
+                    <dl>
+                        <dt>Garant:</dt>
+                            <dd><a href="mailto:itw-garant@fit.vutbr.cz">itw-garant@fit.vutbr.cz</a></dd>
+                        <dt>Přednášející:</dt>
+                            <dd><a href="mailto:itw-prednasejici@fit.vutbr.cz">itw-prednasejici@fit.vutbr.cz</a></dd>
+                        <dt>Cvičící:</dt>
+                            <dd><a href="mailto:itw-cvicici@fit.vutbr.cz">itw-cvicici@fit.vutbr.cz</a></dd>
+                    </dl>
+                </div>
+            
+                <div id="related" class="information-item">
+                    <h2>Související předměty</h2>
+                    <ul>
+                      <li><a target="_blank" href="https://www.fit.vut.cz/study/course/IIS/.cs">Informační systémy</a></li>
+                      <li><a target="_blank" href="https://www.fit.vut.cz/study/course/PIS/.cs">Pokročilé informační systémy</a></li>
+                      <li><a target="_blank" href="https://www.fit.vut.cz/study/course/AIS/.cs">Analýza informačních systémů</a></li>
+                      <li><a target="_blank" href="https://www.fit.vut.cz/study/course/14023/.cs">Skriptovací jazyky</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+    </body>
+
+    <script>
+        window.onscroll = function() {setSticky()};
+
+        const navbar = document.getElementById("navigation");
+        const sticky = navbar.offsetTop;
+
+        function setSticky() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+</html>

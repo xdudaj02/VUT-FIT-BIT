@@ -1,0 +1,42 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Employees{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='employees' level=level %}
+{% endblock %}
+
+{% block content_header %}Employees{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'employee_add' %}">
+            <span>New employee</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <th id="main-th" class="inner-th">Pouzivatelske meno</th>
+        <th class="inner-th">Name</th>
+        <th class="inner-th">Email</th>
+        <th class="inner-th">Is Admin</th>
+        {% for employee in employee_list %}
+            <tr>
+                {% include 'includes/employee_list_item.html' with id=employee.id username=employee.username name=employee.name email=employee.email administrator=employee.administrator %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{# expects id, created, employee_id, employee_name, distributor_id, distributor_name #}}
+<td id="main-td">
+    <a class="order_item" href="{% url 'order_add_more' id %}">O{{ id|stringformat:"04d" }}</a>
+</td>
+<td>{{ created|date:"d.m.Y" }}, {{ created|time:"H:i" }}</td>
+<td>
+    <a class="employee_small_item" href="{% url 'employee_detail' employee_id %}">{{ employee_name }}</a>
+</td>
+<td>
+    <a class="distributor_small_item" href="{% url 'distributor_detail' distributor_id %}">{{ distributor_name }}</a>
+</td>

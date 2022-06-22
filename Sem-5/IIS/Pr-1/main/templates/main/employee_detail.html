@@ -1,0 +1,88 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Employee detail{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='employees' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ employee_detail.name }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'employee_edit' employee_detail.id %}">
+            <span>Upravit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <tr>
+            <th class="line-th">username:</th>
+            <td>{{ employee_detail.username }}</td>
+        </tr>
+        <tr>
+            <th class="line-th">email:</th>
+            <td>{{ employee_detail.email }}</td>
+        </tr>
+    </table>
+
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+    <br>
+    {% if order_list %}
+        <h3>Orders created</h3>
+        <table>
+            <th>ID</th>
+            <th>Created on</th>
+            <th>Distributor</th>
+            {% for order in order_list %}
+                <tr>
+                    {% include 'includes/order_list_emp_item.html' with id=order.id created=order.created employee_name=order.employee.name employee_id=order.employee.id distributor_name=order.distributor.name distributor_id=order.distributor.id %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if order_list %}
+        <h3>Borrowings created</h3>
+        <table>
+            <th>ID</th>
+            <th>Created on</th>
+            <th>User</th>
+            {% for borrowing in borrowing_1_list %}
+                <tr>
+                    {% include 'includes/borrowing_list_item.html' with id=borrowing.id user_id=borrowing.profile.id user_name=borrowing.profile.name borrowed_to=borrowing.borrowed_from level=level %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if order_list %}
+        <h3>Borrowings collected</h3>
+        <table>
+            <th>ID</th>
+            <th>Returned on</th>
+            <th>User</th>
+            {% for borrowing in borrowing_2_list %}
+                <tr>
+                    {% include 'includes/borrowing_list_item.html' with id=borrowing.id user_id=borrowing.profile.id user_name=borrowing.profile.name borrowed_to=borrowing.borrowed_to level=level %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <a id="back-to-list" class="button" href="{% url 'employee_list' %}">
+        <span>Back to employees</span>
+    </a>
+{% endblock %}

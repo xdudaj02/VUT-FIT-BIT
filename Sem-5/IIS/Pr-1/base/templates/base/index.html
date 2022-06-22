@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu">
+    <link rel="icon" sizes="180x180" href="../../static/base/images/favicon.ico">
+    <link rel="stylesheet" href="{% static 'base/styles/style.css' %}">
+    {% block css_src %}{% endblock %}
+</head>
+<body>
+    <div id="top-div">
+        <header>
+            <div id="header-wrapper">
+                <a href="{% url 'home' %}" id="main-heading">
+                    <h1>IIS Knihovna</h1>
+                </a>
+                <div id="login-status">
+                    {% if user.is_authenticated  %}
+                        {% include 'includes/login_status_user.html' %}
+                    {% else %}
+                        {% include 'includes/login_status_guest.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <div id="nav-wrapper">
+                {% block navigation %}{% endblock %}
+            </div>
+        </nav>
+
+        <main>
+            <div id="main-wrapper">
+                <div id="content-header">
+                    <h2>{% block content_header %}{% endblock %}</h2>
+                    {% block btn_new %}{% endblock %}
+                </div>
+                <div id="content">
+                    {% block main_body %}{% endblock %}
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div id="footer-wrapper">
+                <span>&copy 2021, IIS Knihovna</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

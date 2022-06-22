@@ -1,0 +1,38 @@
+--- dirgraph.odevzdany	2020-04-14 17:42:15.857730500 +0200
++++ dirgraph	2020-04-14 17:40:49.425864900 +0200
+@@ -113,7 +113,7 @@
+ 		printf "#" ; from=`expr $from + 1` ; done
+ 	from=0
+ 	to=`expr \( 9999 + $o1GiB \* $coeff \) / 10000`
+-	printf "\n  >=1 Gib : "
++	printf "\n  >=1 GiB : "
+ 	while [ $from -lt $to ] ; do
+ 		printf "#" ; from=`expr $from + 1` ; done
+ 	printf "\n"
+@@ -194,7 +194,7 @@
+ find_error_count=0
+ 
+ is_terminal=false
+-terminal_width=63
++terminal_width=67
+ 
+ #condition for setting output environment width
+ if [ "$normalize" = true ] ; then #if -n set
+@@ -227,13 +227,13 @@
+ 			#call to function that cuts off filename from "size" variable 
+ 			size=`getOnlySize "$size"`
+ 			#set of if conditions for categorazing files by size
+-			if [ "$size" -lt 800 ] ; then 
++			if [ "$size" -lt 100 ] ; then 
+ 				u100B=`expr $u100B + 1` 
+-			elif [ "$size" -lt 8192 ] ; then 
++			elif [ "$size" -lt 1024 ] ; then 
+ 				u1KiB=`expr $u1KiB + 1`
+-			elif [ "$size" -lt 81920 ] ; then 
++			elif [ "$size" -lt 10240 ] ; then 
+ 				u10KiB=`expr $u10KiB + 1`
+-			elif [ "$size" -lt 819200 ] ; then 
++			elif [ "$size" -lt 102400 ] ; then 
+ 				u100KiB=`expr $u100KiB + 1`
+ 			elif [ "$size" -lt 1048576 ] ; then 
+ 				u1MiB=`expr $u1MiB + 1`

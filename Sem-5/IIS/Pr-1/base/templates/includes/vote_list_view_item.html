@@ -1,0 +1,25 @@
+{# expects isbn, library_id, title_name, library_name, vote_count, voted #}
+<td>
+    <a href="{% url 'title_detail' isbn %}" class="title_small_item">{{ title_name }}</a>
+</td>
+<td>
+    <a href="{% url 'library_detail' library_id %}" class="library_small_item">{{ library_name }}</a>
+</td>
+<td>
+    <span class="votes_small_item">{{ vote_count }}</span>
+</td>
+<td>
+    {% if user.is_authenticated %}
+        {% if voted %}
+            <form class="form-no-border" method="POST" action="">
+                {%  csrf_token %}
+                <button class="btn-line" name="cancel_vote" value="{{ isbn }}&{{ library_id }}">Cancel vote</button>
+            </form>
+        {% else %}
+            <form class="form-no-border" method="POST" action="">
+                {%  csrf_token %}
+                <button class="btn-line" name="set_vote" value="{{ isbn }}&{{ library_id }}">Vote for purchasing</button>
+            </form>
+        {% endif %}
+    {% endif %}
+</td>

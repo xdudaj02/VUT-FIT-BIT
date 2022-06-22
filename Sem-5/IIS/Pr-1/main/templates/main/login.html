@@ -1,0 +1,43 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='none' level=level %}
+{% endblock %}
+
+{% block content_header %}Login{% endblock %}
+
+{% block btn_new %}
+    <a id="btn-new" class="button" href="{% url 'register' %}">
+        <span>Register</span>
+    </a>
+{% endblock %}
+
+{% block main_body %}
+    <form method="POST" action="">
+        {%  csrf_token %}
+        <ul>
+            {% for field in login_form %}
+                <li class="{% if field.field.required %}required{% endif %}">
+                    <span>{{ field.label }}: </span><span>{{ field }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="OK">
+    </form>
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+{% endblock %}

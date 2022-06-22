@@ -1,0 +1,5 @@
+{# expects id, name, street_name, street_no, city #}
+<td id="main-td">
+    <a class="library_item" href="{% url 'library_detail' id %}">{{ name }}</a>
+</td>
+<td>{{ street_name }} {{ street_no }}, {{ city }}</td>

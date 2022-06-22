@@ -1,0 +1,16 @@
+{# expects id, title_name, library_name, count #}
+<td id="main-td">
+    <p class="title_item">{{ title_name }}</p>
+</td>
+<td>
+    <p class="title_item">{{ library_name }}</p>
+</td>
+<td class="td-short">
+    <p class="title_item">{{ count }}</p>
+</td>
+<td>
+    <form class="form-no-border" method="POST" action="">
+        {%  csrf_token %}
+        <button class="btn-line" name="remove" value="{{ id }}">Remove</button>
+    </form>
+</td>

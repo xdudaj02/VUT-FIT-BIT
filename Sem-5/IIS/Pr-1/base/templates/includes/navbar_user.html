@@ -1,0 +1,103 @@
+{# expects selected #}
+
+{% if selected == 'home' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'borrowings' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'reservations' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'votes' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'libraries' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'titles' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'authors' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'genres' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-selected"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% elif selected == 'profile' %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-selected"' %}
+{% else %}
+    {% include 'includes/navbar_home.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_borrowings.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_reservations.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_votes_view.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_libraries.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_titles.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_authors.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_genres.html' with selected='id="nav-basic"' %}
+    {% include 'includes/navbar_profile.html' with selected='id="nav-basic"' %}
+{% endif %}

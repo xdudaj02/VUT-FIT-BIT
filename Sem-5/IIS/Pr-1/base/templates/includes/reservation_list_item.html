@@ -1,0 +1,11 @@
+{# expects id, created, user_id, user_name, ready #}
+<td id="main-td">
+    <a class="reservation_item" href="{% url 'reservation_detail' id %}">R{{ id|stringformat:"04d" }}</a>
+</td>
+<td>{{ created|date:"d.m.Y" }}, {{ created|time:"H:i" }}</td>
+{% if level == 2 or level == 3 %}
+    <td class="td-short">
+        <a href="{% url 'user_detail' user_id %}">{{ user_name }}</a>
+    </td>
+{% endif %}
+<td>{{ ready }}</td>

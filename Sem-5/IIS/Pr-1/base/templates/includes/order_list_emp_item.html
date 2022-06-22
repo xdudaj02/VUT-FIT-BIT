@@ -1,0 +1,8 @@
+{# expects id, created, distributor_id, distributor_name #}
+<td id="main-td">
+    <a class="order_item" href="{% url 'order_detail' id %}">O{{ id|stringformat:"04d" }}</a>
+</td>
+<td>{{ created|date:"d.m.Y" }}</td>
+<td>
+    <a class="distributor_small_item" href="{% url 'distributor_detail' distributor_id %}">{{ distributor_name }}</a>
+</td>

@@ -1,0 +1,73 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Order detail {{ order_detail.id }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='orders' level=level %}
+{% endblock %}
+
+{% block content_header %}Order detail {{ order_detail.id }}{% endblock %}
+
+{% block btn_new %}
+    {% if order_detail.handled == False %}
+        {% if level == 2 or level == 3 %}
+            <form class="form-no-border" method="POST" action="">
+                {%  csrf_token %}
+                <button name="action" value="delete">Delete</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <h3>State</h3>
+    {% if order_detail.handled %}
+        <p>Handled</p>
+    {% else %}
+        <p>Not handled</p>
+    {% endif %}
+    <h3>Date and time of creation</h3>
+    <p>{{ order_detail.created|date:"d.m.Y" }}, {{ order_detail.created|time:"H:i" }}</p>
+    {% if level == 2 %}
+        <h3>Created by</h3>
+        <p>{{ order_detail.employee.name }}</p>
+    {% elif level == 3 %}
+        <h3>Created by</h3>
+        <a href="{% url 'employee_detail' order_detail.employee.id %}">{{ order_detail.employee.name }}</a>
+    {% endif %}
+    {% if level == 2 or level == 3 %}
+        <h3>Distributor</h3>
+        <a href="{% url 'distributor_detail' order_detail.distributor.id %}">{{ order_detail.distributor.name }}</a>
+    {% endif %}
+    <h3>Order content</h3>
+    <table>
+        <th>Title</th>
+        <th>Library</th>
+        <th>Number of books</th>
+        {% for item in order_content %}
+            <tr>
+                {% include 'includes/title_in_order_view_list_item.html' with title_name=item.title_in_library.title.name isbn=item.title_in_library.title.isbn library_name=item.title_in_library.library.name library_id=item.title_in_library.library.id count=item.count %}
+            </tr>
+        {% endfor %}
+    </table>
+    {% if level == 1 and order_detail.handled is False %}
+        <form class="form-no-border" method="POST" action="">
+            {%  csrf_token %}
+            <button name="action" value="execute">Deliver</button>
+        </form>
+    {% endif %}
+    <a id="back-to-list" class="button" href="{% url 'order_list' %}">
+        <span>Back to orders</span>
+    </a>
+{% endblock %}

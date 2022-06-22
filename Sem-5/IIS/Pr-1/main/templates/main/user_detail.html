@@ -1,0 +1,88 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}User detail{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='users' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ user_detail.name }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'user_edit' user_detail.id %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <tr>
+            <th class="line-th">username:</th>
+            <td>{{ user_detail.username }}</td>
+        </tr>
+        <tr>
+            <th class="line-th">email:</th>
+            <td>{{ user_detail.email }}</td>
+        </tr>
+    </table>
+
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+    <br>
+
+    {% if reservation_list %}
+        <h3>Active reservations</h3>
+        <table>
+            <th>ID</th>
+            <th>Created</th>
+            {% for reservation in reservation_list %}
+                <tr>
+                    {% include 'includes/reservation_list_view_item.html' with id=reservation.id created=reservation.created isbn=reservation.title_in_library.title.isbn library_id=reservation.title_in_library.library.id user_name=reservation.profile.name user_id=reservation.profile.id level=level %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if active_borrowing_list %}
+        <h3>Active borrowings</h3>
+        <table>
+            <th>ID</th>
+            <th>Borrowed</th>
+            <th>Until</th>
+            {% for borrowing in active_borrowing_list %}
+                <tr>
+                    {% include 'includes/borrowing_list_view_item.html' with id=borrowing.id user_id=borrowing.profile.id user_name=borrowing.profile.name borrowed_to=borrowing.borrowed_to borrowed_from=borrowing.borrowed_from level=level %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if returned_borrowing_list %}
+        <h3>Returned borrowings</h3>
+        <table>
+            <th>ID</th>
+            <th>Borrowed</th>
+            <th>Returned</th>
+            {% for borrowing in returned_borrowing_list %}
+                <tr>
+                    {% include 'includes/borrowing_list_view_item.html' with id=borrowing.id user_id=borrowing.profile.id user_name=borrowing.profile.name borrowed_to=borrowing.borrowed_to borrowed_from=borrowing.borrowed_from level=level %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <a id="back-to-list" class="button" href="{% url 'user_list' %}">
+        <span>Back to users</span>
+    </a>
+{% endblock %}

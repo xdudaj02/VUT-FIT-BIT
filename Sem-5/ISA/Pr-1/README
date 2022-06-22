@@ -1,0 +1,27 @@
+popcl - klient na stahovanie sprav (mailov) zo servera pomocou pop3 protokolu
+V zakladnom mode sa klient pripoji ku serveru pouzitim zadanych prihlasovacich udajov, stiahne vsetky spravy a ulozi ich do zadaneho adresara. 
+Implementacia programu nema ziadne obmedzenia.
+---
+Spustenie:
+popcl <server> [-p <port>] [-T|-S [-c <certfile>] [-C <certaddr>]] [-d] [-n] -a <auth_file> -o <out_dir>
+Vsetky prepinace su plne implementovane.
+	<server>	povinny, musi byt na prvom mieste
+	-a <auth_file>	povinny, <auth_file> je cesta ku suboru s prihlasovacimi udajmi 
+	-o <out_dir>	povinny, <out_dir> je cesta ku adresaru, kde sa bude zapisovat vystup programu
+	-p <port>	nepovinny, <port> je cislo portu, ktory sa pouzije
+	-d		nepovinny, pri pouziti sa po stiahnuti sprav vykona zmazanie vsetkych sprav na serveri
+	-n		nepovinny, pri pouziti budu stiahnute len nove (este nestiahnute) spravy
+			pri kombinacie -n a -d, budu najprv stiahnute nove spravy a potom na serveri vymazane vsetky spravy
+	-T		nepovinny, bude pouzite zabezpecene pripojenie pomocou pop3s protokolu
+	-S		po normalnom pripojeni budu toto okamzite vylepsene na pripojenie zabezpecene
+			-T a -S nie je mozne kombinovat
+	-c <cert_file>	nepovinny, <cert_file> je cesta k suboru, ktory ma byt prehladany pre certifikaty
+	-C <cert_dir>	nepovinny, <cert_dir> je cesta k adresaru, ktory ma byt prehladany pre certifikaty
+			-c a -C je mozne navzajom kombinovat ale mozu sa pouzit len v kombinaci s -T alebo -S
+---
+Odovzdane subory:
+	xdudaj02.tar
+	|- main.cpp
+	|- Makefile
+	|- manual.pdf
+	|- README

@@ -1,0 +1,83 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Borrowing detail {{ borrowing_detail.id }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='borrowings' level=level %}
+{% endblock %}
+
+{% block content_header %}Borrowing detail {{ borrowing_detail.id }}{% endblock %}
+
+{% block btn_new %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <tr>
+            <th class="line-th">User:</th>
+            <td><a href="{% url 'user_detail' borrowing_detail.profile.id %}">{{ borrowing_detail.profile.name }}</a></td>
+        </tr>
+        <tr>
+            <th class="line-th">Borrowed on:</th>
+            <td>{{ borrowing_detail.borrowed_from }}</td>
+        </tr>
+        {% if borrowing_detail.returned %}
+            <tr>
+                <th class="line-th">Returned on:</th>
+                <td>{{ borrowing_detail.borrowed_to }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <th class="line-th">Return before:</th>
+                <td>{{ borrowing_detail.borrowed_to }}</td>
+            </tr>
+        {% endif %}
+        {% if level == 3 %}
+            <tr>
+                <th class="line-th">Created by:</th>
+                <td><a href="{% url 'employee_detail' borrowing_detail.created.id %}">{{ borrowing_detail.created.name }}</a></td>
+            </tr>
+            {% if borrowing_detail.returned %}
+                <tr>
+                    <th class="line-th">Collected by:</th>
+                    <td><a href="{% url 'employee_detail' borrowing_detail.collected.id %}">{{ borrowing_detail.collected.name }}</a></td>
+                </tr>
+            {% endif %}
+        {% endif %}
+    </table>
+    <h3>List of books</h3>
+    <table>
+        <th class="th-tiny">ID</th>
+        <th>Title</th>
+        <th>Library</th>
+        {% for book in borrowing_detail.books.all %}
+            <tr>
+                {% include 'includes/book_list_view_item.html' with id=book.id title_name=book.title_in_library.title.name isbn=book.title_in_library.title.isbn library_id=book.title_in_library.library.id library_name=book.title_in_library.library.name %}
+            </tr>
+        {% endfor %}
+    </table>
+    {% if level == 2 and borrowing_detail.returned is False or level == 3 and borrowing_detail.returned is False %}
+        <form class="form-no-border" method="POST" action="">
+            {%  csrf_token %}
+            <button name="action" value="collect">Collect</button>
+            <button name="action" value="extend">Extend</button>
+        </form>
+    {% endif %}
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+    <a id="back-to-list" class="button" href="{% url 'borrowing_list' %}">
+        <span>Back to borrowings</span>
+    </a>
+{% endblock %}

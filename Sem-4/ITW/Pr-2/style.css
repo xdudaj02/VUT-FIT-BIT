@@ -1,0 +1,414 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, serif;
+    font-size: 14px;
+    line-height: 1.7;
+    background-color: #daf1da;
+    width: 100%;
+    color: #595959;
+}
+
+h1 {
+    font-family: Ubuntu, sans-serif ;
+    font-size: 60px;
+    color: black;
+    margin: 30px 0 10px 0;
+}
+
+h2, h3, h4{
+    font-family: Source Sans Pro, sans-serif ;
+    color: black;
+    margin: 0;
+}
+
+h4 {
+    color: #404040;
+}
+
+h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+#header h3 {
+    padding-bottom: 60px;
+}
+
+
+#navigation {
+    background-color: #339933;
+    height: 100%;
+    width: 250px;
+    overflow-x: hidden;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+#nav-menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#navigation .page-logo {
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+    border: 3px solid black;
+    border-radius: 100%;
+    padding: 10px;
+    background-color: #b3e6b3;
+    margin: 30px 0;
+}
+
+#navigation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#navigation li {
+    display: block;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#navigation li a:link, #navigation li a:visited, #navigation li a:active {
+    text-decoration: none;
+    color: #c8eac8;
+}
+
+#navigation li a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+#navigation li a {
+    color: #c8eac8;
+    font-size: 20px;
+}
+
+#scrollable {
+    margin-left: 250px;
+}
+
+.content {
+    max-width: 1000px;
+    margin: 0 100px;
+    padding: 100px 0;
+}
+
+.paragraph > div {
+    border-bottom: solid 1px #bfbfbf;
+}
+
+#achievements > div{
+    border-bottom: none;
+}
+
+
+img {
+    max-width: 100%;
+    width: 250px;
+    min-width: 50px;
+    border-radius: 50%;
+    border: 10px solid #339933;
+}
+
+p {
+    text-align: justify;
+    margin: 0;
+}
+
+#career-navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#career-navigation li {
+    display: inline;
+    margin: 0 10px 0 0;
+    padding: 0;
+}
+
+#career-navigation ul {
+    margin: 0;
+    padding: 0;
+}
+
+#career-navigation li a:link, #career-navigation li a:visited, #career-navigation li a:active {
+    text-decoration: none;
+    color: #404040;
+    border-bottom: solid 1px #404040;
+}
+
+#career-navigation li a:hover {
+    text-decoration: none;
+    color: #737373;
+    border-bottom: solid 1px #737373;
+}
+
+#career-navigation li a {
+    color: #404040;
+    border-bottom: solid 1px #404040;
+    text-transform: uppercase;
+}
+
+.career-item, .education-item {
+    padding-top: 25px;
+}
+
+#career h2 {
+    margin-bottom: 0;
+}
+
+#achievements ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+i {
+    padding-right: 10px;
+}
+
+#header a:link, #header a:visited, #header a:active {
+    text-decoration: none;
+    color: #404040;
+}
+
+#header a:hover {
+    text-decoration: none;
+    color: #737373;
+}
+
+.social-logo {
+    font-size: 40px;
+}
+
+.mail-link:hover {
+    border-bottom: solid 1px #737373;
+}
+
+#nav-toggle {
+    position: absolute;
+    top: -20px;
+}
+
+#navigation .icon-burger {
+    display: none;
+    position: absolute;
+    right: 5%;
+    top: 35%;
+}
+
+#navigation .icon-burger .line {
+    width: 30px;
+    height: 5px;
+    background-color: white;
+    margin: 5px;
+    border-radius: 3px;
+    transition: all .3s ease-in-out;
+}
+
+
+a {
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 900px) {
+    @media only screen and (max-height: 450px) {
+        .page-logo {
+            display: none;
+        }
+
+        #nav-menu {
+            margin: 0;
+        }
+
+        #navigation {
+            justify-content: center;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    #scrollable {
+        margin-left: 0;
+        margin-top: 50px;
+    }
+
+    .content {
+        margin: 0 50px;
+    }
+
+    #navigation {
+        height: 100px;
+        width: 100%;
+        overflow-x: hidden;
+        position: fixed;
+        z-index: 10 ;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: row;
+        align-content: space-between;
+        justify-content: space-between;
+        border-bottom: 1px solid #cccccc;
+    }
+
+    #nav-menu {
+        height: auto;
+    }
+
+    #nav-links {
+        float: none;
+        position: fixed;
+        z-index: 9;
+        left: 0;
+        right: 0;
+        top: 100px;
+        bottom: 100%;
+        width: auto;
+        height: 0;
+        background-color: #c6ecc6;
+        overflow: hidden;
+        transition: all .5s ease-in-out;
+    }
+
+    #nav-links li {
+        padding: 15px 0;
+        margin: 0;
+        height: 60px;
+        border-bottom: 1px solid #cccccc;
+    }
+
+    #nav-links li a {
+        line-height: 60px;
+        font-size: 30px;
+    }
+
+    #navigation .icon-burger {
+        display: block;
+    }
+
+    #navigation :checked ~ #nav-links {
+        bottom: 0;
+        height: 546px;
+    }
+
+    #navigation :checked ~ .icon-burger .line:nth-child(1) {
+        transform: translateY(10px) rotate(405deg);
+    }
+
+    #navigation :checked ~ .icon-burger .line:nth-child(3) {
+        transform: translateY(-10px) rotate(-405deg);
+    }
+
+    #navigation :checked ~ .icon-burger .line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .icon-burger {
+        position: absolute;
+        top: -10px;
+    }
+
+    #navigation .page-logo {
+        margin: 10px;
+    }
+
+    #navigation li a, #navigation li a:link, #navigation li a:visited, #navigation li a:active {
+        color: #666666;
+    }
+
+    #navigation li a:hover {
+        color: black;
+    }
+
+    .career-item, .education-item {
+        padding-top: 125px;
+        margin-top: -100px;
+    }
+
+    .content {
+        margin-top: -100px;
+        padding-top: 200px;
+    }
+
+    body {
+        font-size: 24px;
+    }
+
+    h1 {
+        font-size: 80px;
+    }
+
+    h2 {
+        font-size: 50px;
+    }
+
+    .social-logo {
+        font-size: 60px;
+    }
+
+    #achievements .fa-ul li i {
+        padding-right: 40px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .content {
+        margin: 0 15px;
+    }
+    body {
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    .social-logo {
+        font-size: 40px;
+    }
+
+
+    #nav-links li a {
+        line-height: 40px;
+        font-size: 20px;
+    }
+
+    #nav-links li {
+         padding: 10px 0;
+         height: 40px;
+    }
+
+    #navigation :checked ~ #nav-links {
+        height: 366px;
+    }
+
+    #navigation .page-logo {
+        font-size: 15px;
+        padding: 5px;
+        border-width: 2px;
+    }
+}

@@ -1,0 +1,57 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Titles{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='titles' level=level %}
+{% endblock %}
+
+{% block content_header %}Titles{% endblock %}
+
+{% block btn_new %}
+    {% if level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'title_add' %}">
+            <span>New title</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <form method="post" action="">
+        {%  csrf_token %}
+        <ul>
+            {% for field in title_form %}
+                <li><span>{{ field.label }}: </span><span>{{ field }}</span></li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Search">
+    </form>
+    <form class="form-search" method="POST" action="">
+        {%  csrf_token %}
+        <button name="action" value="show_all">Show all</button>
+    </form>
+
+    <table>
+        {% if title_list %}
+            <th id="main-th">Name</th>
+            <th>Main author</th>
+            <th>Genre</th>
+            {% for title in title_list %}
+                <tr>
+                    {% include 'includes/title_list_item.html' with name=title.name isbn=title.isbn author_name=title.authors.first.name author_surname=title.authors.first.surname author_id=title.authors.first.id genre_name=title.genre.name genre_id=title.genre.id %}
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+{% endblock %}

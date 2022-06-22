@@ -1,0 +1,41 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Distributors{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='distributors' level=level %}
+{% endblock %}
+
+{% block content_header %}Distributors{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'distributor_add' %}">
+            <span>New distributor</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <th id="main-th" class="inner-th">Username</th>
+        <th class="inner-th">Name</th>
+        <th class="inner-th">Email</th>
+        {% for distributor in distributor_list %}
+            <tr>
+                {% include 'includes/distributor_list_item.html' with id=distributor.id username=distributor.username name=distributor.name email=distributor.email %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

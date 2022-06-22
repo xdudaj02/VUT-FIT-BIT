@@ -1,0 +1,50 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Edit employee{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='employees' level=level %}
+{% endblock %}
+
+{% block content_header %}Edit employee{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <form class="form-no-border" method="POST" action="">
+            {%  csrf_token %}
+            <button name="action" value="delete">Delete</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <form method="POST" action="">
+        {%  csrf_token %}
+        <ul>
+            {% for field in employee_form %}
+                <li><span>{{ field.label }}: </span><span>{{ field }}</span></li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="OK">
+    </form>
+    {% for error in employee_form.errors.values %}
+        <li><span class="err-msg">{{ error }}</span></li>
+    {% endfor %}
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+    <a id="back-to-list" class="button" href="{% url 'employee_detail' employee_detail.id %}">
+        <span>Back to employee detail</span>
+    </a>
+{% endblock %}

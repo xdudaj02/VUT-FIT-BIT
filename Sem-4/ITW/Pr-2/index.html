@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Johnny Person</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <nav id="navigation">
+        <a href="http://www.stud.fit.vutbr.cz/~xdudaj02/itw_proj_2/" class="page-logo"><strong>JPerson</strong></a>
+        <div id="nav-menu">
+            <input id="nav-toggle" type="checkbox">
+            <ul id="nav-links">
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('header')">Home</a></li>
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('about')">About</a></li>
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('education')">Education</a></li>
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('career')">Career</a></li>
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('interests')">Interests</a></li>
+                <li><a onclick="document.querySelector('#nav-toggle').checked ^= 1; scrollSmoothTo('achievements')">Achievements</a></li>
+            </ul>
+            <label for="nav-toggle" class="icon-burger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </label>
+        </div>
+    </nav>
+
+    <div id="scrollable">
+        <header id="header" class="paragraph">
+            <div class="content">
+                <div id="header-image">
+                    <img src="img/johnny_person.jpg" alt="Johnny Person">
+                </div>
+                <div id="header-text">
+                    <h1>Johnny Person</h1>
+                    <h3>Sportsman, artist, businessman, amazing human being</h3>
+                    <div class="socials-icons">
+                        <a class="mail-link" href="mailto:john.personeus@mailcompany.com" target="_blank">john.personeus@mailcompany.com</a><br>
+                        <a class="social-logo" href="https://github.com/" target="_blank"><i class="fab fa-github-square"></i></a>
+                        <a class="social-logo" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                        <a class="social-logo" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter-square"></i></a>
+                        <a class="social-logo" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram-square"></i></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="about" class="paragraph">
+            <div class="content">
+                <h2>About</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean finibus venenatis varius. Nunc interdum odio dolor, a facilisis tellus tincidunt ut. Aenean vitae sem nibh. Phasellus faucibus, orci in efficitur fermentum, mi urna gravida lacus, vel condimentum neque metus vitae velit. Mauris ac pretium neque. Pellentesque id ultrices ante, in tincidunt diam. Nunc faucibus auctor dui, sagittis venenatis enim consectetur ac. </p>
+            </div>
+        </section>
+
+        <div id="education" class="paragraph">
+            <div class="content">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3>Fastest online courses about cooking</h3>
+                    <h4>Cooking</h4>
+                    <p>20.3.2020 - 21.3.2020</p>
+                    <p>best in class</p>
+                </div>
+                <div class="education-item">
+                    <h3>Online school BigTiger</h3>
+                    <h4>People management</h4>
+                    <p>january 2020</p>
+                    <p>best in class</p>
+                </div>
+                <div class="education-item">
+                    <h3>Brno University of Technology</h3>
+                    <h4>Faculty of Business and Management</h4>
+                    <p>2014 - 2018</p>
+                    <p>GPA: 1.00</p>
+                </div>
+                <div class="education-item">
+                    <h3>Some normal high school</h3>
+                    <h4>Sports program</h4>
+                    <p>2010 - 2014</p>
+                    <p>GPA: 1.00</p>
+                </div>
+            </div>
+        </div>
+
+        <section id="career" class="paragraph">
+            <div class="content">
+                <h2>Career</h2>
+                <div id="career-navigation">
+                    <ul>
+                        <li><a onclick="scrollSmoothTo('career-sports')">Sports</a></li>
+                        <li><a onclick="scrollSmoothTo('career-arts')">Arts</a></li>
+                        <li><a onclick="scrollSmoothTo('career-business')">Business world</a></li>
+                    </ul>
+                </div>
+                <div class="career-item" id="career-sports">
+                    <h3>Sports</h3>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                        provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum
+                        fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis
+                        est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis
+                        voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis
+                        aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+                    </p>
+                </div>
+                <div class="career-item" id="career-arts">
+                    <h3>Arts</h3>
+                    <p>Pater noster, qui es in caelis sanctificetur nomen tuum adveniat regnum tuum fiat voluntas tua, sicut
+                        in caelo, et in terra. Panem nostrum cotidianum da nobis hodie et dimitte nobis debita nostra, sicut
+                        et nos dimittimus debitoribus nostris et ne nos inducas in tentationem sed libera nos a malo.
+                    </p>
+                </div>
+                <div class="career-item" id="career-business">
+                    <h3>Business world</h3>
+                    <p>Coming out of my cage and I've been doing just fine. Gotta gotta be down because I want it all. It
+                        started out with a kiss how did it end up like this? It was only a kiss, it was only a kiss. Now I'm
+                        falling asleep and she's calling a cab while he's having a smoke and she's taking a drag. Now they're
+                        going to bed and my stomach is sick and it's all in my head but she's touching his chest now he takes
+                        off her dress now. Let me go. And I just can't look, it's killing me and taking control. Jealousy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="paragraph">
+            <div class="content">
+                <h2>Interests</h2>
+                <p>Call me Ishmael. Some years ago - never mind how long precisely - having little or no money in my purse,
+                    and nothing particular to interest me on shore, I thought I would sail about a little and see the
+                    watery part of the world. It is a way I have of driving off the spleen and regulating the circulation.
+                    Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off-then, I account it high time tozz get to sea as soon as I can. This is my substitute for pistol and ball.
+                </p>
+            </div>
+        </section>
+
+        <section id="achievements" class="paragraph">
+            <div class="content">
+                <h2>Achievements</h2>
+                <ul class="fa-ul">
+                    <li><i class="fas fa-arrow-up fa-fw"></i>Highest value rise 2017</li>
+                    <li><i class="fas fa-money-bill-alt fa-fw"></i>Most money made 2018</li>
+                    <li><i class="fas fa-money-bill-alt fa-fw"></i>Most money made 2019</li>
+                    <li><i class="fas fa-money-bill-alt fa-fw"></i>Most money made 2020</li>
+                    <li><i class="fas fa-trophy fa-fw"></i>Winner of Rallye Dakar 2020</li>
+                    <li><i class="fas fa-trophy fa-fw"></i>Winner of Velka Pardubicka 2020</li>
+                    <li><i class="fas fa-fire fa-fw"></i>Hottest man or woman ever</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

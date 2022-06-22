@@ -1,0 +1,10 @@
+{# expects id title_name, library_name #}
+<td class="td-tiny">
+    <span>{{ id }}</span>
+</td>
+<td>
+    <a class="title_small_item" href="{% url 'title_detail' isbn %}">{{ title_name }}</a>
+</td>
+<td>
+    <a class="library_small_item" href="{% url 'library_detail' library_id %}">{{ library_name }}</a>
+</td>

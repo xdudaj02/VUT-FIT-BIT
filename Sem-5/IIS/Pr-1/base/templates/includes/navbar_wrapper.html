@@ -1,0 +1,14 @@
+{# expects selected #}
+{% if user.is_authenticated %}
+    {% if level == 0 %}
+        {% include 'includes/navbar_user.html' with selected=selected %}
+    {% elif level == 1 %}
+        {% include 'includes/navbar_distributor.html' with selected=selected %}
+    {% elif level == 2 %}
+        {% include 'includes/navbar_employee.html' with selected=selected %}
+    {% elif level == 3 %}
+        {% include 'includes/navbar_admin.html' with selected=selected %}
+    {% endif %}
+{% else %}
+    {% include 'includes/navbar_guest.html' with selected=selected %}
+{% endif %}

@@ -1,0 +1,5 @@
+{# expects id, created #}
+<td id="main-td">
+    <a class="reservation_item" href="{% url 'reservation_detail' id %}">R{{ id|stringformat:"04d" }}</a>
+</td>
+<td>{{ created|date:"d.m.Y" }}</td>

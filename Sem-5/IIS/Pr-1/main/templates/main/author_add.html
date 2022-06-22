@@ -1,0 +1,42 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Add Author{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='authors' level=level %}
+{% endblock %}
+
+{% block content_header %}Add Author{% endblock %}
+{% block main_body %}
+    <form method="post" action="{% url 'author_add' %}">
+        {%  csrf_token %}
+        <ul>
+            {% for field in author_form %}
+                <li class="{% if field.field.required %}required{% endif %}">
+                    <span>{{ field.label }}: </span><span>{{ field }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="OK">
+    </form>
+    {% for error in author_form.errors.values %}
+        <li><span class="err-msg">{{ error }}</span></li>
+    {% endfor %}
+    {% for message in messages %}
+        <p class="ok-msg">{{ message }}</p>
+    {% endfor %}
+    <a id="back-to-list" class="button" href="{% url 'author_list' %}">
+        <span>Naspat na autorov</span>
+    </a>
+{% endblock %}

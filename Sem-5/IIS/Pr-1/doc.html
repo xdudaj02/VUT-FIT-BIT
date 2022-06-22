@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="sk">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<h1>2. Knihovna: vyhledávání, rezervace, půjčování a objednávání knih</h1>
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Jakub Duda
+	    <a href="mailto:xdudaj02@stud.fit.vutbr.cz">xdudaj02@stud.fit.vutbr.cz</a> -
+		frontend, backend
+	</dd>
+	<dd>Antonín Honzejk
+	    <a href="mailto:xhonze00@stud.fit.vutbr.cz">xhonze00@stud.fit.vutbr.cz</a> -
+		databáza, backend
+	</dd>
+  <dd>Peter Vaňo
+	    <a href="mailto:xvanop01@stud.fit.vutbr.cz">xvanop01@stud.fit.vutbr.cz</a> -
+		testovanie, backend
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="https://iiskniznica.herokuapp.com/">https://iiskniznica.herokuapp.com/</a></dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<table>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin</td><td>IIS2021admin</td><td>Administrátor</td></tr>
+<tr><td>employee001</td><td>IIS2021emp1</td><td>Zamestnanec</td></tr>
+<tr><td>distributor001</td><td>IIS2021dist1</td><td>Distribútor</td></tr>
+<tr><td>xtestx01</td><td>PASS123word</td><td>Zákazník</td></tr>
+<tr><td>xtestx02</td><td>PASS123word</td><td>Zákazník</td></tr>
+</table>
+
+<h3>Zoznam případů užití</h3>
+<p><b>všetci používatelia: </b>zobraziť autorov, zobraziť tituly, zobraziť knižnice, zobraziť žánre</p>
+<p><b>neprihlásený používateľ: </b>vytvoriť účet</p>
+<p><b>všetci prihlásení používatelia okrem administrátora: </b>zobraziť profil, upraviť profil, vymazať účet</p>
+<p><b>prihlásený používateľ: </b>zobraziť svoje výpožičky, zobraziť svoje rezervácie, vytvoriť rezerváciu,
+    zrušiť rezerváciu, pridať hlas, zrušiť hlas, zobraziť hlasy</p>
+<p><b>distribútor: </b>zobraziť svoje objednávky, doručiť objednávku, pridať titul, upraviť titul, vymazať titul,
+    pridať autora, upraviť autora, pridať žáner</p>
+<p><b>zamestnanec a administrátor: </b>zobraziť výpožičky, vytvoriť výpožičku, zobraziť rezervácie, vytvoriť rezerváciu,
+    zrušiť rezerváciu, zobraziť hlasy, zobraziť objednávky, vytvoriť objednávku, vymazať nedoručenú objednávku,
+    pridať žáner, pridať autora, upraviť autora, pridať titul, upraviť titul, vymazať titul, zobraziť distribútorov,
+    zobraziť používateľov, upraviť používateľa, pridať používateľa, vymazať používateľa</p>
+<p><b>administrátor: </b>vytvoriť knižnicu, upraviť knižnicu, zobraziť zamestnancov, upraviť zamestnancov, vytvoriť
+    zamestnancov, vymazať zamestnancov, vytvoriť distribútora, upraviť distribútora, vymazať distribútora,
+    zobraziť profil, upraviť profil</p>
+<p>zamestnanci a administrátor vytváraju rezervácie a výpožičky pre používateľov nie vlastné</p>
+
+<h2>Implementace</h2>
+<p>Bol použitý framework Django.</p>
+<p>V súbore <i>main/urls.py</i> sú definované platné url adresy a názov funkcie definujúcej zobrazenie, ktorá sa v
+    prípade prístupu na túto url volá. Súbor <i>main/models.py</i> obsahuje definície tried reprezentujúcich jednotlivé
+    tabuľky databázy. Pomocou týchto tried je vykonávané získavanie aj zapisovanie dát do databázy. V súbore
+    <i>main/forms.py</i> sú definované formuláre použité pri vkladaní alebo editovaní dát uložených v databáze.</p>
+<p>Súbor <i>iis/settings.py</i> obsahuje rôzne konfiguračné nastavenia, ako napríklad nastavenie time-outu, kedy vyprší
+    platnosť sedenia.</p>
+<p>Hlavná funkcionalita je implementovaná v súbore <i>main/views.py</i>. Tento súbor definuje jednotlivé zobrazenia,
+    ktoré sú zobrazené pre rôzne url adresy. Zobrazenia sú definované pomocou funkcií. Na začiatku každej funkcie sa
+    sa zistí úroveň používateľa, aby mu mohli byť zobrazené adekvatné dáta alebo aby v prípade nedostatočných práv
+    mohol byť presmerovaný na inú stránku. Toto je väčšinou nasledované načítaním dát z databázy a volaním funkcie
+    render() s parametrom určujúcim html súbor, ktorý má byť zobrazený. Tieto funkcie taktiež definujú zachytenie
+    POST dotazov, ktoré sú vysielané v prípade stlačenia rôznych tlačidiel zobrazených v daných zobrazeniach.
+    Po zachytení POST dotazu je vždy vykonaná adekvátna akcia, väčšinou úprava dát v databáze alebo filtrovanie
+    zobrazených dát.</p>
+<p>Definície spôsobu zobrazenia jednotlivých zobrazení (html súbory) sa nachádzajú v zložke <i>main/templates/main</i>.
+    Tieto súbory rozširujú základnú šablónu <i>base/templates/base/index.html</i>. V zložke
+    <i>base/templates/includes</i> sa nachádzajú definície často opakovaných konštrukcií ako napríklad položka
+    zoznamu. V zložke <i>base/static/base</i> sa nachádzajú použité obrázky a definície css štýlov. Stránky
+    informačného systému majú pre každý typ používateľa rôznu farebnú tému. Modrú pre bežného používateľa (zákazníka),
+    zelenú pre zamestnancov (aj administrátor) a oranžovú pre distribútorov.</p>
+
+<h3>Databáze</h3>
+<div><img src="ER.png" alt="ER diagram"></div>
+
+<h2>Instalace</h2>
+
+<ul>
+<li><b>postup instalace na server: </b>pomocou nainštalovaného Heroku CLI: vytvorenie účtu a prihlásenie, získanie sw
+    požiadavkov (<i>pip freeze > requirements.txt</i>), "pozbieranie" statických súborov zo všetkých Django aplikácii
+    do jedného súboru (<i>python manage.py collectstatic</i>), vytvorenie aplikácie (<i>heroku create</i>), vytvorenie
+    súboru <i>Procfile</i> špecifikujúceho spustenie aplikácie, nastavenie PostgreSQL databázy na Heroku a upravenie
+    detailov o pripojení k tejto databáze v súbore <i>settings.py</i>, inicializácia databázy
+    (<i>python manage.py migrate</i>), <i>git push heroku master</i>, profit</li>
+<li><b>softwarové požadavky: </b>vypísané v súbore requirements.txt: asgiref==3.4.1, certifi==2021.10.8, Django==3.2.5,
+    gunicorn==20.1.0, psycopg2-binary==2.9.2, sqlparse==0.4.1, text-unidecode==1.3,
+    typing-extensions==3.10.0.2, whitenoise==5.3.0, wincertstore==0.2</li>
+<li><b>databáze: </b>Aplikácia využíva PostgreSQL databázu poskytovanú hosting službou Heroku. Vďaka využitiu
+    frameworku Django, ktory podporuje ORM je možné štruktúru databázy vytvoriť spustením príkazov
+    <i>python manage.py makemigrations</i> a python <i>manage.py migrate</i> v domovskom priečinku Django projektu.
+    Do databázy bol následne ručne vložený profil administrátora. Z dôvodu využitia "deafaultnej" triedy z frameworku
+    Django na ukladanie a manipuláciu s dátami o používateľoch, ktorá vykonáva hashovanie hesla, bol najprv v IS
+    vytvorený normálny účet, ktorý bol následne v databáze ručne prenastavený z typu účtu používateľ na typ účtu
+    zamestnanec s právami administrátora a taktiež bola vymazaná vzniknutá entita používateľa a vytvorená nová entita
+    zamestnanca. Ostatné dáta boli vložené prostredníctvom vytvoreného informačného systému.</li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p>Program používa UTC pri časových údajoch.</p>
+<p>Informačný sýstem je nadizajnovaný tak, že profily zamestnancov a distribútorov je možné vytvoriť len z profilu
+    administrátora. Príšlo nám totiž nelogické, aby bolo napríklad možné vytvoriť si profil zamestnanca a mať tak
+    prístup ku dátam, ktoré by bežný používateľ nemal mať možnosť vidieť.</p>
+
+</body>
+</html>

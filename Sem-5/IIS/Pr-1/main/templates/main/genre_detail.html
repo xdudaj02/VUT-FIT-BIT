@@ -1,0 +1,26 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}{{ genre_detail.name }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='genres' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ genre_detail.name }}{% endblock %}
+{% block main_body %}
+    <p>{{ genre_detail.description }}</p>
+    <a id="back-to-list" class="button" href="{% url 'genre_list' %}">
+        <span>Back to genres</span>
+    </a>
+{% endblock %}

@@ -1,0 +1,62 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Authors{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='authors' level=level %}
+{% endblock %}
+
+{% block content_header %}Authors{% endblock %}
+
+{% block btn_new %}
+    {% if level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'author_add' %}">
+            <span>New author</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <form method="POST" action="">
+        {%  csrf_token %}
+        <ul>
+            <li>
+                <span>Name: </span>
+                <span><label><input type="text" name="name"></label></span>
+            </li>
+            <li>
+                <span>Surname: </span>
+                <span><label><input type="text" name="surname"></label></span>
+            </li>
+        </ul>
+        <input type="submit" value="Search">
+    </form>
+    <form class="form-search" method="POST" action="">
+        {%  csrf_token %}
+        <button name="action" value="show_all">Show all</button>
+    </form>
+
+    <table>
+        <th>Name</th>
+        {% for author in author_list %}
+            <tr>
+                {% if author.died is None %}
+                    {% include 'includes/author_list_item.html' with name=author.name surname=author.surname id=author.id born=author.born|date:"Y" died='present' %}
+                {% else %}
+                    {% include 'includes/author_list_item.html' with name=author.name surname=author.surname id=author.id born=author.born|date:"Y" died=author.died|date:"Y" %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

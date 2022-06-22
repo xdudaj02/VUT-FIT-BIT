@@ -1,0 +1,51 @@
+body {
+    background: #edf8ed;
+}
+
+header {
+    background: #41a441;
+}
+
+nav {
+    background: #7ecd7e;
+}
+
+.nav-item:link, .nav-item:visited, .nav-item:active {
+    background: #7ecd7e;
+}
+
+.nav-item:hover {
+    background: #b6e2b6;
+}
+
+#nav-selected:link, #nav-selected:visited, #nav-selected:active, #nav-selected:hover {
+    background: #b6e2b6;
+}
+
+footer {
+    background: #b6e2b6;
+}
+
+h1 {
+    text-shadow:
+            1px 1px 0 #b6e2b6,
+            1px -1px 0 #b6e2b6,
+            -1px 1px 0 #b6e2b6,
+            -1px -1px 0 #b6e2b6,
+            0 1px 0 #b6e2b6,
+            0 -1px 0 #b6e2b6,
+            1px 0 0 #b6e2b6,
+            -1px 0 0 #b6e2b6;
+}
+
+h2 {
+    color: #1b4b1b;
+}
+
+.button:link, .button:visited, .button:active {
+    background: #7ecd7e;
+}
+
+.button:hover {
+    background: #b6e2b6;
+}

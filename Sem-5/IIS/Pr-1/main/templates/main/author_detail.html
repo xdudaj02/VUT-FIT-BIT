@@ -1,0 +1,51 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}{{ author_detail.name }} {{ author_detail.surname }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='authors' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ author_detail.name }} {{ author_detail.surname }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'author_edit' author_detail.id %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    {% if author_detail.died is None %}
+        <p>{{ author_detail.born|date:"d.m.Y" }} - present</p>
+    {% else %}
+        <p>{{ author_detail.born|date:"d.m.Y" }} - {{ author_detail.died|date:"d.m.Y" }}</p>
+    {% endif %}
+    {% if author_detail.description %}
+        <h3>About</h3>
+        <p>{{ author_detail.description }}</p>
+    {% endif %}
+    <h3>Titles</h3>
+    <table>
+        {% for title in title_list %}
+            <tr>
+                {% include 'includes/title_list_item.html' with name=title.name isbn=title.isbn genre_name=title.genre.name genre_id=title.genre.id author_id=author_detail.id author_name=author_detail.name author_surname=author_detail.surname %}
+            </tr>
+        {% endfor %}
+    </table>
+    <a id="back-to-list" class="button" href="{% url 'author_list' %}">
+        <span>Back to authors</span>
+    </a>
+{% endblock %}

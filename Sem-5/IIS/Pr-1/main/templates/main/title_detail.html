@@ -1,0 +1,60 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}{{ title_detail.name }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='titles' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ title_detail.name }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'title_edit' title_detail.isbn %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <h3>Genre</h3>
+    <a class="genre_small_item" href="{% url 'genre_detail' title_detail.genre.id %}">{{ title_detail.genre.name }}</a>
+    <h3>Authors</h3>
+    <table>
+        {% for author in title_detail.authors.all %}
+            <tr>
+                {% if author.died is None %}
+                    {% include 'includes/author_list_item.html' with name=author.name surname=author.surname id=author.id born=author.born|date:"Y" died='sucasnost' %}
+                {% else %}
+                    {% include 'includes/author_list_item.html' with name=author.name surname=author.surname id=author.id born=author.born|date:"Y" died=author.died|date:"Y" %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>About</h3>
+    <p>{{ title_detail.description }}</p>
+    <h3>Availability</h3>
+    <table>
+        <th id="main-th" class="inner-th">Library</th>
+        <th class="inner-th">Currently available</th>
+        {% for library, availability in availability_dict.items %}
+            <tr>
+                {% include 'includes/title_in_library_list_item.html' with level=level isbn=title_detail.isbn name=library.name id=library.id owned=availability.0 available=availability.1 voted=availability.2 reserved=availability.3 %}
+            </tr>
+        {% endfor %}
+    </table>
+    <a id="back-to-list" class="button" href="{% url 'title_list' %}">
+        <span>Back to titles</span>
+    </a>
+{% endblock %}

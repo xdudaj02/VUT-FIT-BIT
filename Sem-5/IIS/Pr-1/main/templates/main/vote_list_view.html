@@ -1,0 +1,38 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Votes{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='votes' level=level %}
+{% endblock %}
+
+{% block content_header %}Votes{% endblock %}
+
+{% block btn_new %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        {% if votes_dict %}
+            <th>Title</th>
+            <th>Library</th>
+            <th>Number of votes</th>
+            {% for vote_key, vote_value in votes_dict.items %}
+                <tr>
+                    {% include 'includes/vote_list_view_item.html' with title_name=vote_key.title.name isbn=vote_key.title.isbn library_name=vote_key.library.name library_id=vote_key.library.id vote_count=vote_value.0 voted=vote_value.1 %}
+                </tr>
+            {% endfor %}
+    {% endif %}
+    </table>
+{% endblock %}

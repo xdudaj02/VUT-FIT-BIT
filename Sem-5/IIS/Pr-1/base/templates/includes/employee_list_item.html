@@ -1,0 +1,11 @@
+{# expects id, username, name, email, administrator #}
+<td id="main-td">
+    <a class="employee_item" href="{% url 'employee_detail' id %}">{{ username }}</a>
+</td>
+<td>{{ name }}</td>
+<td>{{ email }}</td>
+{% if administrator %}
+    <td class="td-tiny">Yes</td>
+{% else %}
+    <td class="td-tiny">No</td>
+{% endif %}

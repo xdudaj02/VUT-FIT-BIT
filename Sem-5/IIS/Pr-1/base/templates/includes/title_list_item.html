@@ -1,0 +1,10 @@
+{# expects isbn, name, author_id, author_name, genre_id, genre_name #}
+<td id="main-td">
+    <a class="title_item" href="{% url 'title_detail' isbn %}">{{ name }}</a>
+</td>
+<td>
+    <a class="author_small_item" href="{% url 'author_detail' author_id %}">{{ author_name }} {{ author_surname }}</a>
+</td>
+<td>
+    <a class="genre_small_item" href="{% url 'genre_detail' genre_id %}">{{ genre_name }}</a>
+</td>

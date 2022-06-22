@@ -1,0 +1,61 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Add Order{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='orders' level=level %}
+{% endblock %}
+
+{% block content_header %}Add Order{% endblock %}
+
+{% block main_body %}
+    <h3>Add title</h3>
+    <form method="post" action="">
+        {%  csrf_token %}
+        <ul>
+            {% for field in order_form %}
+                <li class="{% if field.field.required %}required{% endif %}">
+                    <span>{{ field.label }}: </span><span>{{ field }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <button name="action" value="add">Add</button>
+    </form>
+    {% for error in order_form.errors.values %}
+        <li><span class="err-msg">{{ error }}</span></li>
+    {% endfor %}
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+    <p class="err-msg">Do not leave this page without finishing or canceling your order!</p>
+    <form class="form-no-border" method="POST" action="">
+        {%  csrf_token %}
+        <button name="action" value="finish">Finish</button>
+        <button name="action" value="cancel">Cancel</button>
+    </form>
+    {% if distributor is not None %}
+        <h3>Selected distributor</h3>
+        <p>{{ distributor.name }}</p>
+    {% endif %}
+    {% if order_detail is not None %}
+        <h3>Added titles</h3>
+        <table>
+            {% for item in order_detail %}
+                <tr>
+                    {% include 'includes/title_in_order_list_item.html' with id=item.id title_name=item.title_in_library.title.name library_name=item.title_in_library.library.name count=item.count %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

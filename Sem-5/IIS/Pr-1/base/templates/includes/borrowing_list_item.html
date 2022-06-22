@@ -1,0 +1,10 @@
+{# expects id, user_id, borrowed_to #}
+<td id="main-td">
+    <a class="borrowing_item" href="{% url 'borrowing_detail' id %}">B{{ id|stringformat:"04d" }}</a>
+</td>
+<td class="td-short">{{ borrowed_to|date:"d.m.Y" }}</td>
+{% if level == 2 or level == 3 %}
+    <td>
+        <a class="user_small_item" href="{% url 'user_detail' user_id %}">{{ user_name }}</a>
+    </td>
+{% endif %}

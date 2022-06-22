@@ -1,0 +1,39 @@
+{# expects id, name, owned, available, reserved, voted #}
+<td id="main-td">
+    <a class="library_item" href="{% url 'library_detail' id %}">{{ name }}</a>
+</td>
+{% if owned %}
+    <td class="td-short">{{ available }}/{{ owned }}</td>
+    <td>
+        {% if user.is_authenticated and level == 0 %}
+            {% if reserved %}
+                <form class="form-no-border" method="POST" action="">
+                    {%  csrf_token %}
+                    <button class="btn-line" name="cancel_reservation" value="{{ id }}">Cancel reservation</button>
+                </form>
+            {% else %}
+                <form class="form-no-border" method="POST" action="">
+                    {%  csrf_token %}
+                    <button class="btn-line" name="set_reservation" value="{{ id }}">Make a reservation</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </td>
+{% else %}
+    <td class="td-short">-</td>
+    <td>
+        {% if user.is_authenticated and level == 0 %}
+            {% if voted %}
+                <form class="form-no-border" method="POST" action="">
+                    {%  csrf_token %}
+                    <button class="btn-line" name="cancel_vote" value="{{ id }}">Cancel vote</button>
+                </form>
+            {% else %}
+                <form class="form-no-border" method="POST" action="">
+                    {%  csrf_token %}
+                    <button class="btn-line" name="set_vote" value="{{ id }}">Vote for purchasing</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </td>
+{% endif %}

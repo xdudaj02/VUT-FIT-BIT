@@ -1,0 +1,59 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Libraries{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='libraries' level=level %}
+{% endblock %}
+
+{% block content_header %}Libraries{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'library_add' %}">
+            <span>New library</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <form method="POST" action="">
+        {%  csrf_token %}
+        <ul>
+            <li>
+                <span>Name: </span>
+                <span><label><input type="text" name="name"></label></span>
+            </li>
+            <li>
+                <span>City: </span>
+                <span><label><input type="text" name="city"></label></span>
+            </li>
+        </ul>
+        <input type="submit" value="Search">
+    </form>
+    <form class="form-search" method="POST" action="">
+        {%  csrf_token %}
+        <button name="action" value="show_all">Show all</button>
+    </form>
+
+    <table>
+        <th>Name</th>
+        <th>Address</th>
+        {% for library in library_list %}
+            <tr>
+                {% include 'includes/library_list_item.html' with name=library.name id=library.id street_name=library.street_name street_no=library.street_no city=library.city %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

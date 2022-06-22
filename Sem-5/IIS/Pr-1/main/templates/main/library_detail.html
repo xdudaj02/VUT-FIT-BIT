@@ -1,0 +1,70 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}{{ library_detail.name }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='libraries' level=level %}
+{% endblock %}
+
+{% block content_header %}{{ library_detail.name }}{% endblock %}
+
+{% block btn_new %}
+    {% if level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'library_edit' library_detail.id %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <p>{{ library_detail.description }}</p>
+    <h3>Address</h3>
+    <p>{{ library_detail.street_name }} {{ library_detail.street_no }}<br>{{ library_detail.city }}</p>
+    <h3>Opening hours</h3>
+    <table>
+        <tr>
+            <td class="td-opening">Monday:</td>
+            <td class="td-opening">{{ library_detail.opening_monday|time:"H:i" }}</td>
+            <td class="td-opening"> - </td>
+            <td class="td-opening">{{ library_detail.closing_monday|time:"H:i" }}</td>
+        </tr>
+        <tr>
+            <td class="td-opening">Tuesday:</td>
+            <td class="td-opening">{{ library_detail.opening_tuesday|time:"H:i" }}</td>
+            <td class="td-opening"> - </td>
+            <td class="td-opening">{{ library_detail.closing_tuesday|time:"H:i" }}</td>
+        </tr>
+        <tr>
+            <td class="td-opening">Wednesday:</td>
+            <td class="td-opening">{{ library_detail.opening_wednesday|time:"H:i" }}</td>
+            <td class="td-opening"> - </td>
+            <td class="td-opening">{{ library_detail.closing_wednesday|time:"H:i" }}</td>
+        </tr>
+        <tr>
+            <td class="td-opening">Thursday:</td>
+            <td class="td-opening">{{ library_detail.opening_thursday|time:"H:i" }}</td>
+            <td class="td-opening"> - </td>
+            <td class="td-opening">{{ library_detail.closing_thursday|time:"H:i" }}</td>
+        </tr>
+        <tr>
+            <td class="td-opening">Friday:</td>
+            <td class="td-opening">{{ library_detail.opening_friday|time:"H:i" }}</td>
+            <td class="td-opening"> - </td>
+            <td class="td-opening">{{ library_detail.closing_friday|time:"H:i" }}</td>
+        </tr>
+    </table>
+    <a id="back-to-list" class="button" href="{% url 'library_list' %}">
+        <span>Back to libraries</span>
+    </a>
+{% endblock %}

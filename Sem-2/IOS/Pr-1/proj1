@@ -1,0 +1,290 @@
+#!/bin/sh
+#########################################################################
+#									#
+#			IOS Project 1 - dirgraph			#
+#			       Version No. 1				#
+#		 Jakub Duda, xdudaj02, VUT FIT, 1 BIT			#
+#				24.3.2020				#
+#									#
+#########################################################################
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+#									#
+# Script outputs a histogram of filesizes of files in a directory	#
+# Usage: dirgraph [-i FILE_ERE] [-n] [DIR]				#
+#	-i "FILE_ERE" (optional): ignores files matching extended 	#
+#		regex expression FILE_ERE				#
+#		- if used, processes next argument as FILE_ERE		#
+#	-n (optional): sets normalization of histogram (adjustment 	#
+#		of output to output environment line length)		#
+#	 DIR (optinal): directory DIR is used as root directory,	#
+#		else current directory is used				#
+#									#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
+export POSIXLY_CORRECT=yes
+
+
+############################## FUNCTIONS ################################
+
+#function recursively finds all files in given directory, discards 
+#those matching given pattern and returns list
+getAllFilesWithI()
+{
+	find . -print 2>/dev/null | grep -vs -E "$ignore_file"
+}
+
+#function recursively finds all files in given directory and returns list
+getAllFiles()
+{
+	find . -print 2>/dev/null
+}
+
+#function returns highest argument (number)
+getHighest()
+{
+	highest=$1
+	i=0
+	while [ $i -lt 8 ] ; do 
+		shift
+		if [ "$1" -gt "$highest" ] ; then
+			highest=$1
+		fi
+		i=`expr $i + 1`
+	done
+	echo "$highest"
+}
+
+#function cuts off everything after first 'space' character in given input and returns
+getOnlySize()
+{
+	echo $1 | cut -d" " -f 1
+}
+
+#function prints formated output
+printOutput()
+{
+	printf 'Root directory: %s\n' "$directory"
+	printf 'Directories: %s\n' "$dirs_count"
+	printf 'All files: %s\n' "$files_count"
+	printf "File size histogram:\n"
+	#set of for cycles that print '#' sign size of category timed by coefficeint times
+	#coeffiecient is defaultly multiplied by 10000 so has to be divided by the same number 
+	#using rounding up ( +9999 ) so non-empty category is not empty after multiplication by coeff
+	from=0
+	to=`expr \( 9999 + $u100B \* $coeff \) / 10000`
+	printf "  <100 B  : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u1KiB \* $coeff \) / 10000`
+	printf "\n  <1 KiB  : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u10KiB \* $coeff \) / 10000`
+	printf "\n  <10 KiB : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u100KiB \* $coeff \) / 10000`
+	printf "\n  <100 KiB: "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u1MiB \* $coeff \) / 10000`
+	printf "\n  <1 MiB  : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u10MiB \* $coeff \) / 10000`
+	printf "\n  <10 MiB : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u100MiB \* $coeff \) / 10000`
+	printf "\n  <100 MiB: "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $u1GiB \* $coeff \) / 10000`
+	printf "\n  <1 GiB  : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	from=0
+	to=`expr \( 9999 + $o1GiB \* $coeff \) / 10000`
+	printf "\n  >=1 GiB : "
+	while [ $from -lt $to ] ; do
+		printf "#" ; from=`expr $from + 1` ; done
+	printf "\n"
+}
+
+
+#################################  MAIN  #################################
+
+ignore=false
+normalize=false
+
+#argument parsing
+while getopts :i:n o
+do case "$o" in
+        i) ignore_file=$OPTARG
+		ignore=true;;
+        n) normalize=true;;
+        ?) echo "Error. Wrong use of options." >&2
+                exit 1;;
+esac
+done
+
+#evaluating root directory argument
+eval "directory_check=\$$#"
+#condition for rootdir argument number with different argument options
+if [ "$ignore" = true ] ; then
+        if [ "$normalize" = true ] ; then
+		directory_check=$4
+	else
+		directory_check=$3
+	fi
+else
+	if [ "$normalize" = true ] ; then
+		directory_check=$2
+	else
+		directory_check=$1
+        fi
+fi
+#condition for content of rootdir argument
+if [ -z "$directory_check" ]; then #if empty
+	directory=$PWD #default rootdir
+elif [ ! -d "$directory_check" ]; then #if not valid
+        directory_check="$PWD$directory_check" #extension of rootdir argument with current directory
+	if [ ! -d "$directory_check" ]; then #if still not valid
+		echo "Error. Root directory does not exist." >&2
+		exit 2
+	else #if rootdir extended with current directory is valid (relative path was given)
+		directory=$directory_check
+	fi
+else #if given and valid
+	directory=$directory_check
+fi
+
+#check if -i argument does not match root directory
+if [ "$ignore" = true ] ; then 
+	directory_bn=`basename "$directory"` #root directory without path
+	echo "$directory_bn" | grep -E "$ignore_file" 1>/dev/null 
+	if [ $? -eq 0 ] ; then
+		echo "Error. Pattern for ignoring files matches root directory." >&2
+		exit 3
+	fi
+fi
+
+#variable initialization
+u100B=0
+u1KiB=0
+u10KiB=0
+u100KiB=0
+u1MiB=0
+u10MiB=0
+u100MiB=0
+u1GiB=0
+o1GiB=0
+
+files_count=0
+dirs_count=0
+wc_error_count=0
+find_error_count=0
+
+is_terminal=false
+terminal_width=67
+
+#condition for setting output environment width
+if [ "$normalize" = true ] ; then #if -n set
+	[ ! \( -t 1 \) ] #terminal existence check
+	is_terminal=$?
+	if [ $is_terminal = 1 ] ; then
+		width=`tput cols`
+		terminal_width=`expr $width - 13`
+	fi
+fi
+
+#main function
+cd "$directory" #move to directory to be analysed
+
+if [ "$ignore" = true ] ; then #if i argument set
+	#call to "find & grep" function
+	all_files=`getAllFilesWithI $ignore_file`
+else
+	#call to "find" function
+	all_files=`getAllFiles`
+fi
+
+while IFS= read -r line; do #looping through list of files
+	if [ -f "$line" ] ; then #if file
+		line=`echo $line | cut -c 3-` #cut off first two characters ("./")
+		files_count=`expr $files_count + 1` #file count incrementation
+		wc_error=`wc -c "$line" 2>&1 >/dev/null` #catch errors 
+		if [ -z "$wc_error" ] ; then #if no error
+			size=`wc -c "$line" 2>/dev/null` #gets file size
+			#call to function that cuts off filename from "size" variable 
+			size=`getOnlySize "$size"`
+			#set of if conditions for categorazing files by size
+			if [ "$size" -lt 100 ] ; then 
+				u100B=`expr $u100B + 1` 
+			elif [ "$size" -lt 1024 ] ; then 
+				u1KiB=`expr $u1KiB + 1`
+			elif [ "$size" -lt 10240 ] ; then 
+				u10KiB=`expr $u10KiB + 1`
+			elif [ "$size" -lt 102400 ] ; then 
+				u100KiB=`expr $u100KiB + 1`
+			elif [ "$size" -lt 1048576 ] ; then 
+				u1MiB=`expr $u1MiB + 1`
+			elif [ "$size" -lt 10485760 ] ; then 
+				u10MiB=`expr $u10MiB + 1`
+			elif [ "$size" -lt 104857600 ] ; then 
+				u100MiB=`expr $u100MiB + 1`
+			elif [ "$size" -lt 1073741824 ] ; then 
+				u1GiB=`expr $u1GiB + 1`
+			else 
+		       		o1GiB=`expr $o1GiB + 1`		
+			fi 
+		else #if error while doing "wc -c"
+			wc_error_count=`expr $wc_error_count + 1`
+		fi
+	elif [ -d "$line" ] ; then #if directory
+		dirs_count=`expr $dirs_count + 1` #directory count incrementation
+	fi
+done << EOF
+$all_files
+EOF
+
+#conditions for seting the normalization coefficient (coeff is multiplied by 10000 because of integer division)
+coeff=10000 #default coefficient (1 timed by 10000)
+if [ "$normalize" = true ] ; then #if normalization set
+	#call to "highest" function to get the "fullest" category
+	highest=`getHighest $u100B $u1KiB $u10KiB $u100KiB $u1MiB $u10MiB $u100MiB $u1GiB $o1GiB`
+	#if size of the "fullest" category is greater than output environment width 
+	if [ "$highest" -gt $terminal_width ] ; then 
+		coeff=`expr $coeff \* $terminal_width / $highest` #then set coefficient
+	fi
+fi
+
+#call to "printOutput" function
+printOutput "$directory" "$dirs_count" "$files_count" "$u100B" "$u1KiB" "$u10KiB" "$u1MiB" "$u10MiB" "$u100MiB" "$u1GiB" "$o1GiB" "$coeff"
+
+#return code determination
+find_error=`find . -print 2>&1 >/dev/null` #catch errors 
+if [ "$find_error" ] ; then
+	while IFS= read -r error ; do #loop for getting amount of errors occured while doing "find"
+		find_error_count=`expr $find_error_count + 1`
+	done << END
+	$find_error
+END
+fi
+
+permission_errors=`expr $find_error_count + $wc_error_count` #amount of all non fatal errors, presuming they are permission errors
+if [ $permission_errors -gt 0 ] ; then #if permission errors
+	echo "Permission issues. Unable to access some files. Number of files ignored: $permission_errors." >&2
+        exit 4
+else
+	exit 0
+fi
+#end of file

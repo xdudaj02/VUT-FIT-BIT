@@ -1,0 +1,6 @@
+{# expects id, username, name, email #}
+<td id="main-td">
+    <a class="distributor_item" href="{% url 'distributor_detail' id %}">{{ username }}</a>
+</td>
+<td>{{ name }}</td>
+<td>{{ email }}</td>

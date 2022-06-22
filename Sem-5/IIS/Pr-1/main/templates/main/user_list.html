@@ -1,0 +1,41 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Users{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='users' level=level %}
+{% endblock %}
+
+{% block content_header %}Users{% endblock %}
+
+{% block btn_new %}
+    {% if level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'register' %}">
+            <span>New user</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <th id="main-th" class="inner-th">Username</th>
+        <th class="inner-th">Name</th>
+        <th class="inner-th">Email</th>
+        {% for user in user_list %}
+            <tr>
+                {% include 'includes/user_list_item.html' with id=user.id username=user.username name=user.name email=user.email %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{# expects isbn, library_id, vote_count, title_name, library_name #}
+<td id="main-td" class="td-tiny">
+    <input type="checkbox" id="{{ isbn }}&{{ library_id }}&{{ vote_count }}" name="selected" value="{{ isbn }}&{{ library_id }}&{{ vote_count }}">
+</td>
+<td>
+    <label for="{{ isbn }}&{{ library_id }}&{{ vote_count }}">
+        <span class="title_item">{{ title_name }}</span>
+    </label>
+</td>
+<td>
+    <span class="library_small_item">{{ library_name }}</span>
+</td>
+<td>
+    <span class="votes_small_item">{{ vote_count }}</span>
+</td>

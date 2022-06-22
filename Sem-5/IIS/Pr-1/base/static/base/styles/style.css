@@ -1,0 +1,282 @@
+body {
+    margin: 0;
+    background: aliceblue;
+    font-family: 'Archivo', sans-serif;
+}
+
+#top-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+header {
+    background: cornflowerblue;
+}
+
+nav {
+    background: lightskyblue;
+}
+
+#header-wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#login-status {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#logged-user {
+    font-weight: bolder;
+    display: inline-flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+#nav-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-left: 10px;
+}
+
+.nav-item:link, .nav-item:visited, .nav-item:active {
+    padding: 10px;
+    font-weight: bolder;
+    background: lightskyblue;
+    color: darkslategray;
+}
+
+.nav-item:hover {
+    background: lightblue;
+    color: black;
+}
+
+#nav-selected:link, #nav-selected:visited, #nav-selected:active, #nav-selected:hover {
+    background: lightblue;
+    color: black;
+}
+
+main {
+    flex-grow: 2;
+}
+
+#main-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#content-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#content {
+    padding: 10px 0;
+}
+
+footer {
+    background: lightblue;
+}
+
+#footer-wrapper {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+div[id$='wrapper'] {
+    max-width: 1030px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto;
+}
+
+div[class$='item'], a[class$='item'] {
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+a[class$='small_item'] {
+    padding-bottom: 10px;
+    font-weight: normal;
+}
+
+h1 {
+    margin: 0;
+    padding-bottom: 5px;
+    color: black;
+    font-family: Ubuntu, sans-serif;
+    text-shadow:
+            1px 1px 0 lightblue,
+            1px -1px 0 lightblue,
+            -1px 1px 0 lightblue,
+            -1px -1px 0 lightblue,
+            0 1px 0 lightblue,
+            0 -1px 0 lightblue,
+            1px 0 0 lightblue,
+            -1px 0 0 lightblue;
+}
+
+h2 {
+    margin: 0;
+    color: midnightblue;
+}
+
+h3 {
+    margin: 0;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+a:link, a:visited, a:active, a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: slategray;
+}
+
+p, table {
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+td, th {
+    padding-right: 20px;
+    text-align: left;
+    min-width: 200px;
+}
+
+th {
+    font-size: small;
+    padding-bottom: 10px;
+}
+
+.inner-th {
+    padding-bottom: 5px;
+}
+
+#main-td, #main-th {
+    padding-right: 40px;
+}
+
+.td-opening {
+    min-width: 0;
+    padding-right: 0;
+}
+
+.td-short, .th-short {
+    min-width: 100px;
+}
+
+.td-tiny, .th-tiny {
+    min-width: 20px;
+}
+
+.line-th {
+    font-size: medium;
+    padding-bottom: 0;
+    min-width: 50px;
+    text-align: right;
+}
+
+.button:link, .button:visited, .button:active {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 10px;
+    font-weight: bolder;
+    border-radius: 10px;
+    border: 2px solid darkslategray;
+    background: lightskyblue;
+    color: darkslategray;
+}
+
+.button:hover {
+    border: 2px solid black;
+    background: lightblue;
+    color: black;
+}
+
+#btn-login, #btn-new, #btn-title-action {
+    margin: 0;
+}
+
+#btn-ok {
+    margin-top: 10px;
+}
+
+#btn-title-action {
+    font-size: smaller;
+    padding: 5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 10px;
+}
+
+li {
+    padding-bottom: 10px;
+    vertical-align: top;
+    display: flex;
+    flex-direction: row;
+}
+
+li span {
+    margin-right: 10px ;
+}
+
+.err-msg {
+    padding-top: 10px;
+    color: red;
+}
+
+.ok-msg {
+    padding-top: 10px;
+    color: green;
+}
+
+.err-msg ul, .err-msg ul li  {
+    padding: 0;
+}
+
+form {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.form-no-border {
+    border: 0 none;
+    padding: 5px 0 0 0;
+}
+
+.form-search {
+    border: 0 none;
+    padding: 15px 0 30px 0;
+}
+
+button {
+    margin-right: 5px;
+}
+
+.btn-line {
+    margin-bottom: 0;
+}
+
+li[class$='required'] {
+    font-weight: bold;
+}

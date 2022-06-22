@@ -1,0 +1,39 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Genres{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='genres' level=level %}
+{% endblock %}
+
+{% block content_header %}Genres{% endblock %}
+
+{% block btn_new %}
+    {% if level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'genre_add' %}">
+            <span>New genre</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    <table>
+        <th>Name</th>
+        {% for genre in genre_list %}
+            <tr>
+                {% include 'includes/genre_list_item.html' with name=genre.name id=genre.id %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

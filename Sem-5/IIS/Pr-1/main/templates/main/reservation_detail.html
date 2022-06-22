@@ -1,0 +1,51 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Reservation detail {{ reservation_detail.id }}{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='reservations' level=level %}
+{% endblock %}
+
+{% block content_header %}Reservation detail {{ reservation_detail.id }}{% endblock %}
+
+{% block main_body %}
+    {% if level == 2 or level == 3 %}
+        <h3>Pouzivatel</h3>
+        <a href="{% url 'user_detail' reservation_detail.profile.id %}">{{ reservation_detail.profile.name }}</a>
+    {% endif %}
+    <h3>Kniha</h3>
+    <a href="{% url 'title_detail' reservation_detail.title_in_library.title.isbn %}">{{ reservation_detail.title_in_library.title.name }}</a>
+    <h3>Datum a cas vytvorenia</h3>
+    <p>{{ reservation_detail.created }}</p>
+    <h3>Kniznica</h3>
+    <a href="{% url 'library_detail' reservation_detail.title_in_library.library.id %}">{{ reservation_detail.title_in_library.library.name }}</a>
+    <h3>Stav</h3>
+    {% if reservation_detail.book == null %}
+        <p>Title is currently unavailable.</p>
+    {% else %}
+        <p>Book is ready for pick-up.</p>
+    {% endif %}
+    {% if level == 0 or level == 2 or level == 3 %}
+        <form class="form-no-border" method="POST" action="">
+            {%  csrf_token %}
+            <button name="cancel_reservation" value="{{ reservation_detail.title_in_library.title.isbn }}&{{ reservation_detail.title_in_library.library.id }}">Zrusit rezervaciu</button>
+            {% if reservation_detail.ready %}
+                <button name="to_borrowing" value="{{ reservation_detail.title_in_library.title.isbn }}&{{ reservation_detail.title_in_library.library.id }}">To borrowing</button>
+            {% endif %}
+        </form>
+    {% endif %}
+    <a id="back-to-list" class="button" href="{% url 'reservation_list' %}">
+        <span>Back to reservations</span>
+    </a>
+{% endblock %}

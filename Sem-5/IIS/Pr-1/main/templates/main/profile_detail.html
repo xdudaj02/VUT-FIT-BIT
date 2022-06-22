@@ -1,0 +1,52 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='profile' level=level %}
+{% endblock %}
+
+{% block content_header %}Profile{% endblock %}
+
+{% block btn_new %}
+    {% if level == 0 or level == 1 or level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'profile_edit' %}">
+            <span>Edit</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    {% if level == 3 %}
+        <h3>admin</h3>
+    {% endif %}
+    <table>
+        <tr>
+            <th class="line-th">username:</th>
+            <td>{{ profile.username }}</td>
+        </tr>
+        <tr>
+            <th class="line-th">name:</th>
+            <td>{{ profile.name }}</td>
+        </tr>
+        <tr>
+            <th class="line-th">email:</th>
+            <td>{{ profile.email }}</td>
+        </tr>
+    </table>
+
+    {% for message in messages %}
+        <p class="err-msg">{{ message }}</p>
+    {% endfor %}
+{% endblock %}

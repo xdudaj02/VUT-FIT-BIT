@@ -1,0 +1,66 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='reservations' level=level %}
+{% endblock %}
+
+{% block content_header %}Reservations{% endblock %}
+
+{% block btn_new %}
+    {% if level == 2 or level == 3 %}
+        <a id="btn-new" class="button" href="{% url 'reservation_add' %}">
+            <span>New reservation</span>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main_body %}
+    {% if level != 0 %}
+        <form method="post" action="">
+            {%  csrf_token %}
+            <ul>
+                {% for field in reservation_form %}
+                    <li><span>{{ field.label }}: </span><span>{{ field }}</span></li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="Search">
+        </form>
+        <form class="form-search" method="POST" action="">
+            {%  csrf_token %}
+            <button name="action" value="show_all">Show all</button>
+        </form>
+    {% endif %}
+
+    <table>
+        {% if reservation_list %}
+            <th>ID</th>
+            <th>Created on</th>
+            {% if level == 2 or level == 3 %}
+                <th class="th-short">User</th>
+            {% endif %}
+            <th>State</th>
+            {% for reservation in reservation_list %}
+                <tr>
+                    {% if reservation.book is None %}
+                        {% include 'includes/reservation_list_item.html' with id=reservation.id ready='unavailable' created=reservation.created isbn=reservation.title_in_library.title.isbn library_id=reservation.title_in_library.library.id user_name=reservation.profile.name user_id=reservation.profile.id level=level %}
+                    {% else %}
+                        {% include 'includes/reservation_list_item.html' with id=reservation.id ready='ready' created=reservation.created isbn=reservation.title_in_library.title.isbn library_id=reservation.title_in_library.library.id user_name=reservation.profile.name user_id=reservation.profile.id level=level %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+{% endblock %}

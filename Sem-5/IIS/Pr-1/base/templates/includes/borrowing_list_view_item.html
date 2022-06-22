@@ -1,0 +1,6 @@
+{# expects id, borrowed_from, borrowed_to #}
+<td id="main-td">
+    <a class="borrowing_item" href="{% url 'borrowing_detail' id %}">B{{ id|stringformat:"04d" }}</a>
+</td>
+<td class="td-short">{{ borrowed_from|date:"d.m.Y" }}</td>
+<td class="td-short">{{ borrowed_to|date:"d.m.Y" }}</td>

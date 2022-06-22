@@ -1,0 +1,5 @@
+{# expects id, name, surname, born, died #}
+<td id="main-td">
+    <a class="author_item" href="{% url 'author_detail' id %}">{{ name }} {{ surname }}</a>
+</td>
+<td>{{ born }} - {{ died }}</td>

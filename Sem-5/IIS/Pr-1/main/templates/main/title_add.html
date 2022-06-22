@@ -1,0 +1,43 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}Add Title{% endblock %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='titles' level=level %}
+{% endblock %}
+
+{% block content_header %}Add Title{% endblock %}
+
+{% block main_body %}
+    <form method="post" action="{% url 'title_add' %}">
+        {%  csrf_token %}
+        <ul>
+            {% for field in title_form %}
+                <li class="{% if field.field.required %}required{% endif %}">
+                    <span>{{ field.label }}: </span><span>{{ field }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="OK">
+    </form>
+    {% for error in title_form.errors.values %}
+        <li><span class="err-msg">{{ error }}</span></li>
+    {% endfor %}
+    {% for message in messages %}
+        <p class="ok-msg">{{ message }}</p>
+    {% endfor %}
+    <a id="back-to-list" class="button" href="{% url 'title_list' %}">
+        <span>Back to titles</span>
+    </a>
+{% endblock %}

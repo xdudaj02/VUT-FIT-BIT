@@ -1,0 +1,55 @@
+body {
+    background: #fff2e6;
+}
+
+header {
+    background: #ff881a;
+}
+
+nav {
+    background: #ffb066;
+}
+
+.nav-item:link, .nav-item:visited, .nav-item:active {
+    background: #ffb066;
+}
+
+.nav-item:hover {
+    background: #ffca99;
+}
+
+#nav-selected:link, #nav-selected:visited, #nav-selected:active, #nav-selected:hover {
+    background: #ffca99;
+}
+
+footer {
+    background: #ffca99;
+}
+
+h1 {
+    margin: 0;
+    padding-bottom: 5px;
+    color: black;
+    font-family: Ubuntu, sans-serif;
+    text-shadow:
+            1px 1px 0 #ffca99,
+            1px -1px 0 #ffca99,
+            -1px 1px 0 #ffca99,
+            -1px -1px 0 #ffca99,
+            0 1px 0 #ffca99,
+            0 -1px 0 #ffca99,
+            1px 0 0 #ffca99,
+            -1px 0 0 #ffca99;
+}
+
+h2 {
+    color: #663300;
+}
+
+.button:link, .button:visited, .button:active {
+    background: #ffb066;
+}
+
+.button:hover {
+    background: #ffca99;
+}

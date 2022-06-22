@@ -1,0 +1,7 @@
+{% load static %}
+
+{% if level == 2 or level == 3 %}
+        <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+    {% elif level == 1 %}
+        <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+    {% endif %}

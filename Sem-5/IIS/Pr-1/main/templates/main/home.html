@@ -1,0 +1,32 @@
+{%  extends 'base/index.html' %}
+{% load static %}
+
+{% block css_src %}
+    {% if user.is_authenticated %}
+        {% if level == 2 or level == 3 %}
+            <link rel="stylesheet" href="{% static 'base/styles/employee.css' %}">
+        {% elif level == 1 %}
+            <link rel="stylesheet" href="{% static 'base/styles/distributor.css' %}">
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block navigation %}
+    {% include 'includes/navbar_wrapper.html' with selected='home' level=level %}
+{% endblock %}
+
+{% block content_header %}Home{% endblock %}
+{% block main_body %}
+    <p>Welcome to IIS Knihovna.</p>
+    {% if level == 0 %}
+        <br>
+        {% if reservation_ready_count > 0 %}
+            <p>You have {{ reservation_ready_count }} reservations ready.</p>
+        {% endif %}
+        {% if next_borrowing is not None %}
+            <p>Your next deadline for returning a borrowing is {{ next_borrowing.borrowed_to|date:"d.m.Y" }}.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

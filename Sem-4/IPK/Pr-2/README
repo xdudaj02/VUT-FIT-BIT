@@ -1,0 +1,29 @@
+ipk-sniffer, version 1.0
+Jakub Duda, xdudaj02
+
+ipk-sniffer je program urceny na sniffovanie TCP, UDP, ARP alebo ICMP pakiet na vybranom sietovom rozhrani. Program na standardny vystup vypise vysniffovany paket specifikovany prepinacmi prikazoveho riadku.
+
+pred prvym spustenim je potrebne spustit prikaz 
+	$ cmake .
+
+projekt je mozne prelozit prikazom
+	$ make
+
+spustenie programu pre vypis dostupnych sietovych rozhrani
+	$ ./ipk-sniffer
+	$ ./ipk-sniffer -i
+	$ ./ipk-sniffer --interface
+
+spustenie programu pre sniffovanie pakiet
+	$ ./ipk-sniffer -i|--interface interface_name [nepovinne argumenty]
+
+nepovinne argumenty
+	-p port_number	port_number je cislo portu pre sniffovanie
+	-n pckt_amount	pckt_amount je pocet pakiet ktore budu vysniffovane
+	-t | --tcp	pri pouziti program sniffuje tcp pakety
+	-u | --udp	pri pouziti program sniffuje udp pakety
+	--arp 		pri pouziti program sniffuje arp pakety
+	--icmp		pri pouziti program sniffuje icmp pakety
+
+Ak nie je uvedeny ani jeden argument urcujuci typ pakiet su sniffovane vsetky styri podporovane typy.
+Argumenty a ich poradie je mozne lubovolne kombinovat.
