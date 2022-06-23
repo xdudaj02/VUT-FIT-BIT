@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="10"
+   height="12"
+   viewBox="0 0 10 12"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 5,-6.9187908e-6 C 4.7916666,0.00273593 4.5833334,0.14092736 4.5833334,0.42856301 V 3.74998 L 0,5.9999721 H 10 L 5.4166666,3.74998 V 0.42856301 C 5.4166666,0.12997055 5.2083334,-0.00274608 5,-6.9187908e-6 Z m 0.8333334,0 V 2.5714127 H 9.166666 L 7.5,1.2857029 9.166666,-6.9187908e-6 Z M 0,6.857112 V 7.7142518 H 0.8333334 V 11.142812 H 0 v 0.85714 h 10 v -0.85714 H 9.166666 V 7.7142518 H 10 V 6.857112 Z m 5,1.2857098 c 0.8333334,0 1.6666666,0.4285699 1.6666666,1.2857098 V 11.142812 H 3.3333334 V 9.4285316 C 3.3333334,8.5713917 4.1666666,8.1428218 5,8.1428218 Z"
+     id="town-hall"
+     style="stroke-width:0.845153" />
+</svg>

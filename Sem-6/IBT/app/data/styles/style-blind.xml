@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Definition of styling rules used for completely blind map generation.
+
+    author  Jakub Duda, xdudaj02
+    file    style-blind.xml
+    date    8.5.2022
+-->
+<Map srs="+init=epsg:3857" background-color="rgb(255, 255, 255)">
+    <Style name="town_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="15" fill="black" halo-fill="white" halo-radius="3"
+                            dx="10" placement="point" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement dx="-10"/>
+                <Placement dx="0" dy="10"/>
+                <Placement dx="0" dy="-10"/>
+                <Placement dx="10" dy="0" size="12" wrap-width="120"/>
+                <Placement dx="-10" dy="0" size="12" wrap-width="120"/>
+                <Placement dx="0" dy="-10" size="12" wrap-width="120"/>
+                <Placement dx="0" dy="10" size="12" wrap-width="120"/>
+                <Placement dx="10" dy="0" size="10" wrap-width="100"/>
+                <Placement dx="-10" dy="0" size="10" wrap-width="100"/>
+                <Placement dx="0" dy="-10" size="10" wrap-width="100"/>
+                <Placement dx="0" dy="10" size="10" wrap-width="100"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="town">
+        <Rule>
+            <PointSymbolizer file="../symbols//place/town.svg" transform="scale(1)"/>
+        </Rule>
+    </Style>
+    <Style name="city_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="20" fill="black" halo-fill="white" halo-radius="3"
+                            dx="10" placement="point" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement dx="-10"/>
+                <Placement dx="0" dy="10"/>
+                <Placement dx="0" dy="-10"/>
+                <Placement dx="10" dy="0" size="16"/>
+                <Placement dx="-10" dy="0" size="16"/>
+                <Placement dx="0" dy="-10" size="16"/>
+                <Placement dx="0" dy="10" size="16"/>
+                <Placement dx="10" dy="0" size="12" wrap-width="120"/>
+                <Placement dx="-10" dy="0" size="12" wrap-width="120"/>
+                <Placement dx="0" dy="-10" size="12" wrap-width="120"/>
+                <Placement dx="0" dy="10" size="12" wrap-width="120"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="city">
+        <Rule>
+            <PointSymbolizer file="../symbols//place/city.svg" transform="scale(1)"/>
+        </Rule>
+    </Style>
+    <Style name="capital_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="25" fill="black" halo-fill="white" halo-radius="3"
+                            dx="10" placement="point" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement size="22"/>
+                <Placement size="20" wrap-width="120"/>
+                <Placement size="18" wrap-width="120"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="capital">
+        <Rule>
+            <PointSymbolizer file="../symbols//place/capital.svg" transform="scale(1)"/>
+        </Rule>
+    </Style>
+
+    <Style name="country">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="5"/>
+        </Rule>
+    </Style>
+    <Style name="country_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="50" fill="black" halo-fill="white" halo-radius="3">
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="district">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+        </Rule>
+    </Style>
+    <Style name="district_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Italic" size="20" fill="black" halo-fill="white" halo-radius="3"
+                            placement="interior" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement size="16" wrap-width="120"/>
+                <Placement size="12" wrap-width="100"/>
+                <Placement size="10"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="region">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="3"/>
+        </Rule>
+    </Style>
+    <Style name="region_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Italic" size="30" fill="black" halo-fill="white" halo-radius="3"
+                            placement="interior" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement size="25"/>
+                <Placement size="20" wrap-width="120"/>
+                <Placement size="15" wrap-width="100"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+
+    <Style name="hydro_area">
+        <Rule>
+            <PolygonSymbolizer fill="rgb(255, 255, 255)"/>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+        </Rule>
+    </Style>
+    <Style name="hydro_area_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Italic" size="20" fill="black" halo-fill="white" halo-radius="3"
+                            placement="interior" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement wrap-width="120"/>
+                <Placement wrap-width="100"/>
+                <Placement wrap-width="300"/>
+                <Placement size="18" wrap-width="160"/>
+                <Placement size="16" wrap-width="100"/>
+                <Placement size="12" wrap-width="140"/>
+                <Placement size="12" wrap-width="90"/>
+                <Placement size="10" wrap-width="125"/>
+                <Placement size="10" wrap-width="85"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="hydro_way_bottom">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(255,255,255)" stroke-width="4"/>
+        </Rule>
+    </Style>
+    <Style name="hydro_way_top">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+        </Rule>
+    </Style>
+    <Style name="hydro_way_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Italic" size="18" fill="black" halo-fill="white" halo-radius="3"
+                            placement="line">
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+
+    <Style name="natpark">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+        </Rule>
+    </Style>
+    <Style name="natpark_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="25" fill="black" halo-fill="white" halo-radius="3"
+                            placement="interior" wrap-width="200" wrap-before="true" placement-type="list">
+                <Placement wrap-width="120"/>
+                <Placement wrap-width="100"/>
+                <Placement wrap-width="300"/>
+                <Placement size="22" wrap-width="250"/>
+                <Placement size="22" wrap-width="150"/>
+                <Placement size="20" wrap-width="200"/>
+                <Placement size="20" wrap-width="150"/>
+                <Placement size="16" wrap-width="160"/>
+                <Placement size="16" wrap-width="120"/>
+                <Placement size="12" wrap-width="120"/>
+                <Placement size="12" wrap-width="85"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+    <Style name="geomorph">
+        <Rule>
+            <LineSymbolizer simplify="10" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+        </Rule>
+    </Style>
+    <Style name="geomorph_name">
+        <Rule>
+             <TextSymbolizer minimum-padding="2" margin="2" face-name="Merriweather Regular" size="20" fill="black" halo-fill="white" halo-radius="3"
+                            placement="interior" wrap-width="150" wrap-before="true" placement-type="list">
+                <Placement wrap-width="120"/>
+                <Placement wrap-width="100"/>
+                <Placement wrap-width="300"/>
+                <Placement size="18" wrap-width="160"/>
+                <Placement size="16" wrap-width="100"/>
+                <Placement size="12" wrap-width="140"/>
+                <Placement size="12" wrap-width="90"/>
+                <Placement size="10" wrap-width="125"/>
+                <Placement size="10" wrap-width="85"/>
+                <Placement size="15" placement="point" wrap-width="150" />
+                <Placement size="15" placement="point" wrap-width="120" />
+                <Placement size="15" placement="point" wrap-width="100" />
+                <Placement size="12" wrap-width="140"/>
+                <Placement size="12" wrap-width="100"/>
+                <Placement size="10" wrap-width="130"/>
+                <Placement size="10" wrap-width="90"/>
+                <Placement size="8" wrap-width="125"/>
+                <Placement size="8" wrap-width="85"/>
+                [name]
+            </TextSymbolizer>
+        </Rule>
+    </Style>
+</Map>

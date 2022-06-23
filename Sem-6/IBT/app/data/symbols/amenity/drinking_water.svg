@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="7"
+   height="8"
+   viewBox="0 0 7 8"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 0,3.4285714 0.875,8 h 2.9166667 l 0.875,-4.5714286 z M 0.68833337,4 H 3.9725 L 3.7566667,5.1428571 H 0.90416663 M 1.75,2.8571429 C 1.75,1.7142857 2.3333333,1.1428571 3.5,1.1428571 H 4.0833333 V 0.57142857 H 3.5 C 2.9166667,0.57142857 2.9166667,0 3.5,0 h 1.75 c 0.5833333,0 0.5833333,0.57142857 0,0.57142857 H 4.6666667 V 1.1428571 H 7 V 2 H 3.5 C 2.867235,1.99492 2.625,2.2757009 2.625,2.8571429 Z"
+     id="drinking-water"
+     style="fill:#0073e6;fill-opacity:1;stroke-width:0.577351" />
+</svg>

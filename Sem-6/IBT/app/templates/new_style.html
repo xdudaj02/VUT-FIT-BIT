@@ -1,0 +1,1298 @@
+<!--
+    View for style set definition page.
+
+    author  Jakub Duda, xdudaj02
+    file    new_style.html
+    date    8.5.2022
+-->
+
+{% extends "layout.html" %}
+{% block include %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/populate.js@1.2.2/populate.min.js"></script>
+{% endblock %}
+{% block content %}
+    <h2>Nová štýlová sada</h2>
+    <div class="big-form">
+        <div class="form-full-width-item">
+            <i class="fas fa-question-circle icon modal-icon icon-big" id="main" title="Nápoveda"></i>
+            <i class="fas fa-redo icon icon-big" title="Resetovať" id="reset_form"></i>
+        </div>
+        <div class="form-column-wrapper">
+            <div class="preview-column">
+                <div class="preview-column-item" id="preview_column_name">
+                    <div class="help-heading">
+                        <h4>Náhľad</h4>
+                        <i class="fas fa-question-circle icon modal-icon" id="preview" title="Nápoveda"></i>
+                        <i class="divider"></i>
+                        <i class="fas fa-map-marked icon modal-icon icon-big" id="map" title="Zmeniť územie"></i>
+                    </div>
+                </div>
+                <div class="preview-wrapper" id="preview_wrapper">
+                    <div class="preview-body" id="preview_body">
+                        <img src="data:image/png;base64,{{ data }}" alt="" id="preview-img" class="preview-img">
+                        <div class="preview-load hidden" id="preview-load">
+                            <span>Načítava sa...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-column-item" id="preview_column_import">
+                    <div class="help-heading">
+                        <h4>Import</h4>
+                        <i class="fas fa-question-circle icon modal-icon" id="import" title="Nápoveda"></i>
+                    </div>
+                    <form action="" id="form_import">
+                        <div class="row-wrapper">
+                            <input type="radio" name="import_type" id="import_user" value="user" checked/>
+                            <label for="import_user">Vlastná</label>
+                            <input type="radio" name="import_type" id="import_template" value="template"/>
+                            <label for="import_template">Šablóna</label>
+                        </div>
+                        <div class="row-wrapper">
+                            <div id="import_user_option" class="row-wrapper w-250">
+                                <input type="file" id="user_style_input" name="user_style_input" accept=".json">
+                                <label for="user_style_input" class="file-input">
+                                    <i class="fa fa-file-import" aria-hidden="true"></i>
+                                </label>
+                                <p class="last" id="user_style_file">Vložte JSON</p>
+                            </div>
+                            <div id="import_template_option" class="w-250 collapsed">
+                                <label for="template_style_input">Šablóna: </label>
+                                <select id="template_style_input" name="template_style_input">
+                                    <option value="basic">Základná</option>
+                                    <option value="hike">Turistická</option>
+                                    <option value="bike">Cyklistická</option>
+                                    <option value="ski">Lyžiarska</option>
+                                    <option value="car">Cestná</option>
+                                    <option value="city">Mestská</option>
+                                    <option value="rail">Železničná</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row-wrapper">
+                            <button type="submit" class="custom-button">Načítať</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="preview-column-item" id="preview_column_zoom">
+                    <div class="help-heading">
+                        <h4>Mierka</h4>
+                        <i class="fas fa-question-circle icon modal-icon" id="zoom" title="Nápoveda"></i>
+                    </div>
+                    <form action="" id="form_zoom">
+                        <div id="zoom_option">
+                            <label for="zoom_level">Úroveň priblíženia: </label>
+                            <select id="zoom_level" name="zoom_level" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                            <p id="zoom_level_desc_1" class="detail-desc">
+                                väčšia ako 1 : 22 000 000
+                            </p>
+                            <p id="zoom_level_desc_2" class="detail-desc hidden">
+                                medzi 1 : 22 000 000 a 1 : 8 000 000
+                            </p>
+                            <p id="zoom_level_desc_3" class="detail-desc hidden">
+                                medzi 1 : 8 000 000 a 1 : 3 400 000
+                            </p>
+                            <p id="zoom_level_desc_4" class="detail-desc hidden">
+                                medzi 1 : 3 400 000 a 1 : 1 350 000
+                            </p>
+                            <p id="zoom_level_desc_5" class="detail-desc hidden">
+                                medzi 1 : 1 350 000 a 1 : 340 000
+                            </p>
+                            <p id="zoom_level_desc_6" class="detail-desc hidden">
+                                medzi 1 : 340 000 a 1 : 50 000
+                            </p>
+                            <p id="zoom_level_desc_7" class="detail-desc hidden">
+                                medzi 1 : 50 000 a 1 : 17 000
+                            </p>
+                            <p id="zoom_level_desc_8" class="detail-desc hidden">
+                                medzi 1 : 17 000 a 1 : 3 350
+                            </p>
+                            <p id="zoom_level_desc_9" class="detail-desc hidden">
+                                menšia ako 1 : 3 350
+                            </p>
+                        </div>
+                        <div class="row-wrapper">
+                            <button type="submit" class="custom-button">Prispôsobiť</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="options-column" id="options_column">
+                <form action="" id="form">
+                    {% for section in options.options %}
+                        <div class="form-section form-section-collapsable">
+                            <div class="form-section-heading" id="heading_{{section.id}}">
+                                <div class="help-heading">
+                                    <input class="toggle" type="checkbox" name="layer" id="toggle_{{section.id}}" value="{{section.id}}"/>
+                                    <label class="toggle-label" for="toggle_{{section.id}}"></label>
+                                    <h4>
+                                        <label for="toggle_{{section.id}}">{{section.name}}</label>
+                                    </h4>
+{#                                            <i class="fas fa-question-circle icon modal-icon" id="" title="Nápoveda"></i>#}
+                                    <p class="divider"></p>
+                                    <i class="fas fa-chevron-circle-down icon icon-big" id="button_{{section.id}}" title="Rozbaliť"></i>
+                                </div>
+                            </div>
+                            <div class="form-section-body-col-wrapper form-section-body-collapsable collapsed" id="collapsable_{{section.id}}">
+                                {% for option in section.options %}
+                                    <div class="form-section-col">
+                                        <h4>{{option.name}}</h4>
+                                    {% if option.type == "radio" %}
+                                        {% for value in option.options %}
+                                            <input type="radio" id="{{option.id}}_{{value.id}}" name="{{section.id}}_{{option.id}}" value="{{value.id}}" {% if value.checked %}checked{% endif %} disabled>
+                                            <label for="{{option.id}}_{{value.id}}">{{value.name}}</label><br>
+                                        {% endfor %}
+                                    {% else %}
+                                        <label for="{{section.id}}_{{option.id}}">Stupeň detailu: </label>
+                                        <select id="{{section.id}}_{{option.id}}" name="{{section.id}}_{{option.id}}" disabled>
+                                            {% for desc in option.descriptions %}
+                                                <option value="{{loop.index}}">{{loop.index}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% for desc in option.descriptions %}
+                                            <p id="{{section.id}}_{{option.id}}_desc_{{loop.index}}" class="detail-desc {% if loop.index > 1 %}hidden{% endif %}">
+                                                {{desc}}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <div class="form-section-col dummy">
+                                </div>
+                                <div class="form-section-col dummy">
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+        <div class="form-full-width-item">
+            <div class="form-submit help-heading" id="form-style">
+                <input id="save" type="submit" class="modal-icon" value="Uložiť"/>
+                <input id="download-style" type="submit" value="Stiahnuť"/>
+                <i class="fas fa-question-circle icon modal-icon" id="submit" title="Nápoveda"></i>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal" id="modal_main">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Štýlová sada</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Vytvorte si svoj vlastný typ mapy. Zvoľte si prvky, ktoré sa majú vykresliť
+                    na mape a vyberte si ich detail vyobrazenia.
+                </p>
+                <h4>Selekcia prvkov</h4>
+                <p class="small">
+                    Pravú časť nástroja tvorí selekcia prvkov. Prvky mapy sú rozdelené do deväť
+                    skupín, kde každú skupinu reprezentuje jedna rozbaľovacia sekcia. Sekciu sú najprv vypnuté
+                    a zbalené. Pre aktivovanie sekcie je potrebné prepnúť spínač nachádzajúci sa naľavo od jej
+                    názvu. Aktivovaním sekcie alebo stlačením tlačidla na pravo od jej názvu sa sekcia rozbalí.
+                    Pri uložení štýlovej sady sú vypnuté sekcie a nastavenie ich prvkov ignorované.
+                </p>
+                <p class="small">
+                    Každá sekcia obsahuje nastavenia zobrazenia niektorých prvkov mapy. Väčšina
+                    nastavení spočíva v zvolení úrovne detailu zobrazenia daného prvku. Na začiatku je pre
+                    každý prvok nastavený jeho detail na <b>1</b>, čo značí, že prvok nie je vykreslený alebo
+                    nie je vykreslený odlišne od základného prvku tohto typu. Pod voľbou detailu zobrazenia sa
+                    nachádza text, ktorý vysvetľuje práve zvolenú úroveň.
+                </p>
+                <p class="small">
+                    Stlačením tlačidla <i class="fas fa-redo help-button"></i> je možné všetky
+                    nastavenia vynulovať a začat od znova.<br>
+                    Stlačením tlačidla <i>Uložiť štýlovú sadu</i> sa stiahne súbor vo formáte JSON, ktorý
+                    definuje vami vytvorenú štýlovú sadu a je možné ho použiť pri tvorbe klasickej mapy.
+                </p>
+                <h3>Náhľad</h3>
+                <p class="small">
+                    V ľavej časti nástroja sa nachádza náhľad. Náhľad na malom území ukazuje ako by vyzerala
+                    mapa s použitím tejto štýlovej sady. Náhľad sa automaticky aktualizuje s každou zmenou.
+                </p>
+                <p class="small">
+                    Náhľad zobrazuje územie mestskej časti <i>Královo Pole v Brne</i>.<br>
+                    Stlačením tlačidla <i class="fas fa-map-marked help-button"></i> je možné zmeniť územie
+                    zobrazené v náhľade. Územie je možné nastaviť pomocou ohraničenia zvoleného územia
+                    ohraničujúcim obdĺžnikom na mape alebo zadaním súradníc a stlačením tlačidla <i>Potvrdiť</i>.
+                </p>
+                <p class="small">
+                    Zvolením väčšieho územia a veľkého množstva prvkov s vysokou úrovňou detailu sa predlžuje
+                    čas generovania náhľadu, čo narušuje tvorbu štýlovej sady, preto sa neodporúča pri tvorbe
+                    detailných sád nastavovať veľké územie náhľadu.
+                </p>
+                <h3>Import</h3>
+                <p class="small">
+                    Nástroj umožňuje importovať už existujúci štýl a následne ho upravovať a znovu uložiť.
+                    Možnosť importu sa nachádza na ľavom paneli a umožňuje prepínať medzi vložením vlastnej
+                    alebo základnej sady.
+                </p>
+                <p class="small">
+                    Vlastnú sadu je možné importovať vložením súboru vo formáte JSON, obsahujúceho definíciu
+                    štýlovej sady a stlačením tlačidla <i>Načítať</i>.
+                </p>
+                <p class="small">
+                    Nástroj tiež umožňuje importovať jednu z existujúcich základných sád, tzv. šablón.
+                    Pri prepnutí na možnosť <i>Šablóna</i> sa zobrazí možnosť zvolenia základnej sady.
+                </p>
+                <h3>Mierka</h3>
+                <p class="small">
+                    Pri generovaní mapy  aplikácia interne používa 9 úrovní priblíženia, ktoré sú vypočítané
+                    z mierky mapy. Na základe týchto úrovní potom aplikácia vyberá jednotlivé prvky, ktoré sa
+                    majú vykresliť. Tento algoritmus zabezpečuje rovnosť medzi úrovnou priblíženia a úrovňou
+                    detailu, t.j. že pri mapách s menším priblížením sa nevykreslí príliš veľký počet prvkov,
+                    čo by spôsobilo vytvorenie neprehľadnej mapy. Tento algoritmus je využívaný len pri použití
+                    jednej zo základných sád a pri použití vlastnej sady je preskočený, čím dáva používateľom
+                    slobodu tvorby akejkoľvek mapy.
+                </p>
+                <p class="small">
+                    Na ľavom paneli je preto tiež možnosť prispôsobenia štýlu na ľubovoľnú úroveň priblíženia,
+                    ktoré sú definované rozpätím mierky mapy. Najmenšie priblíženie a detail je na úrovni
+                    <i>1</i> a naopak najväčšie na úrovni <i>9</i>.
+                </p>
+                <h3>Dokončenie</h3>
+                <p class="small">
+                    Po stlačení tlačidla <i>Uložiť</i> sa vaša sada uloží a budete ju môcť používať na tvorbu máp až dokým
+                    nezatvoríte prehliadač. V nástroji na tvorbu mapy sa vám automaticky ponúknu všetky uložené sady.
+                    Ak však máte v pláne sadu neskôr upravovať, je potrebné si ju stiahnuť.
+                </p>
+                <p class="small">
+                    Po stlačení tlačidla <i>Stiahnuť</i> sa vám zobrazí ponuka na stiahnutie vašej sady.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_preview">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Náhľad</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    V ľavej časti nástroja sa nachádza náhľad. Náhľad na malom území ukazuje ako by vyzerala
+                    mapa s použitím tejto štýlovej sady. Náhľad sa automaticky aktualizuje s každou zmenou.
+                </p>
+                <p class="small">
+                    Náhľad zobrazuje územie mestskej časti <i>Královo Pole v Brne</i>.<br>
+                    Stlačením tlačidla <i class="fas fa-map-marked help-button"></i> je možné zmeniť územie
+                    zobrazené v náhľade. Územie je možné nastaviť pomocou ohraničenia zvoleného územia
+                    ohraničujúcim obdĺžnikom na mape alebo zadaním súradníc a stlačením tlačidla <i>Potvrdiť</i>.
+                </p>
+                <p class="small">
+                    Zvolením väčšieho územia a veľkého množstva prvkov s vysokou úrovňou detailu sa predlžuje
+                    čas generovania náhľadu, čo narušuje tvorbu štýlovej sady, preto sa neodporúča pri tvorbe
+                    detailných sád nastavovať veľké územie náhľadu.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_import">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Import</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Nástroj umožňuje importovať už existujúci štýl a následne ho upravovať a znovu uložiť.
+                    Možnosť importu sa nachádza na ľavom paneli a umožňuje prepínať medzi vložením vlastnej
+                    alebo základnej sady.
+                </p>
+                <p class="small">
+                    Vlastnú sadu je možné importovať vložením súboru vo formáte JSON, obsahujúceho definíciu
+                    štýlovej sady a stlačením tlačidla <i>Načítať</i>.
+                </p>
+                <p class="small">
+                    Nástroj tiež umožňuje importovať jednu z existujúcich základných sád, tzv. šablón.
+                    Pri prepnutí na možnosť <i>Šablóna</i> sa zobrazí možnosť zvolenia základnej sady.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_zoom">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Mierka</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Pri generovaní mapy  aplikácia interne používa 9 úrovní priblíženia, ktoré sú vypočítané
+                    z mierky mapy. Na základe týchto úrovní potom aplikácia vyberá jednotlivé prvky, ktoré sa
+                    majú vykresliť. Tento algoritmus zabezpečuje rovnosť medzi úrovnou priblíženia a úrovňou
+                    detailu, t.j. že pri mapách s menším priblížením sa nevykreslí príliš veľký počet prvkov,
+                    čo by spôsobilo vytvorenie neprehľadnej mapy. Tento algoritmus je využívaný len pri použití
+                    jednej zo základných sád a pri použití vlastnej sady je preskočený, čím dáva používateľom
+                    slobodu tvorby akejkoľvek mapy.
+                </p>
+                <p class="small">
+                    Na ľavom paneli je preto tiež možnosť prispôsobenia štýlu na ľubovoľnú úroveň priblíženia,
+                    ktoré sú definované rozpätím mierky mapy. Najmenšie priblíženie a detail je na úrovni
+                    <i>1</i> a naopak najväčšie na úrovni <i>9</i>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_submit">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Dokončenie</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Po stlačení tlačidla <i>Uložiť</i> sa vaša sada uloží a budete ju môcť používať na tvorbu máp až dokým
+                    nezatvoríte prehliadač. V nástroji na tvorbu mapy sa vám automaticky ponúknu všetky uložené sady.
+                    Ak však máte v pláne sadu neskôr upravovať, je potrebné si ju stiahnuť.
+                </p>
+                <p class="small">
+                    Po stlačení tlačidla <i>Stiahnuť</i> sa vám zobrazí ponuka na stiahnutie vašej sady.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_map">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <i class="divider"></i>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <div id="map-wrapper" class="map-wrapper">
+                    <div id="leaflet-map" class="leaflet-map"></div>
+                </div>
+                <div class="row-wrapper" id="coordinates">
+                    <div class="row-item">
+                        <p class="last">Súradnice: </p>
+                    </div>
+                    <input type="number" id="area_left" name="area_left" placeholder="ľavá" step="0.0001" size="2" value="49.2173" required>
+                    <label for="area_left"></label>
+                    <input type="number" id="area_bottom" name="area_bottom" placeholder="dolná" step="0.0001" size="2" value="16.5863" required>
+                    <label for="area_bottom"></label>
+                    <input type="number" id="area_right" name="area_right" placeholder="pravá" step="0.0001" size="2" value="49.2345" required>
+                    <label for="area_right"></label>
+                    <input type="number" id="area_top" name="area_top" placeholder="horná" step="0.0001" size="2" value="16.6061" required>
+                    <label for="area_top"></label>
+                    <button type="button" class="custom-button" id="set_coordinates">Nastaviť</button>
+                </div>
+                <div class="form-submit" id="form-style">
+                    <input id="set_preview" type="submit" value="Použiť"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_save">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <i class="divider"></i>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <h4>Názov štýlovej sady:</h4>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="text" id="json_name" name="json_name" size="50" value="style" required>
+                        <label for="json_name"></label>
+                    </div>
+                </div>
+                <div class="form-submit" id="form-style">
+                    <input id="save_json" type="submit" value="Uložiť"/>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // map
+        let map = L.map('leaflet-map', {zoomControl: false}).setView({lon: 16.5962, lat: 49.2254}, 14);
+
+        // layers
+        let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+        });
+        osm.addTo(map);
+
+        // zoom and scale controls
+        L.control.scale({imperial: false, metric: true}).addTo(map);
+        L.control.zoom({zoomInTitle: 'Priblížiť', zoomOutTitle: 'Oddialiť'}).addTo(map);
+
+        // items
+        let bounds = map.getBounds()
+        let bbox = L.rectangle([[49.2173, 16.5863], [49.2345, 16.6061]], {fill: false, color: "#ffffff", weight: 2});
+        let bbox_bounds = bbox.getBounds()
+
+        let pointIcon = L.icon({
+            iconUrl: '{{ url_for('static', filename='img/marker.png') }}',
+            iconSize: [10, 10],
+            iconAnchor: [5, 5]
+        });
+
+        let dragIcon = L.icon({
+            iconUrl: '{{ url_for('static', filename='img/drag_marker.svg') }}',
+            iconSize: [20, 20],
+            iconAnchor: [-8, -10]
+        });
+
+        let point_sw = L.marker(bbox_bounds.getSouthWest(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_se = L.marker(bbox_bounds.getSouthEast(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_nw = L.marker(bbox_bounds.getNorthWest(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_ne = L.marker(bbox_bounds.getNorthEast(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_drag = L.marker(bbox_bounds.getNorthWest(), {icon: dragIcon, draggable: true, autoPan: true});
+
+        let shade_left = L.rectangle([bounds.getNorthWest(), [bounds.getSouth(), point_sw.getLatLng().lng]], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_bottom = L.rectangle([point_sw.getLatLng(), [bounds.getSouth(), point_se.getLatLng().lng]], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_right = L.rectangle([[bounds.getNorth(), point_ne.getLatLng().lng], bounds.getSouthEast()], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_top = L.rectangle([[bounds.getNorth(), point_nw.getLatLng().lng], point_ne.getLatLng()], {color: "#000000", weight: 0, domInteractive: false});
+
+        function move_point_drag() {
+            if ((point_ne.getLatLng().lng < point_nw.getLatLng().lng) && (point_sw.getLatLng().lat > point_nw.getLatLng().lat)) {
+                point_drag.setLatLng(point_se.getLatLng());
+            } else if (point_ne.getLatLng().lng < point_nw.getLatLng().lng) {
+                point_drag.setLatLng(point_ne.getLatLng());
+            } else if (point_sw.getLatLng().lat > point_nw.getLatLng().lat) {
+                point_drag.setLatLng(point_sw.getLatLng());
+            } else {
+                point_drag.setLatLng(point_nw.getLatLng());
+            }
+        }
+
+        /**
+         * Sets position of shadow panes.
+         *
+         */
+        function move_shadow_panes() {
+            if ((point_sw.getLatLng().lng > point_se.getLatLng().lng) && (point_nw.getLatLng().lat < point_sw.getLatLng().lat)) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_ne.getLatLng().lng]]);
+                shade_bottom.setBounds([point_ne.getLatLng(), [map.getBounds().getSouth(), point_nw.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_sw.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_se.getLatLng().lng], point_sw.getLatLng()]);
+            } else if (point_sw.getLatLng().lng > point_se.getLatLng().lng) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_se.getLatLng().lng]]);
+                shade_bottom.setBounds([point_se.getLatLng(), [map.getBounds().getSouth(), point_sw.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_nw.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_ne.getLatLng().lng], point_nw.getLatLng()]);
+            }
+            else if (point_nw.getLatLng().lat < point_sw.getLatLng().lat) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_nw.getLatLng().lng]]);
+                shade_bottom.setBounds([point_nw.getLatLng(), [map.getBounds().getSouth(), point_ne.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_se.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_sw.getLatLng().lng], point_se.getLatLng()]);
+            } else {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_sw.getLatLng().lng]]);
+                shade_bottom.setBounds([point_sw.getLatLng(), [map.getBounds().getSouth(), point_se.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_ne.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_nw.getLatLng().lng], point_ne.getLatLng()]);
+            }
+        }
+
+        /**
+         * Sets cursor when dragging.
+         *
+         */
+        function set_cursor_drag() {
+            document.getElementsByClassName('leaflet-marker-icon')[0].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[1].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[2].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[3].removeAttribute('id');
+        }
+
+        /**
+         * Converts GPS latitude coordinate to Mercator coordinate system.
+         *
+         * @param lat   latitude coordinate in WSG84
+         * @returns {number}  coordinate in Mercator coordinate system
+         */
+        function get_mercator_lat(lat) {
+            // latitude to mercator calculation
+            // from: StackExchange, https://gis.stackexchange.com/
+            // on: 25.4.2022
+            // question: How to convert lat long to meters using Mercator projection in C#,
+            //       https://gis.stackexchange.com/questions/15269/how-to-convert-lat-long-to-meters-using-mercator-projection-in-c
+            // question by: Muhammad Hasan Khan, https://gis.stackexchange.com/users/2604/muhammad-hasan-khan
+            // answer by: Hairy, https://gis.stackexchange.com/users/2356/hairy
+            // edited by: Brian Burns, https://gis.stackexchange.com/users/82297/brian-burns
+            return 6378137.0 * (lat / 180.0) * Math.PI;
+        }
+
+        /**
+         * Converts GPS longitude coordinate to Mercator coordinate system.
+         *
+         * @param lon   longitude coordinate in WSG84
+         * @returns {number}  coordinate in Mercator coordinate system
+         */
+        function get_mercator_lon(lon) {
+            // longitude to mercator calculation
+            // from: StackExchange, https://gis.stackexchange.com/
+            // on: 25.4.2022
+            // question: How to convert lat long to meters using Mercator projection in C#,
+            //       https://gis.stackexchange.com/questions/15269/how-to-convert-lat-long-to-meters-using-mercator-projection-in-c
+            // question by: Muhammad Hasan Khan, https://gis.stackexchange.com/users/2604/muhammad-hasan-khan
+            // answer by: Hairy, https://gis.stackexchange.com/users/2356/hairy
+            // edited by: Brian Burns, https://gis.stackexchange.com/users/82297/brian-burns
+            lon = lon / 180.0 * Math.PI;
+            return 6378137.0 * Math.log((Math.sin(lon) + 1) / Math.cos(lon));
+        }
+
+        /**
+         * Adjusts bounding box to fit preview panel size and all other map elements accordingly.
+         *
+         */
+        function adjust_size() {
+            let current_right = parseFloat(document.getElementById('area_right').value);
+            let current_left = parseFloat(document.getElementById('area_left').value);
+            let merc_left = get_mercator_lat(current_left);
+            let merc_top = get_mercator_lon(parseFloat(document.getElementById('area_top').value));
+            let merc_bottom = get_mercator_lon(parseFloat(document.getElementById('area_bottom').value));
+
+            let height_geo = merc_top - merc_bottom;
+            let width_geo = height_geo * 300 / 400;
+            let merc_right = merc_left + width_geo;
+            let latlon_right = merc_right / 6378137.0 / Math.PI * 180.0;
+
+            let diff = (latlon_right - current_right) / 2;
+
+            point_se.setLatLng([parseFloat(document.getElementById('area_bottom').value), current_right + diff]);
+            point_ne.setLatLng([parseFloat(document.getElementById('area_top').value), current_right + diff]);
+            point_sw.setLatLng([parseFloat(document.getElementById('area_bottom').value), current_left - diff]);
+            point_nw.setLatLng([parseFloat(document.getElementById('area_top').value), current_left - diff]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            update_coordinates();
+            move_shadow_panes();
+            map.fitBounds(bbox.getBounds().pad(0.2));
+        }
+
+        /**
+         * Updates coordinates on the status panel under the map, so they match the coordinates of the bounding box.
+         *
+         */
+        function update_coordinates() {
+            let left = Math.min(point_nw.getLatLng().lng, point_ne.getLatLng().lng);
+            let bottom = Math.min(point_sw.getLatLng().lat, point_nw.getLatLng().lat);
+            let right = Math.max(point_se.getLatLng().lng, point_sw.getLatLng().lng);
+            let top = Math.max(point_ne.getLatLng().lat, point_se.getLatLng().lat);
+            document.getElementById('area_left').value = Math.round(left * 10000) / 10000;
+            document.getElementById('area_bottom').value = Math.round(bottom * 10000) / 10000;
+            document.getElementById('area_right').value = Math.round(right * 10000) / 10000;
+            document.getElementById('area_top').value = Math.round(top * 10000) / 10000;
+        }
+
+        /**
+         * Handles the setting of correct resize cursor for each corner of the bounding box.
+         *
+         */
+        function set_cursor_resize() {
+            if ((point_ne.getLatLng().lng < point_nw.getLatLng().lng) && (point_sw.getLatLng().lat > point_nw.getLatLng().lat)) {
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_ne');
+            } else if (point_ne.getLatLng().lng < point_nw.getLatLng().lng) {
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_ne');
+            } else if (point_sw.getLatLng().lat > point_nw.getLatLng().lat) {
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_ne');
+            } else {
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_ne');
+            }
+        }
+
+        /**
+         * Sets bouding box to the default position and accordingly adjusts all other elements on the map.
+         *
+         */
+        function reset_bbox() {
+            bbox.setBounds(map.getBounds().pad(-0.2));
+            point_sw.setLatLng(map.getBounds().pad(-0.2).getSouthWest());
+            point_se.setLatLng(map.getBounds().pad(-0.2).getSouthEast());
+            point_nw.setLatLng(map.getBounds().pad(-0.2).getNorthWest());
+            point_ne.setLatLng(map.getBounds().pad(-0.2).getNorthEast());
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_resize();
+            update_coordinates();
+        }
+
+        point_sw.on('drag', function(e) {
+            point_nw.setLatLng([point_nw.getLatLng().lat, e.latlng.lng]);
+            point_se.setLatLng([e.latlng.lat, point_se.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_se.on('drag', function(e) {
+            point_ne.setLatLng([point_ne.getLatLng().lat, e.latlng.lng]);
+            point_sw.setLatLng([e.latlng.lat, point_sw.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_nw.on('drag', function(e) {
+            point_sw.setLatLng([point_sw.getLatLng().lat, e.latlng.lng]);
+            point_ne.setLatLng([e.latlng.lat, point_ne.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_ne.on('drag', function(e) {
+            point_se.setLatLng([point_se.getLatLng().lat, e.latlng.lng]);
+            point_nw.setLatLng([e.latlng.lat, point_nw.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_sw.on('dragend', function(e) {
+            adjust_size();
+            set_cursor_resize();
+        });
+        point_se.on('dragend', function(e) {
+            adjust_size();
+            set_cursor_resize();
+        });
+        point_nw.on('dragend', function(e) {
+            adjust_size();
+            set_cursor_resize();
+        });
+        point_ne.on('dragend', function(e) {
+            adjust_size();
+            set_cursor_resize();
+        });
+        point_drag.on('drag', function(e) {
+            let width = bbox.getBounds().getEast() - bbox.getBounds().getWest()
+            let height = bbox.getBounds().getSouth() - bbox.getBounds().getNorth()
+            point_nw.setLatLng([e.latlng.lat, e.latlng.lng]);
+            point_sw.setLatLng([e.latlng.lat + height, e.latlng.lng]);
+            point_se.setLatLng([e.latlng.lat + height, e.latlng.lng + width]);
+            point_ne.setLatLng([e.latlng.lat, e.latlng.lng + width]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_shadow_panes();
+            update_coordinates();
+        });
+        map.on('move', function(e) {
+            move_shadow_panes();
+        });
+
+        // bbox layer
+        let bbox_layer = L.layerGroup([shade_left, shade_bottom, shade_right, shade_top, bbox, point_sw, point_se, point_nw, point_ne, point_drag]);
+        bbox_layer.addTo(map);
+        update_coordinates();
+
+        // buttons
+        let bboxButton = L.easyButton({
+            states: [{
+                stateName: 'hide-bbox',
+                icon: 'fa-vector-square',
+                title: 'Skryť výber územia',
+                onClick: function(btn, map) {
+                    bbox_layer.remove();
+                    btn.state('show-bbox');
+                }
+            }, {
+                stateName: 'show-bbox',
+                icon: 'fa-vector-square',
+                title: 'Zobraziť výber územia',
+                onClick: function(btn, map) {
+                    bbox_layer.addTo(map);
+                    reset_bbox();
+                    btn.state('hide-bbox');
+                    adjust_size();
+                }
+            }]
+        });
+
+        let centreButton = L.easyButton({
+            states: [{
+                stateName: 'centre',
+                icon: 'fa-crosshairs',
+                title: 'Vycentrovať',
+                onClick: function(btn, map) {
+                    map.fitBounds(bbox.getBounds().pad(0.2));
+                }
+            }]
+        });
+
+        let actionBar = L.easyBar([
+            bboxButton,
+            centreButton,
+        ]);
+        actionBar.addTo(map);
+
+        /**
+         * Handles setting of bounding box from values in coordinate input fields and adjustment of other map elements.
+         *
+         */
+        function set_coordinates() {
+            let left = parseFloat(document.getElementById('area_left').value);
+            let bottom = parseFloat(document.getElementById('area_bottom').value);
+            let right = parseFloat(document.getElementById('area_right').value);
+            let top = parseFloat(document.getElementById('area_top').value);
+
+            if (isNaN(left) || isNaN(bottom) || isNaN(right) || isNaN(top))
+                return;
+
+            bbox.setBounds([[bottom, left], [top, right]]);
+            point_sw.setLatLng(bbox.getBounds().getSouthWest());
+            point_se.setLatLng(bbox.getBounds().getSouthEast());
+            point_nw.setLatLng(bbox.getBounds().getNorthWest());
+            point_ne.setLatLng(bbox.getBounds().getNorthEast());
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_resize();
+            map.fitBounds(bbox.getBounds().pad(0.2));
+            adjust_size();
+        }
+
+        set_cursor_resize();
+        document.getElementsByClassName('leaflet-interactive')[0].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[1].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[2].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[3].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-control-zoom-in')[0].classList.add('last');
+        document.getElementsByClassName('leaflet-control-zoom-out')[0].classList.add('last');
+
+
+        /**
+         * Loads content of given form into serialized JSON.
+         *
+         * @param form_element  form element that should be collected into a JSON
+         * @returns {string}    serialized JSON representation of given form
+         */
+        function jsonate_form(form_element) {
+            let form_data = new FormData(form_element);
+
+            // convert FormData to JSON (keeping fields with same name)
+            // from: StackOverflow, https://stackoverflow.com/
+            // on: 20.4.2022
+            // question: How to convert FormData (HTML5 object) to JSON,
+            //       https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json
+            // question by: Leonardo Villela, https://stackoverflow.com/users/4032069/leonardo-villela
+            // answer by: Wilt, https://stackoverflow.com/users/1697459/wilt
+            // edited by: Nilpo, https://stackoverflow.com/users/637208/nilpo
+            let dict = {};
+            form_data.forEach((value, key) => {
+                if(!Reflect.has(dict, key)){
+                    dict[key] = value;
+                    return;
+                }
+                if(!Array.isArray(dict[key])){
+                    dict[key] = [dict[key]];
+                }
+                dict[key].push(value);
+            });
+            return JSON.stringify(dict);
+
+        }
+
+        /**
+         * Creates cookie containing style set definition loaded from form settings.
+         *
+         * @returns {boolean}   false to stop form submission
+         */
+        function save_json() {
+            let form = document.getElementById('form');
+            let json = jsonate_form(form);
+            let name = document.getElementById('json_name').value;
+
+            document.cookie = 'mm-style-' + name + '=' + json + ';path=/';
+
+            return false;
+        }
+
+        /**
+         * Downloads JSON file containing style set definition loaded from form settings.
+         *
+         * @returns {boolean}   false to stop form submission
+         */
+        function download_json() {
+            let form = document.getElementById('form');
+            let json = jsonate_form(form);
+
+            let file = new Blob([json], {type: 'application/json'});
+            saveAs(file, document.getElementById('json_name').value + ".json");
+            return false;
+        }
+
+        /**
+         * Displays modal with given id.
+         *
+         * @param id    id of modal
+         */
+        function open_modal(id) {
+            let modal = document.getElementById('modal_' + id);
+            modal.classList.add('modal-displayed');
+            modal.children[0].children[1].scrollTop = 0;
+        }
+
+        /**
+         * Closes all modals.
+         *
+         */
+        function close_modals() {
+            let modals = document.getElementsByClassName('modal-displayed');
+                for (let x of modals) {
+                    x.classList.remove('modal-displayed');
+                }
+        }
+
+        /**
+         * Hide content of given section.
+         *
+         * @param id    section id
+         */
+        function collapse(id) {
+            let collapsable = document.getElementById('collapsable_' + id);
+            collapsable.classList.add('collapsed');
+            collapsable.classList.remove('displayed');
+            let button = document.getElementById('button_' + id);
+            button.setAttribute('title', 'Rozbaliť');
+            button.classList.remove('fa-chevron-circle-up');
+            button.classList.add('fa-chevron-circle-down');
+        }
+
+        /**
+         * Show content of given section.
+         *
+         * @param id    section id
+         */
+        function un_collapse(id) {
+            let collapsable = document.getElementById('collapsable_' + id);
+            collapsable.classList.add('displayed');
+            collapsable.classList.remove('collapsed');
+            let button = document.getElementById('button_' + id);
+            button.setAttribute('title', 'Zbaliť');
+            button.classList.remove('fa-chevron-circle-down');
+            button.classList.add('fa-chevron-circle-up');
+        }
+
+        /**
+         * Handles activation and deactivation of sections.
+         *
+         * @param id    section id
+         * @param is_preview    whether to generate preview
+         */
+        function layer_change(id, is_preview) {
+            let toggle = document.getElementById('toggle_' + id);
+            let collapsable = document.getElementById('collapsable_' + id);
+            let inputs = collapsable.querySelectorAll('input, select');
+            if (toggle.checked) {
+                for (let x of inputs) {
+                    x.disabled = false;
+                    if (x.type !== 'checkbox')
+                        x.required = true;
+                }
+                if (collapsable.classList.contains('collapsed')) {
+                    un_collapse(id);
+                }
+            } else {
+                for (let x of inputs) {
+                    if (x.type !== 'checkbox')
+                        x.required = false;
+                    x.disabled = true;
+                }
+                if (collapsable.classList.contains('displayed')) {
+                    collapse(id);
+                }
+            }
+
+            let field_set = false;
+            let fields = collapsable.querySelectorAll('select');
+            for (let i = 0; i < fields.length; i++) {
+                if (fields[i].value !== '1') {
+                    field_set = true;
+                    break;
+                }
+            }
+            if (is_preview && field_set) {
+                get_preview();
+            }
+        }
+
+        /**
+         * Handles change of explanatory text according to selected option.
+         *
+         * @param id    setting id
+         */
+        function detail_level_desc(id) {
+            let input = document.getElementById(id);
+            let selected = id + '_desc_' + input.value;
+            let desc_list = input.parentElement.querySelectorAll('p');
+            for (let x of desc_list) {
+                if (x.getAttribute('id') === selected)
+                    x.classList.remove('hidden');
+                else
+                    x.classList.add('hidden');
+            }
+
+        }
+
+        /**
+         * Handles switching between options in style set import.
+         *
+         */
+        function import_switch() {
+            let user_import = document.getElementById('import_user');
+            let user_option = document.getElementById('import_user_option');
+            let template_option = document.getElementById('import_template_option');
+            let template_input = document.getElementById('template_style_input');
+            if (user_import.checked) {
+                user_option.classList.remove('collapsed');
+                template_option.classList.add('collapsed');
+                template_input.required = false;
+            } else {
+                template_option.classList.remove('collapsed');
+                user_option.classList.add('collapsed');
+                template_input.required = true;
+            }
+        }
+
+        /**
+         * Handles displaying of file import status.
+         *
+         */
+        function import_file() {
+            let input = document.getElementById('user_style_input');
+            let desc = document.getElementById('user_style_file');
+            if (input.files.length) {
+                desc.innerHTML = input.files[0].name;
+            } else {
+                desc.innerHTML = `Vložte JSON`;
+            }
+        }
+
+        /**
+         * Populates form with data. Based on
+         * https://github.com/dannyvankooten/populate.js/blob/master/populate.js
+         * under MIT License.
+         *
+         *
+         * @param form  form to populate
+         * @param data  data to populate with
+         */
+        function populate_form(form, data) {
+            for (let key in data) {
+                let name = key;
+                let value = data[key];
+                let element = form.elements[name];
+                if (!element) {
+                    continue;
+                }
+
+                let type = element.type || element[0].type;
+                switch (type) {
+                    default:
+                        element.value = value;
+                        break;
+                    case 'radio':
+                    case 'checkbox':
+                        let values = value.constructor === Array ? value : [value];
+                        for (let j = 0; j < element.length; j++) {
+                            element[j].checked = values.indexOf(element[j].value) > -1;
+                        }
+                        break;
+                    case 'select':
+                    case 'select-one':
+                        element.value = value.toString() || value;
+                        break;
+                }
+            }
+        }
+
+
+        /**
+         * Handles import of style set files. Sends request to server to check validity of given file.
+         *
+         * @returns {boolean}   false to prevent form submission
+         */
+        function import_submit() {
+            let input = document.getElementById('user_style_input');
+            let user_import = document.getElementById('import_user');
+            if (!input.files.length && user_import.checked)
+                return false;
+
+            let desc = document.getElementById('user_style_file');
+            let import_form = document.getElementById('form_import');
+            let form = document.getElementById('form');
+            let form_data = new FormData(import_form);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('get_style') }}', true);
+            xhr.send(form_data);
+
+            input.value = '';
+            desc.innerHTML = 'Vložte JSON';
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && (JSON.parse(xhr.responseText)['success'] === true)) {
+                        let data = JSON.parse(xhr.responseText)['data'];
+                        populate_form(form, data);
+                        let toggle_list = document.getElementsByClassName('toggle');
+                        for (let x of toggle_list) {
+                            layer_change(x.value, false);
+                        }
+                        get_preview();
+                    } else {
+                        alert('Vložený súbor nie je platnou štýlovou sadou.');
+                        input.value = '';
+                        desc.innerHTML = 'Vložte JSON';
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Handles preview updating. Checks if settings have actually changed and if yes, sends preview requests, show
+         * loading information and handles display after successful generation
+         *
+         * @param event event that triggered function call
+         */
+        function get_preview(event) {
+            if (event && event.currentTarget.type === 'checkbox') {
+                let field_set = false;
+                let fields = event.currentTarget.parentElement.parentElement.parentElement.querySelectorAll('select');
+                for (let i = 0; i < fields.length; i++) {
+                    if (fields[i].value !== '1') {
+                        field_set = true;
+                        break;
+                    }
+                }
+                if (!field_set) {
+                    return;
+                }
+            }
+            if (event && event.currentTarget.type === 'button') {
+                return;
+            }
+
+            let left = document.getElementById('area_left').value;
+            let bottom = document.getElementById('area_bottom').value;
+            let right = document.getElementById('area_right').value;
+            let top = document.getElementById('area_top').value;
+
+            let form = document.getElementById('form');
+            let json = jsonate_form(form);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('get_preview') }}', true);
+            xhr.send(JSON.stringify({'json': json, 'left': left, 'bottom': bottom, 'right': right, 'top': top}));
+
+            document.getElementById('preview-img').classList.add('hidden')
+            document.getElementById('preview-load').classList.remove('hidden')
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && (JSON.parse(xhr.responseText)['success'] === true)) {
+                        document.getElementById('preview-img').src = 'data:image/png;base64,' + JSON.parse(xhr.responseText)['data'];
+                        document.getElementById('preview-load').classList.add('hidden')
+                        document.getElementById('preview-img').classList.remove('hidden')
+                    }
+                }
+            }
+        }
+
+        /**
+         * Resets all setings to default value.
+         *
+         */
+        function reset_form() {
+            let form = document.getElementById('form');
+
+            for (let i = 0; i < form.elements.length; i++) {
+                let type = form.elements[i].type || form.elements[i][0].type;
+                switch (type) {
+                    default:
+                        break;
+                    case 'select':
+                    case 'select-one':
+                        form.elements[i].value = '1';
+                        form.elements[i].disabled = true;
+                        break;
+                    case 'checkbox':
+                        form.elements[i].checked = false;
+                        form.elements[i].required = false;
+                }
+            }
+            get_preview();
+        }
+
+        /**
+         * Handles submission of form for adjustment of style set in accordance with zoom
+         *
+         * @returns {boolean}   false to prevent form submission
+         */
+        function zoom_submit() {
+            let form = document.getElementById('form');
+            let json = jsonate_form(form);
+            let zoom = document.getElementById('zoom_level').value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('get_zoom') }}', true);
+            xhr.send(JSON.stringify({'json': json, 'zoom': zoom}));
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && (JSON.parse(xhr.responseText)['success'] === true)) {
+                        let data = JSON.parse(xhr.responseText)['data'];
+                        populate_form(form, data);
+                        let toggle_list = document.getElementsByClassName('toggle');
+                        for (let x of toggle_list) {
+                            layer_change(x.value, false);
+                        }
+                        get_preview();
+                    } else {
+                        alert('Nastala chyba a operácia sa nepodarila.');
+                    }
+                }
+            }
+            return false;
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                close_modals();
+            }
+        });
+
+        let fields = document.getElementById('form').querySelectorAll('input, select');
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].classList.contains('toggle'))
+                fields[i].addEventListener('change', (event) => {
+                    if (event.target) {
+                        get_preview();
+                    }
+                });
+        }
+        
+        let modal_buttons = document.getElementsByClassName('modal-icon');
+        for (let i = 0; i < modal_buttons.length; i++) {
+            modal_buttons[i].addEventListener('click', (event) => {
+                open_modal(modal_buttons[i].id);
+            });
+        }
+
+        let modal_close_buttons = document.getElementsByClassName('close-icon');
+        for (let i = 0; i < modal_close_buttons.length; i++) {
+            modal_close_buttons[i].addEventListener('click', (event) => {
+                close_modals();
+            });
+        }
+
+        document.getElementById('set_coordinates').addEventListener('click', (event) => {
+            set_coordinates();
+        });
+
+        document.getElementById('reset_form').addEventListener('click', (event) => {
+            reset_form();
+        });
+
+        document.getElementById('user_style_input').addEventListener('change', (event) => {
+            import_file();
+        });
+        
+        let import_type_items = document.querySelectorAll('input[type="radio"][name="import_type"]');
+        for (let i = 0; i < import_type_items.length; i++) {
+            import_type_items[i].addEventListener('click', (event) => {
+                import_switch();
+            });
+        }
+
+        let layer_items = document.querySelectorAll('input[type="checkbox"][name="layer"]');
+        for (let i = 0; i < layer_items.length; i++) {
+            layer_items[i].addEventListener('change', (event) => {
+                if (event.target)
+                    layer_change(event.target.id.substring(7), true);
+            });
+        }
+
+        let layer_headings = document.getElementsByClassName('form-section-heading');
+        for (let i = 0; i < layer_headings.length; i++) {
+            layer_headings[i].addEventListener('click', (event) => {
+                let id = layer_headings[i].id.substring(8);
+                let body_collapsed = document.getElementById('collapsable_' + id).classList.contains('collapsed');
+                if (body_collapsed)
+                    un_collapse(id);
+                else
+                    collapse(id);
+            });
+        }
+
+        document.getElementById('form_import').addEventListener('submit', (event) => {
+            import_submit();
+            event.preventDefault();
+        });
+
+        document.getElementById('form_zoom').addEventListener('submit', (event) => {
+            zoom_submit();
+            event.preventDefault();
+        });
+
+        document.getElementById('download-style').addEventListener('click', download_json, false);
+
+        document.getElementById('save_json').addEventListener('click', (event) => {
+            close_modals();
+            save_json();
+        });
+
+        document.getElementById('set_preview').addEventListener('click', (event) => {
+            close_modals();
+            get_preview();
+        });
+        
+        let select_items = document.getElementById('options_column').querySelectorAll('select');
+        for (let i = 0; i < select_items.length; i++) {
+            select_items[i].addEventListener('change', (event) => {
+                detail_level_desc(select_items[i].id);
+            });
+        }
+
+        document.getElementById('zoom_level').addEventListener('change', (event) => {
+                detail_level_desc('zoom_level');
+        });
+    </script>
+{% endblock %}

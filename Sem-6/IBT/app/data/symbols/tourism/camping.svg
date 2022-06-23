@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="10"
+   height="10"
+   viewBox="0 0 10 10"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 10,10 5.7142864,2.1428566 6.4285721,0 H 5.7142864 L 5.0000007,1.4285711 4.2857143,0 H 3.5714286 L 4.2857143,2.1428566 0,10 Z M 5.0000007,4.9999994 7.1428579,9.285715 h -4.285715 z"
+     id="camping"
+     style="fill:#782121;stroke-width:0.714285;fill-opacity:1" />
+</svg>

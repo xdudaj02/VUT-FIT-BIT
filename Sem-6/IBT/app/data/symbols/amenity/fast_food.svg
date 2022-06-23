@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="12"
+   height="11"
+   viewBox="0 0 12 11"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 4.2222222,2 C 1.5555555,2 0.63113953,4.000799 0.66666664,5 V 6 H 11.333333 V 5 c 0,-1 -0.888889,-3 -3.5555554,-3 z M 0.66666664,7 c -0.88888886,0 -0.88888886,1 0,1 H 11.333333 c 0.888889,0 0.888889,-1 0,-1 z m 0,2.03125 v 0.625 C 0.66666664,10.34045 1.3918133,11 1.9999999,11 H 10 c 0.608186,0 1.333333,-0.65955 1.333333,-1.34375 v -0.625 z"
+     id="fast-food"
+     style="fill:#b37700;fill-opacity:1;stroke-width:0.942809" />
+</svg>

@@ -1,0 +1,20 @@
+<!--
+    View for 404 error.
+
+    author  Jakub Duda, xdudaj02
+    file    404.html
+    date    8.5.2022
+-->
+{% extends "layout.html" %}
+{% block content %}
+    <section>
+        <h3>Ojoj</h3>
+        <p>Nič tu nie je.</p>
+    </section>
+    <section>
+        <p>Skúste to radšej inde.</p>
+        <a href="{{ url_for('home') }}">
+            <input type="submit" value="Naspäť na domovskú stránku"/>
+        </a>
+    </section>
+{% endblock %}

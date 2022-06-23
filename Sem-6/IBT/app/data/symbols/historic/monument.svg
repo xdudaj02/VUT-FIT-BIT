@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="10"
+   height="12"
+   viewBox="0 0 10 12"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <rect
+     width="16"
+     height="16"
+     x="0"
+     y="0"
+     id="rect5"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 5,0 C 5,0 3.3333333,1.2828307 3.3333333,1.7142858 V 8.5714286 H 6.6666667 V 1.7142858 C 6.6666667,1.3033761 5,0 5,0 Z M 2.5,9.4285714 c -0.8333333,0 -0.8333333,0.8571426 -0.8333333,1.7142866 H 0.8333333 L 0,12 H 10 L 9.166667,11.142858 H 8.3333333 c 0,-0.857144 0,-1.7142866 -0.8333333,-1.7142866 z"
+     id="monument"
+     style="fill:#804000;fill-opacity:1;stroke:none;stroke-width:0.845155" />
+</svg>

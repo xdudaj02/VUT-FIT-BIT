@@ -1,0 +1,533 @@
+<!--
+    View for completely blind map generation page.
+
+    author  Jakub Duda, xdudaj02
+    file    new_blind.html
+    date    8.5.2022
+-->
+
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Nová slepá mapa</h2>
+    <div class="big-form">
+        <i class="fas fa-question-circle icon modal-icon icon-big" id="main" title="Nápoveda"></i>
+        <form action="" id="form">
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Rozmer</h4>
+                    <i class="fas fa-question-circle icon modal-icon" id="size" title="Nápoveda"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="radio" id="a5" name="size" value="a5" required>
+                        <label for="a5">A5</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="a4" name="size" value="a4" required>
+                        <label for="a4">A4</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="a3" name="size" value="a3" required>
+                        <label for="a3">A3</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Oblasť</h4>
+                    <i class="fas fa-question-circle icon modal-icon" id="area" title="Nápoveda"></i>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" id="cz" name="area" value="cz">
+                    <label class="row-label" for="cz">Česko</label>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" id="sk" name="area" value="sk">
+                    <label class="row-label" for="sk">Slovensko</label>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Zameranie</h4>
+                    <i class="fas fa-question-circle icon modal-icon" id="type" title="Nápoveda"></i>
+                </div>
+                <div class="row-wrapper row-mini">
+                    <div class="row-item w-150">
+                        <h6>Vykresliť</h6>
+                    </div>
+                    <div class="w-20"></div>
+                    <h6>Zobraziť názvy</h6>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="region" name="type" value="region">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="region">Kraje</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="region_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="region_names" value="region" disabled/>
+                        <label class="toggle-label label-disabled" for="region_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="region_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="district" name="type" value="district">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="district">Okresy</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="district_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="district_names" value="district" disabled/>
+                        <label class="toggle-label label-disabled" for="district_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="district_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="city" name="type" value="city">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="city">Krajské mestá</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="city_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="city_names" value="city" disabled/>
+                        <label class="toggle-label label-disabled" for="city_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="city_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="town" name="type" value="town">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="town">Okresné mestá</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="town_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="town_names" value="town" disabled/>
+                        <label class="toggle-label label-disabled" for="town_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="town_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="hydro" name="type" value="hydro">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="hydro">Hydrosféra</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="hydro_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="hydro_names" value="hydro" disabled/>
+                        <label class="toggle-label label-disabled" for="hydro_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="hydro_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="mountain" name="type" value="mountain">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="mountain">Pohoria</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="mountain_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="mountain_names" value="mountain" disabled/>
+                        <label class="toggle-label label-disabled" for="mountain_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="mountain_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="valley" name="type" value="valley">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="valley">Nížiny a kotliny</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="valley_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="valley_names" value="valley" disabled/>
+                        <label class="toggle-label label-disabled" for="valley_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="valley_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <input type="checkbox" class="blind-layer" id="natpark" name="type" value="natpark">
+                    <div class="row-item w-150">
+                        <label class="row-label" for="natpark">Národné parky</label>
+                    </div>
+                    <div class="row-wrapper row-mini">
+                        <label class="toggle-legend tiny w-20 label-disabled" for="natpark_names">
+                            áno
+                        </label>
+                        <input class="toggle" type="checkbox" name="names" id="natpark_names" value="natpark" disabled/>
+                        <label class="toggle-label label-disabled" for="natpark_names"></label>
+                        <label class="toggle-legend tiny w-20 label-disabled" for="natpark_names">
+                            nie
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Použitie</h4>
+                    <i class="fas fa-question-circle icon modal-icon" id="use" title="Nápoveda"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="radio" id="digital" name="use" value="digital" required>
+                        <label for="digital">digitálne použitie</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="print" name="use" value="print" required>
+                        <label for="print">tlač</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-submit" id="form_blind">
+                <input type="submit" id="submit_blind" value="Vygenerovať"/>
+            </div>
+        </form>
+    </div>
+    <div id="download_area">
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal" id="modal_size">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Rozmer</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si rozmer mapy. Vygenerovaná mapa bude mať ideálnu veľkosť a rozlíšenie
+                    pre tlač vo zvolenom formáte. Na výber sú tradičné formáty ako <i>A5</i>, <i>A4</i> či <i>A3</i>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_area">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Oblasť</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si jednu alebo viac oblastí, ktoré sa majú vykresliť na slepej mape. Na mape sa
+                    vykreslia hranice zvolených oblastí.</p>
+                <p class="small">Na výber sú dve krajiny:</p>
+                <ul>
+                    <li>Česko</li>
+                    <li>Slovensko</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_type">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Zameranie</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">
+                    Zameranie mapy je možné vybrať zakliknutím jedného alebo viacerých typov objektov, ktoré sa
+                    majú vykresliť na slepej mape. Automaticky sú vykreslené štátne hranice zvolených územií.</p>
+                <h4>Vykreslenie prvkov</h4>
+                <p class="small">
+                    <b>Kraje</b> - Územné celky prvej úrovne vrámci zvolených krajín. Vykreslia sa obrysy.<br>
+                    <b>Regióny</b> - Územné celky druhej úrovne vrámci zvolených krajín. Vykreslia sa obrysy.<br>
+                    <b>Krajské mestá</b> - Obce so štatútom krajského mesta vrámci zvolených krajín. Vykreslia sa body označujúce polohu mesta. Hlavné mesto je zvýraznené výraznejšou ikonou.<br>
+                    <b>Okresné mestá</b> - Obce so štatútom okresného mesta vrámci zvolených krajín, a teda aj krajské mestá. Vykreslia sa body označujúce polohu mesta. Bod a prípadne aj názov je menší ako pri krajských mestách.<br>
+                    <b>Hydrosféra</b> - Významné hydrologické telesá vrámci krajiny. Vykreslia sa obrysy vodných plôch a toky riek.<br>
+                    <b>Pohoria</b> - Vykreslia sa obrysy pohorí. Dostupné len pre Slovensko.<br>
+                    <b>Nížiny a kotliny</b> - Vykreslia sa obrysy nížin, kotlín a údolí. Dostupné len pre Slovensko.<br>
+                    <b>Národné parky</b> - Vykreslia sa obrysy územií národných parkov.
+                </p>
+                <h4>Názvy prvkov</h4>
+                <p class="small">Pre každý zvolený typ objektov je možné zapnúť vykreslenie ich názvov. Vykreslenie názvov je bežne vypnuté.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_use">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Použitie</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si ako chcete vytvorenú mapu použiť.</p>
+                <p class="small">Mapa bude na základe vašej voľby optimalizovaná pre daný typ použitia. Pri voľbe
+                    <i>tlač</i> je vygenerovaný výstup vo vektorovom formáte PDF a pri použití možnosti
+                    <i>digitálne použitie</i> je výstup vygenerovaný v rastrovom formáte PNG.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_main">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Slepá mapa</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <h3 class="first">Rozmer</h3>
+                <p class="small">Zvoľte si rozmer mapy. Vygenerovaná mapa bude mať ideálnu veľkosť a rozlíšenie
+                    pre tlač vo zvolenom formáte. Na výber sú tradičné formáty ako <i>A5</i>, <i>A4</i> či <i>A3</i>.</p>
+                <h3>Oblasť</h3>
+                <p class="small">Zvoľte si jednu alebo viac oblastí, ktoré sa majú vykresliť na slepej mape. Na mape sa
+                    vykreslia hranice zvolených oblastí.</p>
+                <p class="small">Zatiaľ je možné vyberať spomedzi dvoch krajín:</p>
+                <ul>
+                    <li>Česko</li>
+                    <li>Slovensko</li>
+                </ul>
+                <h3>Zameranie</h3>
+                <p class="small">
+                    Zameranie mapy je možné vybrať zakliknutím jedného alebo viacerých typov objektov, ktoré sa
+                    majú vykresliť na slepej mape. Automaticky sú vykreslené štátne hranice zvolených územií.</p>
+                <h4>Vykreslenie prvkov</h4>
+                <p class="small">
+                    <b>Kraje</b> - Územné celky prvej úrovne vrámci zvolených krajín. Vykreslia sa obrysy.<br>
+                    <b>Regióny</b> - Územné celky druhej úrovne vrámci zvolených krajín. Vykreslia sa obrysy.<br>
+                    <b>Krajské mestá</b> - Obce so štatútom krajského mesta vrámci zvolených krajín. Vykreslia sa body označujúce polohu mesta. Hlavné mesto je zvýraznené výraznejšou ikonou.<br>
+                    <b>Okresné mestá</b> - Obce so štatútom okresného mesta vrámci zvolených krajín, a teda aj krajské mestá. Vykreslia sa body označujúce polohu mesta. Bod a prípadne aj názov je menší ako pri krajských mestách.<br>
+                    <b>Hydrosféra</b> - Významné hydrologické telesá vrámci krajiny. Vykreslia sa obrysy vodných plôch a toky riek.<br>
+                    <b>Pohoria</b> - Vykreslia sa obrysy pohorí. Dostupné len pre Slovensko.<br>
+                    <b>Nížiny a kotliny</b> - Vykreslia sa obrysy nížin, kotlín a údolí. Dostupné len pre Slovensko.<br>
+                    <b>Národné parky</b> - Vykreslia sa obrysy územií národných parkov.
+                </p>
+                <h4>Názvy prvkov</h4>
+                <p class="small">Pre každý zvolený typ objektov je možné zapnúť vykreslenie ich názvov. Vykreslenie názvov je bežne vypnuté.</p>
+                <h3>Použitie</h3>
+                <p class="small">Zvoľte si ako chcete vytvorenú mapu použiť.</p>
+                <p class="small">Mapa bude na základe vašej voľby optimalizovaná pre daný typ použitia. Pri voľbe
+                    <i>tlač</i> je vygenerovaný výstup vo vektorovom formáte PDF a pri použití možnosti
+                    <i>digitálne použitie</i> je výstup vygenerovaný v rastrovom formáte PNG.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        /**
+         * Handles the switching off and disabling of 'display name' options.
+         *
+         * @param id option id
+         */
+        function type_action(id) {
+            let element = document.getElementById(id);
+            let name_element = document.getElementById(id + '_names');
+            name_element.checked = false;
+            name_element.disabled = !element.checked;
+            let labels = document.querySelectorAll('label[for="' + id + '_names"]')
+            for (let x of labels) {
+                if (element.checked)
+                    x.classList.remove('label-disabled');
+                else
+                    x.classList.add('label-disabled');
+            }
+        }
+
+        /**
+         * Loads content of given form into serialized JSON.
+         *
+         * @param form_element  form element that should be collected into a JSON
+         * @returns {string}    serialized JSON representation of given form
+         */
+        function jsonate_form(form_element) {
+            let form_data = new FormData(form_element);
+
+            // convert FormData to JSON (keeping fields with same name)
+            // from: StackOverflow, https://stackoverflow.com/
+            // on: 20.4.2022
+            // question: How to convert FormData (HTML5 object) to JSON,
+            //       https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json
+            // question by: Leonardo Villela, https://stackoverflow.com/users/4032069/leonardo-villela
+            // answer by: Wilt, https://stackoverflow.com/users/1697459/wilt
+            // edited by: Nilpo, https://stackoverflow.com/users/637208/nilpo
+            let dict = {};
+            form_data.forEach((value, key) => {
+                if(!Reflect.has(dict, key)){
+                    dict[key] = value;
+                    return;
+                }
+                if(!Array.isArray(dict[key])){
+                    dict[key] = [dict[key]];
+                }
+                dict[key].push(value);
+            });
+            return JSON.stringify(dict);
+
+        }
+
+        /**
+         * Checks if area selection option is not left empty.
+         *
+         * @returns {boolean}   true if at least one country is selected else false
+         */
+        function check_area() {
+            let area_inputs = document.querySelectorAll('input[name="area"]')
+            for (let x of area_inputs) {
+                if (x.checked)
+                    return true;
+            }
+            return false;
+        }
+
+        /**
+         * Handles submission of form. Creates the waiting area, waits for response and either shows option to download
+         * or informs about error occurrence.
+         *
+         * @returns {boolean}   false to stop form from submitting
+         */
+        function send_form() {
+            if (!check_area()) {
+                alert('Prosím zvoľte si územie.');
+                return false;
+            }
+
+            let form = document.getElementById('form');
+            let json = jsonate_form(form);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('create_blind') }}', true);
+            xhr.send(json);
+
+            document.getElementById('download_area').classList.add('download-active');
+            document.getElementById('download_area').innerHTML = `<div class="loader"></div><br><p><b>Vaša mapa sa generuje.</b></p><p>Pri veľkých a detailných mapách to môže trvať aj niekoľko minút.</p>`;
+            window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});
+            document.getElementById('submit_blind').disabled = true;
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let data = JSON.parse(xhr.responseText)['data'];
+                        let extension = JSON.parse(xhr.responseText)['extension'];
+                        let format_string = '';
+                        if (extension === 'pdf')
+                            format_string = 'application/pdf';
+                        else if (extension === 'png')
+                            format_string = 'image/png';
+                        document.getElementById('download_area').innerHTML = `<img src="{{ url_for('static', filename='img/ok.svg') }}" alt="" class="ok-img"><p>Generovanie mapy bolo dokončené. Mapu si teraz môžete stiahnuť.</p><a href="data:` + format_string +`;base64,` + data + `" download="blind_map.` + extension + `"><input type="submit" value="Stiahnuť mapu"></a>`;
+                        document.getElementById('submit_blind').disabled = false;
+                        window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});
+                    } else {
+                        document.getElementById('submit_blind').disabled = false;
+                        document.getElementById('download_area').innerHTML = ``;
+                        document.getElementById('download_area').classList.remove('download-active');
+                        alert('Nastala chyba a mapu sa nepodarilo vygenerovať.');
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Displays modal with given id.
+         *
+         * @param id    id of modal
+         */
+        function open_modal(id) {
+            let modal = document.getElementById('modal_' + id);
+            modal.classList.add('modal-displayed');
+            modal.children[0].children[1].scrollTop = 0;
+        }
+
+        /**
+         * Closes all modals.
+         *
+         */
+        function close_modals() {
+            let modals = document.getElementsByClassName('modal-displayed');
+                for (let x of modals) {
+                    x.classList.remove('modal-displayed');
+                }
+        }
+
+        let modal_buttons = document.getElementsByClassName('modal-icon');
+        for (let i = 0; i < modal_buttons.length; i++) {
+            modal_buttons[i].addEventListener('click', (event) => {
+                open_modal(modal_buttons[i].id);
+            });
+        }
+
+        let modal_close_buttons = document.getElementsByClassName('close-icon');
+        for (let i = 0; i < modal_close_buttons.length; i++) {
+            modal_close_buttons[i].addEventListener('click', (event) => {
+                close_modals();
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                close_modals();
+            }
+        });
+
+        let layer_items = document.getElementsByClassName('blind-layer');
+        for (let i = 0; i < layer_items.length; i++) {
+            layer_items[i].addEventListener('click', (event) => {
+                type_action(layer_items[i].id);
+            });
+        }
+
+        document.getElementById('form').addEventListener('submit',  (event) => {
+                send_form();
+                event.preventDefault();
+            });
+
+        document.getElementById('city').addEventListener('change',  (event) => {
+                if (event.currentTarget && !event.currentTarget.checked){
+                    document.getElementById('town').checked = false;
+                    type_action('town');
+                }
+            });
+
+        document.getElementById('city_names').addEventListener('change',  (event) => {
+                if (event.currentTarget && !event.currentTarget.checked){
+                    document.getElementById('town_names').checked = false;
+                }
+            });
+
+        document.getElementById('town').addEventListener('change',  (event) => {
+                if (event.currentTarget && event.currentTarget.checked){
+                    if (!document.getElementById('city').checked){
+                        document.getElementById('city').checked = true;
+                        type_action('city');
+                    }
+                }
+            });
+
+        document.getElementById('town_names').addEventListener('change',  (event) => {
+                if (event.currentTarget && event.currentTarget.checked){
+                    if (!document.getElementById('city_names').checked){
+                        document.getElementById('city_names').checked = true;
+                    }
+                }
+            });
+    </script>
+{% endblock %}

@@ -1,0 +1,1117 @@
+{"options": [
+	{
+		"id": "surface",
+		"name": "Povrch",
+		"options": [
+			{
+				"id": "color",
+				"name": "Farebná paleta",
+				"type": "radio",
+				"options": [
+					{
+						"id": "grey",
+						"name": "Stupne šedej",
+						"checked": false
+					},
+					{
+						"id": "color",
+						"name": "Klasické farby",
+						"checked": true
+					},
+					{
+						"id": "winter",
+						"name": "Zimná krajina",
+						"checked": false
+					}
+				]
+			},
+			{
+				"id": "natural",
+				"name": "Prírodné územia",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Rozlíšené prírodné územia s porastom a nezarastené územia.",
+					"Rozlíšené územia s trávnatým porastom, nižším porastom, lesným porastom a nezarastené územia.",
+					"Rozlíšené územia s trávnatým porastom, nižším porastom, lesným porastom a nezarastené územia. Nezarastené územia sú rozlíšené na skalnaté, blatisté, piesočnaté a ľadovcové."
+				]
+			},
+			{
+				"id": "farm",
+				"name": "Poľnohospodárske územia",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené ako bežné územia s nízkym porastom.",
+					"Odlíšené poľnohospodársky využívané územia.",
+					"Rozlíšené polia, sady a vinice.",
+					"Poľnohospodárske územia rozlíšené, vykreslené názvy významných územií."
+				]
+			},
+			{
+				"id": "built",
+				"name": "Zastavané územia",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Odlíšené zastavané územia.",
+					"Zastavané územia rozlíšené na obývané, obchodné, priemyselné, poľnohospodárske a územia vo výstavbe.",
+					"Zastavané územia rozlíšené, vykreslené názvy významných územií."
+				]
+			}
+		]
+	},
+	{
+		"id": "admin",
+		"name": "Administratívne členenie",
+		"options": [
+			{
+				"id": "country",
+				"name": "Štáty",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené hranice.",
+					"Vykreslené hranice, názov automaticky pozdĺž hraníc pri väčších územiach a v strede pri menších územiach.",
+					"Vykreslené hranice, názov malým písmom pozdĺž hraníc.",
+					"Vykreslené hranice, názov veľkým písmom v strede územia."
+				]
+			},
+			{
+				"id": "region",
+				"name": "Kraje",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené hranice.",
+					"Vykreslené hranice, názov automaticky pozdĺž hraníc pri väčších územiach a v strede pri menších územiach.",
+					"Vykreslené hranice, názov malým písmom pozdĺž hraníc.",
+					"Vykreslené hranice, názov veľkým písmom v strede územia."
+				]
+			},
+			{
+				"id": "district",
+				"name": "Regióny",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené hranice.",
+					"Vykreslené hranice, názov automaticky pozdĺž hraníc pri väčších územiach a v strede pri menších územiach.",
+					"Vykreslené hranice, názov malým písmom pozdĺž hraníc.",
+					"Vykreslené hranice, názov veľkým písmom v strede územia."
+				]
+			},
+			{
+				"id": "capital",
+				"name": "Hlavné mesto",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslený názov."
+				]
+			},
+			{
+				"id": "city",
+				"name": "Veľkomestá",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslený názov."
+				]
+			},
+			{
+				"id": "town",
+				"name": "Mestá",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslený názov."
+				]
+			},
+			{
+				"id": "village",
+				"name": "Dediny a usadlosti",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslený bod.",
+					"Vykreslený názov."
+				]
+			},
+			{
+				"id": "suburb",
+				"name": "Mestské časti",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslený názov."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "hydro",
+		"name": "Hydrosféra",
+		"options": [
+			{
+				"id": "lake",
+				"name": "Jazerá",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené územie.",
+					"Vykreslené územie a názov."
+				]
+			},
+			{
+				"id": "river",
+				"name": "Rieky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslený tok veľkých riek.",
+					"Vykreslený tok všetkých riek.",
+					"Vykreslený tok rieky a pozdĺž pravidelne sa opakujúci názov."
+				]
+			},
+			{
+				"id": "stream",
+				"name": "Potoky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslený tok potoka.",
+					"Vykreslený tok potoka a pozdĺž pravidelne sa opakujúci názov."
+				]
+			},
+			{
+				"id": "reservoir",
+				"name": "Vodné nádrže",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené územie.",
+					"Vykreslené územie a názov."
+				]
+			},
+			{
+				"id": "canal",
+				"name": "Umelé toky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslený tok.",
+					"Vykreslený tok a názov."
+				]
+			},
+			{
+				"id": "wetland",
+				"name": "Mokrade",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územie.",
+					"Vykreslené odlišne."
+				]
+			},
+			{
+				"id": "waterfall",
+				"name": "Vodopády",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "spring",
+				"name": "Pramene",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona."
+				]
+			},
+			{
+				"id": "dam",
+				"name": "Hrádze",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "breakwater",
+				"name": "Móla",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "marina",
+				"name": "Prístavy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené územie.",
+					"Vykreslené územia a ikona.",
+					"Vykreslené územie, ikona a názov."
+				]
+			},
+			{
+				"id": "route",
+				"name": "Lodné trasy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená trasa."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "natural",
+		"name": "Prírodné objekty",
+		"options": [
+			{
+				"id": "peak",
+				"name": "Vrchy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov.",
+					"Vykreslená ikona, názov a nadmorská výška."
+				]
+			},
+			{
+				"id": "saddle",
+				"name": "Sedlá",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov.",
+					"Vykreslená ikona, názov a nadmorská výška."
+				]
+			},
+			{
+				"id": "cave",
+				"name": "Jaskyne",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov.",
+					"Vykreslená ikona, názov a nadmorská výška."
+				]
+			},
+			{
+				"id": "volcano",
+				"name": "Sopky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov.",
+					"Vykreslená ikona, názov a nadmorská výška."
+				]
+			},
+			{
+				"id": "ridge",
+				"name": "Hrebene",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "cliff",
+				"name": "Útesy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "protected",
+				"name": "Chránené oblasti",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené hranice územia.",
+					"Vykreslené územie a názov automaticky vykreslený pozdĺž hraníc väčšíh území a v strede väčších území.",
+					"Vykreslené územie a malý názov pozdĺž hraníc uzemia.",
+					"Vykreslené územie a názov v strede územia."
+				]
+			},
+			{
+				"id": "trees",
+				"name": "Stromoradia a významné osamelé stromy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "viewpoint",
+				"name": "Miesta výhľadu",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "roads",
+		"name": "Cesty",
+		"options": [
+			{
+				"id": "motorway",
+				"name": "Diaľnice a rýchlostné cesty",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou.",
+					"Vykreslené odlišnou farbou."
+				]
+			},
+			{
+				"id": "primary",
+				"name": "Cesty prvej triedy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou.",
+					"Vykreslené odlišnou farbou."
+				]
+			},
+			{
+				"id": "secondary",
+				"name": "Cesty druhej triedy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou.",
+					"Vykreslené odlišnou farbou."
+				]
+			},
+			{
+				"id": "tertiary",
+				"name": "Cesty tretej triedy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou, bielou."
+				]
+			},
+			{
+				"id": "link",
+				"name": "Pripájacie cesty (na križovatkách)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "service",
+				"name": "Neklasifikované a obslužné cesty",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou."
+				]
+			},
+			{
+				"id": "residential",
+				"name": "Ulice",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené základnou farbou."
+				]
+			},
+			{
+				"id": "pavement",
+				"name": "Chodníky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené.",
+					"Vykreslené, odlíšené schody."
+				]
+			},
+			{
+				"id": "track",
+				"name": "Poľné cesty",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "path",
+				"name": "Lesné chodníčky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené.",
+					"Vykreslené, rozlíšené pešie, cyklistické a jazdecké (kone)."
+				]
+			},
+			{
+				"id": "bridges",
+				"name": "Mosty",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežná cesta.",
+					"Odlíšené od bežnej cesty, vykreslené úrovne ciest.",
+					"Odlíšené od bežnej cesty, vykreslené úrovne ciest, vykreslená ikona.",
+					"Odlíšené od bežnej cesty, vykreslené úrovne ciest, vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "tunnels",
+				"name": "Tunely",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežná cesta.",
+					"Odlíšené od bežnej cesty.",
+					"Odlíšené od bežnej cesty, vykreslená ikona.",
+					"Odlíšené od bežnej cesty, vykreslená ikona a  názov."
+				]
+			},
+			{
+				"id": "construction",
+				"name": "Cesty vo výstavbe",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené rovnakým štýlom ako bežné cesty, jemne odlíšené."
+				]
+			},
+			{
+				"id": "names",
+				"name": "Názvy ulíc a iných ciest",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "junction",
+				"name": "Názvy diaľničných zjazdov",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			},
+			{
+				"id": "signs",
+				"name": "Cestné značenie (jednosmerné cesty, semafory)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "rail",
+		"name": "Železnice",
+		"options": [
+			{
+				"id": "normal",
+				"name": "Železničné trate",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené normálne.",
+					"Vykreslené normálne, vykreslené aj obslužné trate (odlišne)."
+				]
+			},
+			{
+				"id": "special",
+				"name": "Špeciálne trate (zubačka, úzkorozchodná)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené nevýrazne.",
+					"Vykreslené normálne.",
+					"Vykreslené, vykreslené aj obslužné trate (odlišne)."
+				]
+			},
+			{
+				"id": "tram",
+				"name": "Električky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené.",
+					"Vykreslené, vykreslené aj obslužné trate (odlišne)."
+				]
+			},
+			{
+				"id": "subway",
+				"name": "Metro",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené.",
+					"Vykreslené, vykreslené aj obslužné trate (odlišne)."
+				]
+			},
+			{
+				"id": "bridges",
+				"name": "Mosty",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako klasické trate.",
+					"Odlíšené od klasických tratí, vykreslené úrovne tratí.",
+					"Odlíšené od klasických tratí, vykreslené úrovne tratí, vykreslené ikony.",
+					"Odlíšené od klasických tratí, vykreslené úrovne tratí, vykreslené ikony a názvy."
+				]
+			},
+			{
+				"id": "tunnels",
+				"name": "Tunely",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako klasické trate.",
+					"Odlíšené od klasických tratí.",
+					"Odlíšené od klasických tratí, vykreslené ikony.",
+					"Odlíšené od klasických tratí, vykreslené ikony a názvy."
+				]
+			},
+			{
+				"id": "construction",
+				"name": "Trate vo výstavbe",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené odlišne od klasických tratí."
+				]
+			},
+			{
+				"id": "disused",
+				"name": "Neupoužívané trate",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené odlišne od klasických tratí."
+				]
+			},
+			{
+				"id": "station",
+				"name": "Železničné stanice",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov.",
+					"Vykreslená ikona, názov a detaily (platformy, priecestia)."
+				]
+			},
+			{
+				"id": "tram_stop",
+				"name": "Zastávky električiek",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "built",
+		"name": "Umelé objekty",
+		"options": [
+			{
+				"id": "buildings",
+				"name": "Budovy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené obrysy.",
+					"Vykreslené obrysy a názvy významných budov.",
+					"Vykreslené obrysy, názvy významných budov a pri ostatných budovách vykreslené orientačné čísla (číslo na ulici)."
+				]
+			},
+			{
+				"id": "aerial",
+				"name": "Lanové dráhy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené dráhy.",
+					"Vykreslené dráhy, vykreslené názvy."
+				]
+			},
+			{
+				"id": "statue",
+				"name": "Architektonické stavby (sochy, pomníky, fontány)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené ikony.",
+					"Vykreslené ikony a názvy."
+				]
+			},
+			{
+				"id": "tower",
+				"name": "Veže (telekomunikačné, zásobárenské)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslené ikony.",
+					"Vykreslené ikony a názvy."
+				]
+			},
+			{
+				"id": "barrier",
+				"name": "Pozdĺžne bariéry (oplotenia, múry, živé ploty, hradby)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené obrysy."
+				]
+			},
+			{
+				"id": "gate",
+				"name": "Priečne bariéry (brány, závory)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona."
+				]
+			},
+			{
+				"id": "city",
+				"name": "Iné mestské objekty (altánky, prístrešky, lavičky, záchody, smätné koše a iné)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené ikony."
+				]
+			},
+			{
+				"id": "nature",
+				"name": "Iné turistické objekty (informačné tabule, smerovníky, ohniská, posedy a iné)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené ikony."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "amenity",
+		"name": "Inštitúcie",
+		"options": [
+			{
+				"id": "shop",
+				"name": "Obchody",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "education",
+				"name": "Vzdelávacie inštitúcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "art",
+				"name": "Umelecké inštitúcie (kiná, divadlá, galérie, múzeá)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "religion",
+				"name": "Náboženské inštitúcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "office",
+				"name": "Úradné inštitúcie (úrady, radnica, pošta)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "medical",
+				"name": "Zdravotné inštitúcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "forces",
+				"name": "Inštitúcie bezpečnostných zložiek",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "finance",
+				"name": "Finančné inštitúcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "law",
+				"name": "Právne inštitúcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "social",
+				"name": "Sociálne zariadenia",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "food",
+				"name": "Stravovacie zariadenia (reštaurácie, bary, krčmy, stánky)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "hotel",
+				"name": "Hotely a ubytovne",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "hut",
+				"name": "Horské chaty, kemping",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "parks",
+				"name": "Parky",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslený názov."
+				]
+			},
+			{
+				"id": "playground",
+				"name": "Detské ihriská",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslená ikona."
+				]
+			},
+			{
+				"id": "pool",
+				"name": "Kúpaliská",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Vykreslené územie.",
+					"Vykreslené územie a ikona.",
+					"Vykreslené územie, ikona a názov."
+				]
+			},
+			{
+				"id": "theme",
+				"name": "Zábavné parky a iné atrakcie",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Vykreslené územie.",
+					"Vykreslené územie a názov."
+				]
+			},
+			{
+				"id": "castle",
+				"name": "Historické budovy (hrady, zámky, hradby, sídla)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "bus",
+				"name": "Autobusové stanice a zastávky",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "parking",
+				"name": "Parkoviská",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Vykreslená ikona."
+				]
+			},
+			{
+				"id": "gas",
+				"name": "Čerpacie stanice",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné budovy.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "aero",
+				"name": "Letiská",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Vykreslené územie (dráhy, špeciálne budovy).",
+					"Vykreslené územie a ikona.",
+					"Vykreslené územie, ikona a názov."
+				]
+			},
+			{
+				"id": "military",
+				"name": "Vojenské územia",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslený názov."
+				]
+			},
+			{
+				"id": "waste",
+				"name": "Odpadové inštitúcie (zberné dvory, recyklačné strediská)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslená ikona.",
+					"Odlišne vykreslené územie, vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "quarry",
+				"name": "Územia ťažby (kameňolomy)",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné prírodné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslený názov."
+				]
+			},
+			{
+				"id": "cemetery",
+				"name": "Cintoríny",
+				"type": "select",
+				"descriptions": [
+					"Vykreslené ako bežné územia.",
+					"Odlišne vykreslené územie.",
+					"Odlišne vykreslené územie, vykreslený názov."
+				]
+			}
+		]
+	}
+,
+	{
+		"id": "sport",
+		"name": "Šport",
+		"options": [
+			{
+				"id": "racetrack",
+				"name": "Pretekárske okruhy (automobilové)",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená trať."
+				]
+			},
+			{
+				"id": "stadium",
+				"name": "Štadióny",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené územie.",
+					"Vykreslené územie a ikona.",
+					"Vykreslené územie, ikona a názov."
+				]
+			},
+			{
+				"id": "pitch",
+				"name": "Iné športoviská",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené územie.",
+					"Vykreslené územie a ikona.",
+					"Vykreslené územie, ikona a názov."
+				]
+			},
+			{
+				"id": "athletic",
+				"name": "Atletické dráhy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená dráha."
+				]
+			},
+			{
+				"id": "hike",
+				"name": "Turistické trasy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené trasy (farebne rozlíšené).",
+					"Vykreslené trasy a názvy."
+				]
+			},
+			{
+				"id": "bike",
+				"name": "Cyklotrasy",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené trasy jednofarebne.",
+					"Vykreslené trasy viacfarebne (podľa náročnosti).",
+					"Vykreslené trasy s názvami (jednofarebne).",
+					"Vykreslené trasy s názvami (viacfarebne)."
+				]
+			},
+			{
+				"id": "ski",
+				"name": "Lyžiarske strediská",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona.",
+					"Vykreslená ikona a názov."
+				]
+			},
+			{
+				"id": "piste",
+				"name": "Lyžiarske zjazdovky",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené trasy (farebne rozlíšené).",
+					"Vykreslené trasy a názvy."
+				]
+			},
+			{
+				"id": "xcountry",
+				"name": "Trate pre bežecké lyžovanie",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslené trasy.",
+					"Vykreslené trasy a názvy."
+				]
+			},
+			{
+				"id": "golf",
+				"name": "Golfové ihriská",
+				"type": "select",
+				"descriptions": [
+					"Nevykreslené.",
+					"Vykreslená ikona a typ povrchu.",
+					"Vykreslená ikona, typ povrchu a názov."
+				]
+			}
+		]
+	}
+
+]}

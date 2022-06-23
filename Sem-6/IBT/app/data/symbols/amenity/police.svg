@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="9"
+   height="12"
+   viewBox="0 0 9 12"
+   id="svg4"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 2.7,0 1.8,0.85714286 V 1.7142857 H 7.2 V 0.85714286 L 6.3,0 Z M 1.8,2.5714286 c -0.02997,0.1446223 0,0.2910222 0,0.4444445 0,1.2272888 1.457379,2.126984 2.7,2.126984 1.242621,0 2.7,-0.8996952 2.7,-2.126984 0,-0.1534223 0,-0.4444445 0,-0.4444445 z M 1.8,6 C 0.5229846,6 0.012735,7.6084954 0,8.5714286 V 12 H 1.378125 L 6.3,6 Z M 7.65,6 2.728125,12 H 9 V 8.5714286 C 9,7.6084063 8.7544422,6 7.65,6 Z"
+     id="police"
+     style="stroke-width:0.87831" />
+</svg>

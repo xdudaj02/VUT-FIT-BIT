@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg12021"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs12025" />
+  <rect
+     id="mapnik_workaround"
+     width="32"
+     height="32"
+     fill="none" />
+  <path
+     stroke-width="1"
+     stroke="#759e6c"
+     opacity=".38"
+     d=" M0.5,0 v5 m0,6 v5 m0,5.5 v5 M4.5,5.5 v5 m0,5.5 v5 m0,6 v5 M8.5,0 v5 m0,6 v5 m0,5.5 v5 M12.5,5.5 v5 m0,5.5 v5 m0,6 v5 M16.5,0 v5 m0,6 v5 m0,5.5 v5 M20.5,5.5 v5 m0,5.5 v5 m0,6 v5 M24.5,0 v5 m0,6 v5 m0,5.5 v5 M28.5,5.5 v5 m0,5.5 v5 m0,6 v5"
+     id="path12019" />
+</svg>

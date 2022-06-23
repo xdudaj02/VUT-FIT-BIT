@@ -1,0 +1,54 @@
+<!--
+    View for home page.
+
+    author  Jakub Duda, xdudaj02
+    file    index.html
+    date    8.5.2022
+-->
+{% extends "layout.html" %}
+{% block content %}
+    <section class="gallery">
+    </section>
+    <section>
+        <h3>O Projekte</h3>
+        <p>Táto stránka vznikla v roku 2022, ako produkt bakalárskej práce a jej účelom je poskytnúť
+            nástroj, ktorý umožňuje <b>vygenerovať mapu</b> (nie len) <b>pre tlač</b>. Momentálne sú
+            podporované mapy územia <b>Slovenskej republiky</b> a mapy územia <b>Českej republiky</b>.</p>
+        <p>Na internete existuje mnoho mapovo-zameraných služieb, ktoré ponúkajú možnosť tlače, no väčšinou
+            ponúkajú len obmedzený počet druhov mapy, ktoré často obsahujú aj prvky, o ktoré používateľ
+            zrovna nemá záujem, no neexistuje možnosť tieto prvky odstrániť. Táto stránka sa preto
+            zameriava na <b>voľbu typu/štýlu mapy</b>. Okrem možnosti voľby <b>preddefinovaných typov</b>
+            mapy s rôznymi zameraniami, poskytuje možnosť vytvoriť si <b>vlastnú štýlovú sadu</b> a určiť
+            si, ktoré prvky sa v mape vykreslia a taktiež si zvoliť medzi niekoľkými farebnými a
+            veľkostnými alternáciami vykreslenia jednotlivých prvkov.</p>
+        <p>Stránka tiež umožňuje používateľovi vykresliť do generovanej mapy <b>svoje trasy</b>, a to
+            pomocou vloženia <b>GPX súborov</b>.</p>
+        <p>Okrem klasických máp, umožňuje generovať aj <b>slepé mapy</b>, pri ktorých je možné zvoliť si
+            oblasť, zameranie či zapnúť alebo vypnúť zobrazenie názvov objektov daného zamerania.</p>
+    </section>
+    <section>
+        <h3>Vytvoriť mapu</h3>
+        <div class="row-wrapper">
+            <a href="{{ url_for('new_classic') }}" target="_blank">
+                <input type="submit" value="Klasická Mapa"/>
+            </a>
+            <a href="{{ url_for('new_blind') }}" target="_blank">
+                <input type="submit" value="Slepá Mapa"/>
+            </a>
+        </div>
+        <p>Potrebujete slepú mapu miest Slovenska, ktorú dáte vyplniť žiakom na hodine geografie?
+            Chcete si vytlačiť obrovskú cyklistickú mapu vášho okolia, ktorú si môžete zavesiť vo
+            vašej kancelárii? Alebo si chcete na mape zobraziť trasy z vašej dovolenky? V tom prípade
+            ste na správnom mieste.</p>
+
+        <h3>Vytvoriť štýlovú sadu</h3>
+        <div class="row-wrapper">
+            <a href="{{ url_for('new_style') }}" target="_blank">
+                <input type="submit" value="Štýlová sada"/>
+            </a>
+        </div>
+        <p>Nastavte si svoju mapu od základov. Od miest, diaľníc či železničných tratí, cez jaskyne, jazerá
+            a chránené parky až po kiná, reštaurácie alebo autobusové zastávky. Je len na vás, čo bude na
+            vašej mape.</p>
+    </section>
+{% endblock %}

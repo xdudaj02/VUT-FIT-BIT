@@ -1,0 +1,43 @@
+UPDATE planet_osm_point SET ele = '974' WHERE osm_id = 1506543047;
+CREATE INDEX way_area ON planet_osm_polygon (ST_Area(way, true));
+CREATE INDEX population_index ON planet_osm_point ((population::int)) WHERE "place" IN ('city', 'town');
+CREATE INDEX ele_index ON planet_osm_point ((ele::real)) WHERE "natural" IN ('peak', 'volcano', 'saddle', 'cave_entrance');
+CREATE INDEX hw_bridge_index ON planet_osm_point (highway, (layer::integer)) WHERE bridge IS NOT NULL;
+CREATE INDEX rw_bridge_index ON planet_osm_point (railway, (layer::integer)) WHERE bridge IS NOT NULL;
+
+CREATE TABLE blind_point (osm_id bigint, capital text, name text, place text, population INteger, way geometry(Geometry, 4326),
+in_sk boolean, in_cz boolean);
+CREATE TABLE blind_line (osm_id bigint, waterway text, name text, way geometry(Geometry, 4326), in_sk boolean, in_cz boolean);
+CREATE TABLE blind_polygon (osm_id bigint, "natural" text, boundary text, admin_level text, protect_class text, way geometry(Geometry, 4326),
+in_sk boolean, in_cz boolean);
+
+INSERT INTO blind_point (osm_id, capital, place, name, population, way, in_sk) SELECT osm_id, capital, place, name, population::int,
+way, TRUE AS in_sk FROM planet_osm_point WHERE place IN ('city', 'town') AND ST_Within(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-14296));
+INSERT INTO blind_point (osm_id, capital, place, name, population, way, in_cz) SELECT osm_id, capital, place, name, population::int,
+way, TRUE AS in_cz FROM planet_osm_point WHERE place IN ('city', 'town') AND ST_Within(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-51684));
+
+INSERT INTO blind_line (osm_id, waterway, way, name, in_sk) SELECT clip.osm_id, clip.waterway, clip.way, clip.name, TRUE AS in_sk FROM
+(select osm_id, waterway, (ST_Dump(ST_Intersection(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-14296)))).geom AS way, name FROM
+planet_osm_line WHERE ("waterway"='river') AND (ST_Intersects(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-14296)))) AS clip WHERE ST_Dimension(clip.way) = 1;
+INSERT INTO blind_line (osm_id, waterway, way, name, in_cz) SELECT clip.osm_id, clip.waterway, clip.way, clip.name, TRUE AS in_cz FROM
+(select osm_id, waterway, (ST_Dump(ST_Intersection(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-51684)))).geom AS way, name FROM
+planet_osm_line WHERE ("waterway"='river') AND (ST_Intersects(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-51684)))) AS clip WHERE ST_Dimension(clip.way) = 1;
+
+INSERT INTO blind_polygon (osm_id, "natural", boundary, admin_level, protect_class, way, ref, name, in_cz) SELECT osm_id, "natural",
+boundary, admin_level, protect_class, way, ref, name, TRUE AS in_cz FROM planet_osm_polygon WHERE (("boundary"='national_park' OR
+("boundary"='protected_area' AND "protect_class"='2')) OR ("natural" IN ('basin', 'plateau', 'plain', 'valley', 'mountain_range')) OR
+("natural"='water' AND ST_Area(way, true) > 1000000) OR (boundary='administrative' AND ((admin_level='6' AND ref not LIKE 'SK%') OR
+(admin_level='7' AND ref LIKE 'CZ%')))) AND (ST_Within(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-51684)) OR
+ST_Area(ST_Intersection(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-51684))) > ST_Area(ST_Difference(way, (SELECT way FROM
+planet_osm_polygon WHERE osm_id=-51684))));
+INSERT INTO blind_polygon (osm_id, "natural", boundary, admin_level, protect_class, way, ref, name, in_sk) SELECT osm_id, "natural",
+boundary, admin_level, protect_class, way, ref, name, TRUE AS in_sk FROM planet_osm_polygon WHERE (("boundary"='national_park' OR
+("boundary"='protected_area' AND "protect_class"='2')) OR ("natural" IN ('basin', 'plateau', 'plain', 'valley', 'mountain_range')) OR
+("natural"='water' AND ST_Area(way, true) > 1000000) OR (boundary='administrative' AND ((admin_level='4' AND ref LIKE 'SK%') OR
+(admin_level='8' AND ref LIKE 'SK%')))) AND (ST_Within(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-14296)) OR
+ST_Area(ST_Intersection(way, (SELECT way FROM planet_osm_polygon WHERE osm_id=-14296))) > ST_Area(ST_Difference(way, (SELECT way FROM
+planet_osm_polygon WHERE osm_id=-14296))));
+
+CREATE INDEX blind_point_index ON blind_point USING gist(way);
+CREATE INDEX blind_line_index ON blind_line USING gist(way);
+CREATE INDEX blind_polygon_index ON blind_polygon USING gist(way);

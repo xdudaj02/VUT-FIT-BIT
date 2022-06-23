@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 12 11"
+   height="11"
+   width="12"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs28" />
+  <rect
+     width="14"
+     height="14"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <g
+     transform="matrix(0.85845286,0,0,0.91449412,0,-0.15693778)"
+     id="vbars"
+     style="fill:#ff7f2a">
+    <rect
+       id="rect5"
+       height="5"
+       width="0.5"
+       y="2.5"
+       x="3.5"
+       style="fill:#860073;fill-opacity:1" />
+    <rect
+       id="rect7"
+       height="5.5"
+       width="0.5"
+       y="2.5"
+       x="5.5"
+       style="fill:#860073;fill-opacity:1" />
+    <rect
+       id="rect9"
+       height="6"
+       width="0.5"
+       y="2.5"
+       x="7.5"
+       style="fill:#860073;fill-opacity:1" />
+    <rect
+       id="rect11"
+       height="6"
+       width="0.5"
+       y="2.5"
+       x="9.5"
+       style="fill:#860073;fill-opacity:1" />
+  </g>
+  <g
+     transform="matrix(0.85845286,0,0,0.91449412,0,-0.15693778)"
+     id="hbars"
+     style="fill:#ff6600">
+    <rect
+       id="rect14"
+       height="0.5"
+       width="10.5"
+       y="4"
+       x="1"
+       style="fill:#860073;fill-opacity:1" />
+    <rect
+       id="rect16"
+       height="0.5"
+       width="10.5"
+       y="6"
+       x="1"
+       style="fill:#860073;fill-opacity:1" />
+  </g>
+  <g
+     transform="matrix(0.85845286,0,0,0.91449412,0,-0.15693778)"
+     id="wheels">
+    <circle
+       id="circle19"
+       r="1"
+       cy="11.2"
+       cx="9.5"
+       style="fill:#860073;fill-opacity:1" />
+    <circle
+       id="circle21"
+       r="1"
+       cy="11.2"
+       cx="3.5"
+       style="fill:#860073;fill-opacity:1" />
+  </g>
+  <path
+     d="m 9.4429812,8.0735094 v 1.828989 H 1.2876793 a 0.42922679,0.45724746 0 1 1 0,-0.9144949 H 8.5845286 V 7.6162623 Z"
+     id="base"
+     style="fill:#860073;fill-opacity:1;stroke-width:0.88603" />
+  <path
+     d="M 9.8722074,1.6720504 10.102273,0.52893282 11.374501,0.02596105 a 0.47506661,0.50607977 0 1 1 0.300458,0.96021882 l -0.858453,0.32007293 -0.08585,0.3657976"
+     id="handle"
+     style="fill:#860073;fill-opacity:1;stroke-width:0.88603" />
+  <path
+     style="fill:#860073;fill-opacity:1;fill-rule:evenodd;stroke-width:0.88603"
+     d="M 0,1.6720504 H 10.730661 L 9.4429812,8.0735094 0.85845286,7.1590152 M 1.0018145,2.5865446 H 9.6884989 L 8.7991418,7.0675658 1.6310604,6.3359705 Z"
+     id="body" />
+</svg>

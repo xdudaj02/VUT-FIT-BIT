@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="4"
+   height="6"
+   viewBox="0 0 4 6"
+   id="svg2"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <rect
+     width="10"
+     height="10"
+     x="0"
+     y="0"
+     id="canvas"
+     style="visibility:hidden;fill:none;stroke:none" />
+  <path
+     d="M 1.3333333,0.75 H 0.66666667 L 0,1.5 H 4 L 3.3333333,0.75 H 2.6666667 L 2,0 Z M 0,2.25 0.66666667,6 H 3.3333333 L 4,2.25 Z"
+     id="waste-basket"
+     style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:0.707107" />
+</svg>

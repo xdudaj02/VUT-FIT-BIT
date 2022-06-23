@@ -1,0 +1,1396 @@
+<!--
+    View for more or less blind map generation page.
+
+    author  Jakub Duda, xdudaj02
+    file    new_classic.html
+    date    8.5.2022
+-->
+
+{% extends "layout.html" %}
+{% block include %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+{% endblock %}
+{% block content %}
+    <h2>Nová klasická mapa</h2>
+    <div class="big-form" id="big_form">
+        <i class="fas fa-question-circle icon icon-big modal-icon" title="Nápoveda" id="main"></i>
+        <form action="" id="form">
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Oblasť</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="area"></i>
+                </div>
+                <div id="map-wrapper" class="map-wrapper">
+                    <div id="leaflet-map" class="leaflet-map"></div>
+                </div>
+                <div class="row-wrapper" id="coordinates">
+                    <div class="row-item">
+                        <p class="last">Súradnice: </p>
+                    </div>
+                    <input type="number" id="area_left" name="area_left" placeholder="ľavá" step="0.0001" size="2" required>
+                    <label for="area_left"></label>
+                    <input type="number" id="area_bottom" name="area_bottom" placeholder="dolná" step="0.0001" size="2" required>
+                    <label for="area_bottom"></label>
+                    <input type="number" id="area_right" name="area_right" placeholder="pravá" step="0.0001" size="2" required>
+                    <label for="area_right"></label>
+                    <input type="number" id="area_top" name="area_top" placeholder="horná" step="0.0001" size="2" required>
+                    <label for="area_top"></label>
+                    <button type="button" class="custom-button" id="set_coordinates">Nastaviť</button>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Rozlíšenie</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="size"></i>
+                </div>
+                <div class="row-wrapper">
+                    <input type="number" id="size_x" name="size_x" placeholder="šírka" size="2" required min="1">
+                    <label for="size_x">x</label>
+                    <input type="number" id="size_y" name="size_y" placeholder="výška" size="2" required min="1">
+                    <label for="size_y"></label>
+                    <label for="size_unit"></label>
+                    <select id="size_unit" name="size_unit">
+                        <option value="px">px</option>
+                        <option value="mm">mm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>PPI / DPI</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="ppi"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="radio" id="ppi_classic" name="ppi" value="classic" checked="checked" required>
+                        <label for="ppi_classic">90.7</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="ppi_print" name="ppi" value="print" required>
+                        <label for="ppi_print">300</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="ppi_custom" name="ppi" value="custom" required>
+                        <label for="ppi_custom">Vlastné</label>
+                    </div>
+                    <input type="number" id="ppi_custom_value" name="ppi_custom" size="2" placeholder="PPI" disabled>
+                    <label for="ppi_custom_value"></label>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Štýlová sada</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="type"></i>
+                </div>
+                <p>Vyberte si sadu alebo si <a href="{{ url_for('new_style') }}" target="_blank" class="text-link">vytvorte vlastnú</a>.</p>
+                <div class="row-wrapper-big flex-row-wrapper">
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="basic" name="type" value="basic" class="hidden" required checked>
+                        <label for="basic" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/basic.png') }}" alt="" width="100px" height="120px">
+                            Základná
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="hike" name="type" value="hike" class="hidden" required>
+                        <label for="hike" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/hike.png') }}" alt="" width="100px" height="120px">
+                            Turistická
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="bike" name="type" value="bike" class="hidden" required>
+                        <label for="bike" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/bike.png') }}" alt="" width="100px" height="120px">
+                            Cyklistická
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="ski" name="type" value="ski" class="hidden" required>
+                        <label for="ski" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/ski.png') }}" alt="" width="100px" height="120px">
+                            Lyžiarska
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="car" name="type" value="car" class="hidden" required>
+                        <label for="car" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/car.png') }}" alt="" width="100px" height="120px">
+                            Cestná
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="city" name="type" value="city" class="hidden" required>
+                        <label for="city" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/city.png') }}" alt="" width="100px" height="120px">
+                            Mestská
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="rail" name="type" value="rail" class="hidden" required>
+                        <label for="rail" class="column-wrapper img-radio">
+                            <img src="{{ url_for('static', filename='img/rail.png') }}" alt="" width="100px" height="120px">
+                            Železničná
+                        </label>
+                    </div>
+                    <div class="column-wrapper row-item flex-row-item">
+                        <input type="radio" id="custom" name="type" value="custom" class="hidden" required>
+                        <label for="custom" class="column-wrapper img-radio modal-icon" id="file">
+                            <span id="custom_type" class="custom-type">
+                                <i class="fa fa-file-import"></i><br>
+                                Zvoľte štýl
+                            </span>
+                            Vlastná
+                        </label>
+                    </div>
+                </div>
+                <div class="modal" id="modal_file">
+                    <div class="modal-inner">
+                        <div class="modal-header">
+                            <i class="divider"></i>
+                            <i class="fas fa-times close-icon"></i>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Výber vlastnej štýlovej sady</h4>
+                            <div class="row-wrapper">
+                                <input type="radio" name="custom_style_type" id="custom_file_radio" value="file" checked/>
+                                <label for="custom_file_radio">Vložiť súbor</label>
+                                <input type="radio" name="custom_style_type" id="custom_saved_radio" value="saved"/>
+                                <label for="custom_saved_radio">Uložené sady</label>
+                            </div>
+                            <div class="row-wrapper">
+                                <div id="custom_file_option" class="row-wrapper w-250">
+                                    <input type="file" id="custom_file" name="custom_file" accept=".json">
+                                    <label for="custom_file" class="file-input">
+                                        <i class="fa fa-file-import" aria-hidden="true"></i>
+                                    </label>
+                                    <p class="last" id="custom_file_name">Vložte JSON</p>
+                                </div>
+                                <div id="custom_saved_option" class="row-wrapper w-250 collapsed">
+                                    <label for="custom_saved">Uložené sady: </label>
+                                    <select id="custom_saved" name="custom_saved">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-submit">
+                                <input id="use_custom" type="submit" value="Použiť"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section" id="gpx_wrapper">
+                <div class="help-heading">
+                    <h4>Vložiť trasy</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="gpx"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="button" id="new-gpx-group">
+                        <div><i class="fas fa-plus-circle"></i></div>
+                        <p class="last">Nová skupina trás</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Projekcia</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="projection"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="radio" id="proj_mercator" name="projection" value="3857" required checked>
+                        <label for="proj_mercator">Mercatorove</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="proj_krovak" name="projection" value="5514" required>
+                        <label for="proj_krovak">Křovákove</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="help-heading">
+                    <h4>Výstupný formát</h4>
+                    <i class="fas fa-question-circle icon modal-icon" title="Nápoveda" id="format"></i>
+                </div>
+                <div class="row-wrapper">
+                    <div class="row-item">
+                        <input type="radio" id="jpg" name="format" value="jpg" required>
+                        <label for="jpg">JPG</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="pdf" name="format" value="pdf" required>
+                        <label for="pdf">PDF</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="png" name="format" value="png" checked="checked" required>
+                        <label for="png">PNG</label>
+                    </div>
+                    <div class="row-item">
+                        <input type="radio" id="svg" name="format" value="svg" required>
+                        <label for="svg">SVG</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-submit" id="form-classic">
+                <input id="submit_classic" type="submit" value="Vygenerovať"/>
+            </div>
+        </form>
+    </div>
+    <div id="download_area">
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal" id="modal_area">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Oblasť</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si územie, ktoré bude vykreslené na mape.</p>
+                <p class="small">Na mape nájdite žiadané územie a ohraničujúci obdĺžnik nastavte tak, aby sa celé
+                    toto územie nachádzalo v jeho vnútri. Na mape bude vykreslené územie nachádzajúce sa vo vnútri
+                    ohraničujúceho obdĺžnika.
+                </p>
+                <p class="small">Pod mapou sa zobrazujú geografické súradnice popisujúce hrany ohraničujúceho obdĺžnika. Tieto
+                    súradnice sa automaticky menia s pohybom a zmenou tvaru ohraničujúceho obdĺžnika. Upravením
+                    hodnôt súradníc a stlačením tlačidla <i>Nastaviť</i>, môžete jednoducho nastaviť presnú polohu
+                    ohraničujúceho obdĺžnika.
+                </p>
+                <h4>Ovládanie mapy</h4>
+                <p class="small">
+                    <i class="fas fa-plus help-button"></i><b>Priblížiť</b> - Zväčšenie priblíženia mapy.<br>
+                    <i class="fas fa-minus help-button"></i><b>Oddialiť</b> - Zmenšenie priblíženia mapy.<br>
+                    <i class="fas fa-vector-square help-button"></i><b>Skryť / Zobraziť výber územia</b> - Skryť
+                    ohraničujúci obdĺžnik pre lepšiu orientáciu v mape. / Naspäť zobraziť ohraničujúci obdĺžnik.<br>
+                    <i class="fas fa-expand-arrows-alt help-button"></i><b>Zväčšiť / </b><i class="fas fa-compress-arrows-alt help-button"></i>
+                    <b>Zmenšiť mapu</b> - Roztiahnuť mapu na celú obrazovku. / Vrátiť pôvodnú veľkosť mapy.<br>
+                    <i class="fas fa-crosshairs help-button"></i><b>Vycentrovať mapu</b> - Posunutie mapy a zmena jej
+                    priblíženia tak, aby sa ohraničujúci obdĺžnik nachádzal presne v strede mapy.
+                </p>
+                <h4>Ovládanie ohraničujúceho obdĺžnika</h4>
+                <p class="small"><b>Zmena veľkosti</b> - Stlačením a podržaním ľubovolného rohu ohraničujúceho
+                    obdĺžnika, začnete presúvať tento bod a tým meniť veľkosť zvoleného územia.
+                    Posun bodu ukončíte jeho uvoľnením.<br>
+                    <b>Presun</b> - Stlačením a podržaním mriežky nachádzajúcej sa v ľavom hornom rohu
+                    ohraničujúceho obdĺžnika započnete jeho presun. Tento presun ukončíte uvoľnením uchopenia
+                    mriežky. Presun nemení veľkosť obdĺžnika.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_size">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Rozlíšenie</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si akú veľkosť má mať vaša mapa.</p>
+                <p class="small">Zadajte jeden z parametrov, <i>šírka</i> alebo <i>výška</i>, a druhý bude automaticky dopočítaný
+                    na základe rozmeru zvoleného územia. Parametre je možné zadať v pixeloch alebo milimetroch.</p>
+                <p class="small">Maximálna šírka alebo výška jednej mapy je 32 768 pixelov.</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_ppi">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">PPI / DPI</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si PPI (resp. DPI) vašej mapy. Táto možnosť neovplyvňuje mapy vo vektorovom formáte.</p>
+                <p class="small">Nastavte hodnotu <i>PPI (Pixel per inch)</i>, t.j. počet pixelov na palec,
+                    ktorá určuje kvalitu výslednej mapy. Čím je hodnota PPI vyššia, tým kvalitnejšia je mapa.
+                    Na použitie mapy vo forme obrázku, je dostačujúca základná hodnota <b>90.7 PPI</b>. Pri tlači je však
+                    vyžadovaná vyššia hodnota. <b>300 PPI</b> je zlatý štandard, ktorý je pre tlač viac než dostatočný.
+                </p>
+                <p class="small">Dostupná je samozrejme aj možnosť zadať vlastnú hodnotu PPI.</p>
+                <p class="small"><i>DPI (Dot per inch)</i> je veličina, ktorá sa používa pri tlači a je zameniteľná s PPI.
+                    Nastavenie PPI neovplyvňuje veľkosť mapy, ale veľkosť prvkov mapy.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_type">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Štýlová sada</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si štýlovú sadu, ktorá určuje či a ako budú vykreslené jednotlivé prvky mapy.</p>
+                <p class="small">Môžte si vybrať medzi niekoľkými základnými štýlovými sadami alebo použiť svoju vlastnú.
+                    Štýlovú sadu si vyberte kliknutím na názov alebo rámček s náhľadom jednej z možností.
+                </p>
+                <h4>Základné štýlové sady</h4>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Základná</b> - Vykresľuje typ povrchu, základné prírodné objekty, vodné plochy, obce,
+                    administratívne hranice, farebne vyznačenú pešiu, automobilovú, železničnú, leteckú či lodnú infraštruktúru
+                    a aj základné neprírodné objekty (tunely, mosty, hrádze, hradby, významné stavby, významné inštitúcie,
+                    športoviská).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Turistická</b> - Od základnej štýlovej sady sa líši detailnejším vykreslením
+                    rôznych typov prírodných území, detailnejším vykreslením prírodných objektov (názov, nadmorská výška),
+                    vykreslením chránených oblastí, turistických trás a objektov súvisiacich s turistikou
+                    (smerovníky, chaty, hotely, miesta výhľadu). Dopravná infraštruktúra a obývané oblasti sú
+                    vykreslené menej podrobne a menej výrazne.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Cyklistická</b> - Štýlová sada podobná tej turistickej, na rozdiel od ktorej,
+                    nevykresľuje turistické, ale cyklistické trasy. Cestná infraštruktúra je vykreslená s väčším
+                    detailom (odlíšenie diaľníc, nespevnených ciest, peších zón).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Lyžiarska</b> - Štýlová sada zameraná na zimné športy. Prírodné územia sú
+                    vykreslené v bielo-modrých odtieňoch imitujúcich snehovú pokrývku. Sada obsahuje detailné
+                    vykreslenie lyžiarskych stredísk. Obsahuje dráhy vlekov a lanoviek; podľa obtiažnosti farebne
+                    odlíšené lyžiarske zjazdovky, trasy pre klasické lyžovanie, skialpinizmus alebo areály pre
+                    freestylové lyžovanie. Pre významné zjazdovky a lanovky sú vykreslené aj názvy.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Cestná</b> - Štýlová sada, ktorá kladie dôraz na automobilovú infraštruktúru.
+                    Jednotlivé cety sú vykreslené s najväčším detailom. Prírodné územia a objekty sú vykreslené
+                    s menším farebným dôrazom, čiernobielo. Sada obsahuje vykreslenie objektov spojených hlavne
+                    s dopravou ako čerpacie stanice, parkoviská a iné. Zobrazuje taktiež aj cesty vo výstavbe.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Mestská</b> - Štýlová sada vhodná pre mapy obývaných oblastí s väčším priblížením.
+                    Oproti základnej sade obsahuje vykreslenie rôznych inštitúcií (zdravotné, vzdelávacie,
+                    náboženské, stravovacie, kultúrne, športové, nákupné, právne a iné). Detailnejšie zobrazuje
+                    pešiu infraštruktúru a pridáva tiež názvy ulíc, názvy významných budov, orientačné čísla budov
+                    a vykreslenie rôznych umelých objektov nachádzajúcich sa v obývaných oblastiach (zastávky,
+                    altánky, lavičky, toalety, cestné značenia, brány a iné).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Železničná</b> - Štýlová sada, ktorá kladie dôraz na železničnú infraštruktúru.
+                    Železnice sú vykreslené s najväčším detailom. Okrem bežných železničných dráh, sú vykreslené
+                    aj servisné dráhy, dráhy vo výstavbe alebo opustené dráhy. Odlíšené sú aj špeciálne dráhy ako
+                    napríklad úzkorozchodná železnica. Sada obsahuje vykreslenie všetkých objektov spojených s
+                    železničnou dopravou ako stanice, priecestia alebo nástupištia. Sada tiež obsahuje názvy
+                    všetkých staníc, tunelov a mostov.
+                </p>
+                <p class="small">Pri použití základnej štýlovej sady, je na základe vypočítanej mierky mapy prispôsobený aj
+                    výber vykreslených prvkov s účelom zachovania prehľadnosti a jednoznačnosi mapy.
+
+                </p>
+                <h4>Vlastná štýlová sada</h4>
+                <p class="small">Na výber je tiež použitie vlastnej štýlovej sady. Vlastnú štýlovú sadu si môžete od
+                    základu vytvoriť presne podľa svojich predstáv v
+                    <a href="new_style_bu.html" target="_blank" class="text-link">nástroji na tvorbu štýlov</a>.
+                    Túto sadu si môžete dočasne uložiť, čo vám umožňí túto sadu používať až do kým nezatvoríte
+                    prehliadač alebo si sadu môžte stiahnuť ako súbor vo formáte JSON.
+                </p>
+                <p class="small">Pri zvolení možnosti <i>Vlastná štýlová sada</i> je možné vybrať si ktorúkoľvek z
+                    uložených sád alebo vložiť súbor typu JSON obsahujúci stiahnutú štýlovú sadu.
+                </p>
+                <p class="small">Pri použití vlastnej štýlovej sady nie je aplikované prispôsobenie vykreslených prvkov
+                    vzhľadom na mierku mapy.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_gpx">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Trasy</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Vložte svoje vlastné trasy. Pridajte až desať skupín a pre každú skupinu si
+                    vyberte inú farbu.
+                </p>
+                <p class="small">Kliknutím na možnosť <i>Nová skupina trás</i> pridajte novú skupinu trás.
+                    Následne si kliknutím na farebný (červený) obdĺžnik zvoľte farbu akou budú trasy v tejto skupine
+                    vykreslené a kliknutím na možnosť <i>Vložiť GPX súbory</i>, vložte súbory typu GPX, obsahujúce
+                    vaše trasy.
+                </p>
+                <p class="small">Za tlačidlom na vloženie súborov sa zobrazí počet vložených súborov. Zotrvaním
+                    myšou nad týmto údajom je možné si prehliadnuť ich názvy. Opakovaním stlačením tlačidla na
+                    vloženie súborov je možné zvoliť iné súbory. Skupinu trás je možné jednoducho odstrániť
+                    kliknutím na tlačidlo <b>X</b>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_projection">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Projekcia</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si kartografickú projekciu vašej mapy.</p>
+                <p class="small">Kartografická projekcia je spôsob (systém) pomocou, ktorého je zobrazený
+                    zemský povrch do roviny.</p>
+                <p class="small"><b>Mercatorovo zobrazenie</b> je najčastejšie používané zobrazenie,
+                    ktoré má dobrú presnosť na celej zemeguli. Jeho výhodou je zachovanie orientácie na sever a
+                    zároveň zachovanie tvarov objektov zemského povrchu. Nevýhodou je, skreslenie území ďaleko
+                    od rovníka.</p>
+                <p class="small"><b>Krovákove zobrazenie</b> je zobrazenie optimalizované pr územia Česka a
+                    Slovenska, kde má najlepšiu presnosť. Jeho nevýhodou ale je jeho pootočenie, čo spôsobuje,
+                    že nie je orientované na sever ale mierne severovýchodne.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal_format">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Výstupný formát</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <p class="small">Zvoľte si v akom formáte má byť mapa vygenerovaná.</p>
+                <p class="small">Súbory typu <b>SVG</b> a <b>PDF</b> sú vektorového formátu. Tento formát je
+                    vhodný na tlač a editovanie.
+                </p>
+                <p class="small">Súbory typu <b>PNG</b> a <b>JPG</b> sú rastrového formátu. Tento formát je
+                    vhodný na použitie vo forme obrázku.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal_main">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2 class="light">Klasická mapa</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <div class="modal-body">
+                <h3 class="first">Oblasť</h3>
+                <p class="small">Zvoľte si územie, ktoré bude vykreslené na mape.</p>
+                <p class="small">Na mape nájdite žiadané územie a ohraničujúci obdĺžnik nastavte tak, aby sa celé
+                    toto územie nachádzalo v jeho vnútri. Na mape bude vykreslené územie nachádzajúce sa vo vnútri
+                    ohraničujúceho obdĺžnika.
+                </p>
+                <p class="small">Pod mapou sa zobrazujú geografické súradnice popisujúce hrany ohraničujúceho obdĺžnika. Tieto
+                    súradnice sa automaticky menia s pohybom a zmenou tvaru ohraničujúceho obdĺžnika. Upravením
+                    hodnôt súradníc a stlačením tlačidla <i>Nastaviť</i>, môžete jednoducho nastaviť presnú polohu
+                    ohraničujúceho obdĺžnika.
+                </p>
+                <h4>Ovládanie mapy</h4>
+                <p class="small">
+                    <i class="fas fa-plus help-button"></i><b>Priblížiť</b> - Zväčšenie priblíženia mapy.<br>
+                    <i class="fas fa-minus help-button"></i><b>Oddialiť</b> - Zmenšenie priblíženia mapy.<br>
+                    <i class="fas fa-vector-square help-button"></i><b>Skryť / Zobraziť výber územia</b> - Skryť
+                    ohraničujúci obdĺžnik pre lepšiu orientáciu v mape. / Naspäť zobraziť ohraničujúci obdĺžnik.<br>
+                    <i class="fas fa-expand-arrows-alt help-button"></i><b>Zväčšiť / </b><i class="fas fa-compress-arrows-alt help-button"></i>
+                    <b>Zmenšiť mapu</b> - Roztiahnuť mapu na celú obrazovku. / Vrátiť pôvodnú veľkosť mapy.<br>
+                    <i class="fas fa-crosshairs help-button"></i><b>Vycentrovať mapu</b> - Posunutie mapy a zmena jej
+                    priblíženia tak, aby sa ohraničujúci obdĺžnik nachádzal presne v strede mapy.
+                </p>
+                <h4>Ovládanie ohraničujúceho obdĺžnika</h4>
+                <p class="small"><b>Zmena veľkosti</b> - Stlačením a podržaním ľubovolného rohu ohraničujúceho
+                    obdĺžnika, začnete presúvať tento bod a tým meniť veľkosť zvoleného územia.
+                    Posun bodu ukončíte jeho uvoľnením.<br>
+                    <b>Presun</b> - Stlačením a podržaním mriežky nachádzajúcej sa v ľavom hornom rohu
+                    ohraničujúceho obdĺžnika započnete jeho presun. Tento presun ukončíte uvoľnením uchopenia
+                    mriežky. Presun nemení veľkosť obdĺžnika.
+                </p>
+                <h3>Rozlíšenie</h3>
+                <p class="small">Zvoľte si akú veľkosť má mať vaša mapa.</p>
+                <p class="small">Zadajte jeden z parametrov, <i>šírka</i> alebo <i>výška</i>, a druhý bude automaticky dopočítaný
+                    na základe rozmeru zvoleného územia.</p>
+                <p class="small">Parametre je možné zadať v pixeloch alebo milimetroch.</p>
+                <h3>PPI / DPI</h3>
+                <p class="small">Zvoľte si PPI (resp. DPI) vašej mapy. Táto možnosť neovplyvňuje mapy vo vektorovom formáte.</p>
+                <p class="small">Nastavte hodnotu <i>PPI (Pixel per inch)</i>, t.j. počet pixelov na palec,
+                    ktorá určuje kvalitu výslednej mapy. Čím je hodnota PPI vyššia, tým kvalitnejšia je mapa.
+                    Na použitie mapy vo forme obrázku, je dostačujúca základná hodnota <b>90.7 PPI</b>. Pri tlači je však
+                    vyžadovaná vyššia hodnota. <b>300 PPI</b> je zlatý štandard, ktorý je pre tlač viac než dostatočný.
+                </p>
+                <p class="small">Dostupná je samozrejme aj možnosť zadať vlastnú hodnotu PPI.</p>
+                <p class="small"><i>DPI (Dot per inch)</i> je veličina, ktorá sa používa pri tlači a je zameniteľná s PPI.
+                    Nastavenie PPI neovplyvňuje veľkosť mapy, ale veľkosť prvkov mapy.
+                </p>
+                <h3>Štýlová sada</h3>
+                <p class="small">Zvoľte si štýlovú sadu, ktorá určuje či a ako budú vykreslené jednotlivé prvky mapy.</p>
+                <p class="small">Môžte si vybrať medzi niekoľkými základnými štýlovými sadami alebo použiť svoju vlastnú.
+                    Štýlovú sadu si vyberte kliknutím na názov alebo rámček s náhľadom jednej z možností.
+                </p>
+                <h4>Základné štýlové sady</h4>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Základná</b> - Vykresľuje typ povrchu, základné prírodné objekty, vodné plochy, obce,
+                    administratívne hranice, farebne vyznačenú pešiu, automobilovú, železničnú, leteckú či lodnú infraštruktúru
+                    a aj základné neprírodné objekty (tunely, mosty, hrádze, hradby, významné stavby, významné inštitúcie,
+                    športoviská).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Turistická</b> - Od základnej štýlovej sady sa líši detailnejším vykreslením
+                    rôznych typov prírodných území, detailnejším vykreslením prírodných objektov (názov, nadmorská výška),
+                    vykreslením chránených oblastí, turistických trás a objektov súvisiacich s turistikou
+                    (smerovníky, chaty, hotely, miesta výhľadu). Dopravná infraštruktúra a obývané oblasti sú
+                    vykreslené menej podrobne a menej výrazne.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Cyklistická</b> - Štýlová sada podobná tej turistickej, na rozdiel od ktorej,
+                    nevykresľuje turistické, ale cyklistické trasy. Cestná infraštruktúra je vykreslená s väčším
+                    detailom (odlíšenie diaľníc, nespevnených ciest, peších zón).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Lyžiarska</b> - Štýlová sada zameraná na zimné športy. Prírodné územia sú
+                    vykreslené v bielo-modrých odtieňoch imitujúcich snehovú pokrývku. Sada obsahuje detailné
+                    vykreslenie lyžiarskych stredísk. Obsahuje dráhy vlekov a lanoviek; podľa obtiažnosti farebne
+                    odlíšené lyžiarske zjazdovky, trasy pre klasické lyžovanie, skialpinizmus alebo areály pre
+                    freestylové lyžovanie. Pre významné zjazdovky a lanovky sú vykreslené aj názvy.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Cestná</b> - Štýlová sada, ktorá kladie dôraz na automobilovú infraštruktúru.
+                    Jednotlivé cety sú vykreslené s najväčším detailom. Prírodné územia a objekty sú vykreslené
+                    s menším farebným dôrazom, čiernobielo. Sada obsahuje vykreslenie objektov spojených hlavne
+                    s dopravou ako čerpacie stanice, parkoviská a iné. Zobrazuje taktiež aj cesty vo výstavbe.
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Mestská</b> - Štýlová sada vhodná pre mapy obývaných oblastí s väčším priblížením.
+                    Oproti základnej sade obsahuje vykreslenie rôznych inštitúcií (zdravotné, vzdelávacie,
+                    náboženské, stravovacie, kultúrne, športové, nákupné, právne a iné). Detailnejšie zobrazuje
+                    pešiu infraštruktúru a pridáva tiež názvy ulíc, názvy významných budov, orientačné čísla budov
+                    a vykreslenie rôznych umelých objektov nachádzajúcich sa v obývaných oblastiach (zastávky,
+                    altánky, lavičky, toalety, cestné značenia, brány a iné).
+                </p>
+{#                <img src="{{ url_for('static', filename='img/title_img_2.png') }}" alt="" class="help-img">#}
+                <p class="small"><b>Železničná</b> - Štýlová sada, ktorá kladie dôraz na železničnú infraštruktúru.
+                    Železnice sú vykreslené s najväčším detailom. Okrem bežných železničných dráh, sú vykreslené
+                    aj servisné dráhy, dráhy vo výstavbe alebo opustené dráhy. Odlíšené sú aj špeciálne dráhy ako
+                    napríklad úzkorozchodná železnica. Sada obsahuje vykreslenie všetkých objektov spojených s
+                    železničnou dopravou ako stanice, priecestia alebo nástupištia. Sada tiež obsahuje názvy
+                    všetkých staníc, tunelov a mostov.
+                </p>
+                <p class="small">Pri použití základnej štýlovej sady, je na základe vypočítanej mierky mapy prispôsobený aj
+                    výber vykreslených prvkov s účelom zachovania prehľadnosti a jednoznačnosi mapy.
+
+                </p>
+                <h4>Vlastná štýlová sada</h4>
+                <p class="small">Na výber je tiež použitie vlastnej štýlovej sady. Vlastnú štýlovú sadu si môžete od
+                    základu vytvoriť presne podľa svojich predstáv v
+                    <a href="new_style_bu.html" target="_blank" class="text-link">nástroji na tvorbu štýlov</a>.
+                    Túto sadu si môžete dočasne uložiť, čo vám umožňí túto sadu používať až do kým nezatvoríte
+                    prehliadač alebo si sadu môžte stiahnuť ako súbor vo formáte JSON.
+                </p>
+                <p class="small">Pri zvolení možnosti <i>Vlastná štýlová sada</i> je možné vybrať si ktorúkoľvek z
+                    uložených sád alebo vložiť súbor typu JSON obsahujúci stiahnutú štýlovú sadu.
+                </p>
+                <p class="small">Pri použití vlastnej štýlovej sady nie je aplikované prispôsobenie vykreslených prvkov
+                    vzhľadom na mierku mapy.
+                </p>
+                <h3>Trasy</h3>
+                <p class="small">Vložte svoje vlastné trasy. Pridajte až desať skupín a pre každú skupinu si
+                    vyberte inú farbu.
+                </p>
+                <p class="small">Kliknutím na možnosť <i>Nová skupina trás</i> pridajte novú skupinu trás.
+                    Následne si kliknutím na farebný (červený) obdĺžnik zvoľte farbu akou budú trasy v tejto skupine
+                    vykreslené a kliknutím na možnosť <i>Vložiť GPX súbory</i>, vložte súbory typu GPX, obsahujúce
+                    vaše trasy.
+                </p>
+                <p class="small">Za tlačidlom na vloženie súborov sa zobrazí počet vložených súborov. Zotrvaním
+                    myšou nad týmto údajom je možné si prehliadnuť ich názvy. Opakovaním stlačením tlačidla na
+                    vloženie súborov je možné zvoliť iné súbory. Skupinu trás je možné jednoducho odstrániť
+                    kliknutím na tlačidlo <b>X</b>.
+                </p>
+                <h3>Projekcia</h3><p class="small">Zvoľte si kartografickú projekciu vašej mapy.</p>
+                <p class="small">Kartografická projekcia je spôsob (systém) pomocou, ktorého je zobrazený
+                    zemský povrch do roviny.</p>
+                <p class="small"><b>Mercatorovo zobrazenie</b> je najčastejšie používané zobrazenie,
+                    ktoré má dobrú presnosť na celej zemeguli. Jeho výhodou je zachovanie orientácie na sever a
+                    zároveň zachovanie tvarov objektov zemského povrchu. Nevýhodou je, skreslenie území ďaleko
+                    od rovníka.</p>
+                <p class="small"><b>Krovákove zobrazenie</b> je zobrazenie optimalizované pr územia Česka a
+                    Slovenska, kde má najlepšiu presnosť. Jeho nevýhodou ale je jeho pootočenie, čo spôsobuje,
+                    že nie je orientované na sever ale mierne severovýchodne.
+                </p>
+                <h3>Výstupný formát</h3>
+                <p class="small">Zvoľte si v akom formáte má byť mapa vygenerovaná.</p>
+                <p class="small">Súbory typu <b>SVG</b> a <b>PDF</b> sú vektorového formátu. Tento formát je
+                    vhodný na tlač a editovanie.
+                </p>
+                <p class="small">Súbory typu <b>PNG</b> a <b>JPG</b> sú rastrového formátu. Tento formát je
+                    vhodný na použitie vo forme obrázku.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // map
+        let map = L.map('leaflet-map', {zoomControl: false}).setView({lon: 17.4, lat: 49.4}, 7);
+
+        // layers
+        let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+        });
+        osm.addTo(map);
+
+        // zoom and scale controls
+        L.control.scale({imperial: false, metric: true}).addTo(map);
+        L.control.zoom({zoomInTitle: 'Priblížiť', zoomOutTitle: 'Oddialiť'}).addTo(map);
+
+        // items
+        let bounds = map.getBounds()
+        let bbox = L.rectangle(bounds.pad(-0.2), {fill: false, color: "#ffffff", weight: 2});
+
+        let pointIcon = L.icon({
+            iconUrl: '{{ url_for('static', filename='img/marker.png') }}',
+            iconSize: [10, 10],
+            iconAnchor: [5, 5]
+        });
+
+        let dragIcon = L.icon({
+            iconUrl: '{{ url_for('static', filename='img/drag_marker.svg') }}',
+            iconSize: [20, 20],
+            iconAnchor: [-8, -10]
+        });
+
+        let point_sw = L.marker(bounds.pad(-0.2).getSouthWest(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_se = L.marker(bounds.pad(-0.2).getSouthEast(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_nw = L.marker(bounds.pad(-0.2).getNorthWest(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_ne = L.marker(bounds.pad(-0.2).getNorthEast(), {icon: pointIcon, draggable: true, autoPan: true});
+        let point_drag = L.marker(bounds.pad(-0.2).getNorthWest(), {icon: dragIcon, draggable: true, autoPan: true});
+
+        let shade_left = L.rectangle([bounds.getNorthWest(), [bounds.getSouth(), point_sw.getLatLng().lng]], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_bottom = L.rectangle([point_sw.getLatLng(), [bounds.getSouth(), point_se.getLatLng().lng]], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_right = L.rectangle([[bounds.getNorth(), point_ne.getLatLng().lng], bounds.getSouthEast()], {color: "#000000", weight: 0, domInteractive: false});
+        let shade_top = L.rectangle([[bounds.getNorth(), point_nw.getLatLng().lng], point_ne.getLatLng()], {color: "#000000", weight: 0, domInteractive: false});
+
+        /**
+         * Sets position of icon used for dragging bounding box.
+         *
+         */
+        function move_point_drag() {
+            if ((point_ne.getLatLng().lng < point_nw.getLatLng().lng) && (point_sw.getLatLng().lat > point_nw.getLatLng().lat)) {
+                point_drag.setLatLng(point_se.getLatLng());
+            } else if (point_ne.getLatLng().lng < point_nw.getLatLng().lng) {
+                point_drag.setLatLng(point_ne.getLatLng());
+            } else if (point_sw.getLatLng().lat > point_nw.getLatLng().lat) {
+                point_drag.setLatLng(point_sw.getLatLng());
+            } else {
+                point_drag.setLatLng(point_nw.getLatLng());
+            }
+        }
+
+        /**
+         * Sets position of shadow panes.
+         *
+         */
+        function move_shadow_panes() {
+            if ((point_sw.getLatLng().lng > point_se.getLatLng().lng) && (point_nw.getLatLng().lat < point_sw.getLatLng().lat)) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_ne.getLatLng().lng]]);
+                shade_bottom.setBounds([point_ne.getLatLng(), [map.getBounds().getSouth(), point_nw.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_sw.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_se.getLatLng().lng], point_sw.getLatLng()]);
+            } else if (point_sw.getLatLng().lng > point_se.getLatLng().lng) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_se.getLatLng().lng]]);
+                shade_bottom.setBounds([point_se.getLatLng(), [map.getBounds().getSouth(), point_sw.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_nw.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_ne.getLatLng().lng], point_nw.getLatLng()]);
+            }
+            else if (point_nw.getLatLng().lat < point_sw.getLatLng().lat) {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_nw.getLatLng().lng]]);
+                shade_bottom.setBounds([point_nw.getLatLng(), [map.getBounds().getSouth(), point_ne.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_se.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_sw.getLatLng().lng], point_se.getLatLng()]);
+            } else {
+                shade_left.setBounds([map.getBounds().getNorthWest(), [map.getBounds().getSouth(), point_sw.getLatLng().lng]]);
+                shade_bottom.setBounds([point_sw.getLatLng(), [map.getBounds().getSouth(), point_se.getLatLng().lng]]);
+                shade_right.setBounds([[map.getBounds().getNorth(), point_ne.getLatLng().lng], map.getBounds().getSouthEast()]);
+                shade_top.setBounds([[map.getBounds().getNorth(), point_nw.getLatLng().lng], point_ne.getLatLng()]);
+            }
+        }
+
+        /**
+         * Sets cursor when dragging.
+         *
+         */
+        function set_cursor_drag() {
+            document.getElementsByClassName('leaflet-marker-icon')[0].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[1].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[2].removeAttribute('id');
+            document.getElementsByClassName('leaflet-marker-icon')[3].removeAttribute('id');
+        }
+
+        /**
+         * Converts GPS coordinates to Mercator coordinates.
+         *
+         * @param lat   latitude coordinate in WSG84
+         * @param lon   longitude coordinate in WSG84
+         * @returns {number[]}  mercator coordinates
+         */
+        function get_mercator(lat, lon) {
+            // latitude and longitude to mercator calculation
+            // from: StackExchange, https://gis.stackexchange.com/
+            // on: 25.4.2022
+            // question: How to convert lat long to meters using Mercator projection in C#,
+            //       https://gis.stackexchange.com/questions/15269/how-to-convert-lat-long-to-meters-using-mercator-projection-in-c
+            // question by: Muhammad Hasan Khan, https://gis.stackexchange.com/users/2604/muhammad-hasan-khan
+            // answer by: Hairy, https://gis.stackexchange.com/users/2356/hairy
+            // edited by: Brian Burns, https://gis.stackexchange.com/users/82297/brian-burns
+            lat = lat / 180.0 * Math.PI;
+            lon = lon / 180.0 * Math.PI;
+
+            let x = 6378137.0 * lat;
+            let y = 6378137.0 * Math.log((Math.sin(lon) + 1) / Math.cos(lon));
+            return [x, y];
+        }
+
+        /**
+         * Calculates the second size parameter. Uses Mercator coordinates for maximum accuracy.
+         *
+         * @param parameter which parameter to calculate
+         */
+        function calculate_size(parameter) {
+            let [merc_left, merc_bottom] = get_mercator(parseFloat(document.getElementById('area_left').value), parseFloat(document.getElementById('area_bottom').value));
+            let [merc_right, merc_top] = get_mercator(parseFloat(document.getElementById('area_right').value), parseFloat(document.getElementById('area_top').value));
+            let width_geo = merc_right - merc_left;
+            let height_geo = merc_top - merc_bottom;
+            if (parameter === 'x') {
+                document.getElementById('size_y').value = Math.max(document.getElementById('size_y').value, 0)
+                let height_actual = parseFloat(document.getElementById('size_y').value);
+                if (!isNaN(height_actual))
+                    document.getElementById('size_x').value = Math.floor(width_geo / height_geo * height_actual);
+            } else {
+                document.getElementById('size_x').value = Math.max(document.getElementById('size_x').value, 0)
+                let width_actual = parseFloat(document.getElementById('size_x').value);
+                if (!isNaN(width_actual))
+                    document.getElementById('size_y').value = Math.ceil(height_geo / width_geo * width_actual);
+            }
+        }
+
+        /**
+         * Updates coordinates on the status panel under the map, so they match the coordinates of the bounding box.
+         *
+         */
+        function update_coordinates() {
+            let left = Math.min(point_nw.getLatLng().lng, point_ne.getLatLng().lng);
+            let bottom = Math.min(point_sw.getLatLng().lat, point_nw.getLatLng().lat);
+            let right = Math.max(point_se.getLatLng().lng, point_sw.getLatLng().lng);
+            let top = Math.max(point_ne.getLatLng().lat, point_se.getLatLng().lat);
+            document.getElementById('area_left').value = Math.round(left * 10000) / 10000;
+            document.getElementById('area_bottom').value = Math.round(bottom * 10000) / 10000;
+            document.getElementById('area_right').value = Math.round(right * 10000) / 10000;
+            document.getElementById('area_top').value = Math.round(top * 10000) / 10000;
+            calculate_size('y');
+        }
+
+        /**
+         * Handles the setting of correct resize cursor for each corner of the bounding box.
+         *
+         */
+        function set_cursor_resize() {
+            if ((point_ne.getLatLng().lng < point_nw.getLatLng().lng) && (point_sw.getLatLng().lat > point_nw.getLatLng().lat)) {
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_ne');
+            } else if (point_ne.getLatLng().lng < point_nw.getLatLng().lng) {
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_ne');
+            } else if (point_sw.getLatLng().lat > point_nw.getLatLng().lat) {
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_ne');
+            } else {
+                document.getElementsByClassName('leaflet-marker-icon')[0].setAttribute('id', 'point_sw');
+                document.getElementsByClassName('leaflet-marker-icon')[1].setAttribute('id', 'point_se');
+                document.getElementsByClassName('leaflet-marker-icon')[2].setAttribute('id', 'point_nw');
+                document.getElementsByClassName('leaflet-marker-icon')[3].setAttribute('id', 'point_ne');
+            }
+        }
+
+        /**
+         * Sets bouding box to the default position and accordingly adjusts all other elements on the map.
+         *
+         */
+        function reset_bbox() {
+            bbox.setBounds(map.getBounds().pad(-0.2));
+            point_sw.setLatLng(map.getBounds().pad(-0.2).getSouthWest());
+            point_se.setLatLng(map.getBounds().pad(-0.2).getSouthEast());
+            point_nw.setLatLng(map.getBounds().pad(-0.2).getNorthWest());
+            point_ne.setLatLng(map.getBounds().pad(-0.2).getNorthEast());
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_resize();
+            update_coordinates();
+        }
+
+        point_sw.on('drag', function(e) {
+            point_nw.setLatLng([point_nw.getLatLng().lat, e.latlng.lng]);
+            point_se.setLatLng([e.latlng.lat, point_se.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_se.on('drag', function(e) {
+            point_ne.setLatLng([point_ne.getLatLng().lat, e.latlng.lng]);
+            point_sw.setLatLng([e.latlng.lat, point_sw.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_nw.on('drag', function(e) {
+            point_sw.setLatLng([point_sw.getLatLng().lat, e.latlng.lng]);
+            point_ne.setLatLng([e.latlng.lat, point_ne.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_ne.on('drag', function(e) {
+            point_se.setLatLng([point_se.getLatLng().lat, e.latlng.lng]);
+            point_nw.setLatLng([e.latlng.lat, point_nw.getLatLng().lng]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_drag();
+            update_coordinates();
+        });
+        point_sw.on('dragend', function(e) {
+            set_cursor_resize();
+        });
+        point_se.on('dragend', function(e) {
+            set_cursor_resize();
+        });
+        point_nw.on('dragend', function(e) {
+            set_cursor_resize();
+        });
+        point_ne.on('dragend', function(e) {
+            set_cursor_resize();
+        });
+        point_drag.on('drag', function(e) {
+            let width = bbox.getBounds().getEast() - bbox.getBounds().getWest()
+            let height = bbox.getBounds().getSouth() - bbox.getBounds().getNorth()
+            point_nw.setLatLng([e.latlng.lat, e.latlng.lng]);
+            point_sw.setLatLng([e.latlng.lat + height, e.latlng.lng]);
+            point_se.setLatLng([e.latlng.lat + height, e.latlng.lng + width]);
+            point_ne.setLatLng([e.latlng.lat, e.latlng.lng + width]);
+            bbox.setBounds([point_sw.getLatLng(), point_ne.getLatLng()]);
+            move_shadow_panes();
+            update_coordinates();
+        });
+        map.on('move', function(e) {
+            move_shadow_panes();
+        });
+
+        // bbox layer
+        let bbox_layer = L.layerGroup([shade_left, shade_bottom, shade_right, shade_top, bbox, point_sw, point_se, point_nw, point_ne, point_drag]);
+        bbox_layer.addTo(map);
+        update_coordinates();
+
+        // buttons
+        let bboxButton = L.easyButton({
+            states: [{
+                stateName: 'hide-bbox',
+                icon: 'fa-vector-square',
+                title: 'Skryť výber územia',
+                onClick: function(btn, map) {
+                    bbox_layer.remove();
+                    btn.state('show-bbox');
+                }
+            }, {
+                stateName: 'show-bbox',
+                icon: 'fa-vector-square',
+                title: 'Zobraziť výber územia',
+                onClick: function(btn, map) {
+                    bbox_layer.addTo(map);
+                    reset_bbox();
+                    btn.state('hide-bbox');
+                }
+            }]
+        });
+
+        let sizeButton = L.easyButton({
+            states: [{
+                stateName: 'size-up',
+                icon: 'fa-expand-arrows-alt',
+                title: 'Zväčšiť mapu',
+                onClick: function(btn, map) {
+                    document.getElementById('map-wrapper').classList.remove('map-wrapper');
+                    document.getElementById('map-wrapper').classList.add('map-wrapper-full');
+                    document.getElementById('leaflet-map').classList.add('leaflet-map-full');
+                    document.getElementById('leaflet-map').classList.remove('leaflet-map');
+                    document.getElementById('coordinates').classList.add('map-info');
+                    document.getElementsByClassName('leaflet-control-scale')[0].style.marginBottom = '67px';
+                    setTimeout(function(){ map.invalidateSize()}, 10);
+                    btn.state('size-down');
+                }
+            }, {
+                stateName: 'size-down',
+                icon: 'fa-compress-arrows-alt',
+                title: 'Zmenšiť mapu',
+                onClick: function(btn, map) {
+                    document.getElementById('map-wrapper').classList.remove('map-wrapper-full');
+                    document.getElementById('map-wrapper').classList.add('map-wrapper');
+                    document.getElementById('leaflet-map').classList.remove('leaflet-map-full');
+                    document.getElementById('leaflet-map').classList.add('leaflet-map');
+                    document.getElementById('coordinates').classList.remove('map-info');
+                    document.getElementsByClassName('leaflet-control-scale')[0].style.marginBottom = '5px';
+                    setTimeout(function(){ map.invalidateSize()}, 10);
+                    btn.state('size-up');
+                }
+            }]
+        });
+
+        let centreButton = L.easyButton({
+            states: [{
+                stateName: 'centre',
+                icon: 'fa-crosshairs',
+                title: 'Vycentrovať',
+                onClick: function(btn, map) {
+                    map.fitBounds(bbox.getBounds().pad(0.2));
+                }
+            }]
+        });
+
+        let actionBar = L.easyBar([
+            bboxButton,
+            sizeButton,
+            centreButton,
+        ]);
+        actionBar.addTo(map);
+
+        /**
+         * Handles setting of bounding box from values in coordinate input fields and adjustment of other map elements.
+         *
+         */
+        function set_coordinates() {
+            let left = parseFloat(document.getElementById('area_left').value);
+            let bottom = parseFloat(document.getElementById('area_bottom').value);
+            let right = parseFloat(document.getElementById('area_right').value);
+            let top = parseFloat(document.getElementById('area_top').value);
+
+            bbox.setBounds([[bottom, left], [top, right]]);
+            point_sw.setLatLng(bbox.getBounds().getSouthWest());
+            point_se.setLatLng(bbox.getBounds().getSouthEast());
+            point_nw.setLatLng(bbox.getBounds().getNorthWest());
+            point_ne.setLatLng(bbox.getBounds().getNorthEast());
+            move_point_drag();
+            move_shadow_panes();
+            set_cursor_resize();
+            map.fitBounds(bbox.getBounds().pad(0.2));
+        }
+
+        set_cursor_resize();
+        document.getElementsByClassName('leaflet-interactive')[0].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[1].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[2].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-interactive')[3].setAttribute('class', 'leaflet-interactive shade-pane');
+        document.getElementsByClassName('leaflet-control-zoom-in')[0].classList.add('last');
+        document.getElementsByClassName('leaflet-control-zoom-out')[0].classList.add('last');
+
+
+        /**
+         * Handles adding of a new GPX group.
+         *
+         */
+        function add_group() {
+            let element = document.getElementById('new-gpx-group');
+            if (document.getElementsByClassName('gpx-row').length === 9) {
+                element.parentElement.classList.add('hidden');
+                element.parentElement.classList.remove('button');
+            }
+            if ( typeof add_group.counter == 'undefined' ) {
+                add_group.counter = 1;
+            } else {
+                add_group.counter ++;
+            }
+            let gpx_group_html = `<div id="group_` + add_group.counter + `_row" class="row-wrapper gpx-row"><label for="file_` + add_group.counter + `_color" id="file_` + add_group.counter + `_color_label" class="color-input" title="Zvoliť farbu pre skupinu trás"></label><input type="color" id="file_` + add_group.counter + `_color" name="file_` + add_group.counter + `_color" value="#FF0000"><label for="file_` + add_group.counter + `" class="file-input" title="Vložiť GPX súbory"><i class="fa fa-file-import"></i>Vložiť GPX súbory</label><input type="file" id="file_` + add_group.counter + `" name="file_` + add_group.counter + `" multiple accept=".gpx"><p class="file-count last" id="file_` + add_group.counter + `_count" title="Žiadne súbory">0 súborov</p><i class="fa fa-times cancel-button" id="remove_group_` + add_group.counter + `" title="Zrušiť skupinu trás"></i></div>`;
+            element.parentElement.insertAdjacentHTML('beforebegin', gpx_group_html);
+
+        }
+
+        /**
+         * Handles adding of files into a GPX group.
+         *
+         * @param id    GPX group id
+         */
+        function add_files(id) {
+            let element = document.getElementById(id);
+            let info_element = document.getElementById(id + '_count');
+            let count = element.files.length;
+            let file_list = '';
+            if (count > 0) {
+                for(let i = 0; i < count; i++) {
+                    if (i !== 0)
+                        file_list += '\n';
+                    file_list += element.files[i].name;
+                }
+                if (count === 1)
+                    info_element.innerHTML = `1 súbor`;
+                else if (count === 2 || count === 3 || count === 4)
+                    info_element.innerHTML = count + ` súbory`;
+                else
+                    info_element.innerHTML = count + ` súborov`;
+            } else {
+                file_list = 'Žiadne súbory';
+                info_element.innerHTML = `0 súborov`;
+            }
+            info_element.setAttribute('title', file_list);
+        }
+
+        /**
+         * Handles color change of a GPX group.
+         *
+         * @param id    GPX group id
+         */
+        function change_color(id) {
+            let input = document.getElementById(id);
+            let label = document.getElementById(id + '_label');
+            label.style['backgroundColor'] = input.value;
+        }
+
+        /**
+         * Handles deletion of a GPX group.
+         *
+         * @param id    GPX group id
+         */
+        function remove_group(id) {
+            let element = document.getElementById(id + '_row');
+            element.remove()
+            if (document.getElementsByClassName('gpx-row').length < 10) {
+                document.getElementById('new-gpx-group').parentElement.classList.add('row-wrapper');
+                document.getElementById('new-gpx-group').parentElement.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Handles selection of a custom style set.
+         *
+         */
+        function custom_type_file() {
+            if (document.getElementById('custom_file_radio').checked === false) {
+                let element = document.getElementById('custom_saved');
+                document.getElementById('custom_type').innerHTML = `<i class="fas fa-file"></i><br>` + element.options[element.selectedIndex].text;
+                document.getElementById('custom_type').classList.remove('red');
+                return;
+            }
+            let element = document.getElementById('custom_file');
+            if (!element.files.length) {
+                document.getElementById('custom_type').innerHTML = `<i class="fa fa-file-import"></i><br>Zvoľte štýl`;
+                return;
+            }
+
+            let form_data = new FormData();
+            form_data.append("file", element.files[0]);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('check_json') }}', true);
+            xhr.send(form_data);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && (JSON.parse(xhr.responseText)['success'] === true)) {
+                        document.getElementById('custom_type').innerHTML = `<i class="fas fa-file"></i><br>` + element.files[0].name;
+                        document.getElementById('custom_type').classList.remove('red');
+                    } else {
+                        alert('Vložený súbor nie je platnou štýlovou sadou. Vložte prosím iný súbor.');
+                        element.value = '';
+                        document.getElementById('custom_type').innerHTML = `<i class="fa fa-file-import"></i><br>Zvoľte štýl`;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Handles form submission. Creates the waiting area, waits for response and either shows option to download
+         * or informs about error occurrence.
+         *
+         * @returns {boolean}   false to stop form submission
+         */
+        function send_form() {
+            if (document.getElementById('custom').checked) {
+                if (document.getElementById('custom_file_radio').checked && !document.getElementById('custom_file').files.length) {
+                    document.getElementById('custom_type').classList.add('red');
+                    alert('Prosím vložte súbor obsahujúci vašu štýlovú sadu.');
+                    return false;
+                }
+            }
+
+            let form = document.getElementById('form');
+            let form_data = new FormData(form);
+            form_data.append('gpx_count', document.getElementsByClassName('gpx-row').length.toString());
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('create_classic') }}', true);
+            xhr.send(form_data);
+
+            document.getElementById('custom_file').value = '';
+            if (document.getElementById('custom_file_radio').checked)
+                document.getElementById('custom_type').innerHTML = `<i class="fa fa-file-import"></i><br>Zvoľte sadu`;
+            document.getElementById('submit_classic').disabled = true;
+            document.getElementById('download_area').classList.add('download-active');
+            document.getElementById('download_area').innerHTML = `<div class="loader"></div><br><p><b>Vaša mapa sa generuje.</b></p><p>Pri veľkých a detailných mapách to môže trvať aj niekoľko minút.</p>`;
+            window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && (JSON.parse(xhr.responseText)['success'] === true)) {
+                        let data = JSON.parse(xhr.responseText)['data'];
+                        let extension = JSON.parse(xhr.responseText)['extension'];
+                        let format_string = '';
+                        if (extension === 'pdf')
+                            format_string = 'application/pdf';
+                        else if (extension === 'png')
+                            format_string = 'image/png';
+                        else if (extension === 'jpg')
+                            format_string = 'image/jpeg';
+                        else if (extension === 'svg')
+                            format_string = 'image/svg+xml';
+                        document.getElementById('download_area').innerHTML = `<img src="{{ url_for('static', filename='img/ok.svg') }}" alt="" class="ok-img"><p>Generovanie mapy bolo dokončené. Mapu si teraz môžete stiahnuť.</p><a href="data:` + format_string +`;base64,` + data + `" download="map.` + extension + `"><input type="submit" value="Stiahnuť mapu"></a>`;
+                        document.getElementById('submit_classic').disabled = false;
+                        window.scrollTo({left: 0, top: document.body.scrollHeight, behavior: "smooth"});
+                    } else {
+                        document.getElementById('submit_classic').disabled = false;
+                        document.getElementById('download_area').innerHTML = ``;
+                        document.getElementById('download_area').classList.remove('download-active');
+                        alert('Nastala chyba a mapu sa nepodarilo vygenerovať.');
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Displays modal with given id.
+         *
+         * @param id    id of modal
+         */
+        function open_modal(id) {
+            let modal = document.getElementById('modal_' + id);
+            modal.classList.add('modal-displayed');
+            modal.children[0].children[1].scrollTop = 0;
+        }
+
+        /**
+         * Closes all modals.
+         *
+         */
+        function close_modals() {
+            let modals = document.getElementsByClassName('modal-displayed');
+                for (let x of modals) {
+                    x.classList.remove('modal-displayed');
+                }
+        }
+
+        /**
+         * Gets numerical value of selected PPI.
+         *
+         * @returns {number}    selected PPI
+         */
+        function get_ppi() {
+            let checked_ppi;
+            for (let x of ['ppi_classic', 'ppi_print', 'ppi_custom']) {
+                if (document.getElementById(x).checked)
+                    checked_ppi = x;
+            }
+            let ppi;
+            if (checked_ppi === 'ppi_custom') {
+                ppi = parseFloat(document.getElementById('ppi_custom_value').value)
+            }
+            else {
+                let ppi_dict = {'ppi_classic': 90.7, 'ppi_print': 300};
+                ppi = ppi_dict[checked_ppi];
+            }
+            return ppi
+        }
+
+        /**
+         * Handles enforcing of Mapnik pixel limit in size selection
+         *
+         * @param axis  which size parameter to adjust
+         * @returns {boolean}   whether adjustment had to be made
+         */
+        function limit_size(axis) {
+            let unit = document.getElementById('size_unit').value;
+            let value = document.getElementById('size_' + axis).value
+            let limit = 32768;
+            if (unit === 'mm')
+                limit = 32768 * 25.4 / get_ppi();
+            document.getElementById('size_' + axis).value = Math.min(value, limit);
+            return value !== document.getElementById('size_' + axis).value;
+        }
+
+        /**
+         * Handles switching between options in custom style set selection.
+         *
+         */
+        function custom_switch() {
+            let user_import = document.getElementById('custom_file_radio');
+            let user_option = document.getElementById('custom_file_option');
+            let template_option = document.getElementById('custom_saved_option');
+            if (user_import.checked) {
+                user_option.classList.remove('collapsed');
+                template_option.classList.add('collapsed');
+            } else {
+                template_option.classList.remove('collapsed');
+                user_option.classList.add('collapsed');
+            }
+        }
+
+        /**
+         * Handles displaying of file import status.
+         *
+         */
+        function custom_file() {
+            let input = document.getElementById('custom_file');
+            let desc = document.getElementById('custom_file_name');
+            if (input.files.length) {
+                desc.innerHTML = input.files[0].name;
+            } else {
+                desc.innerHTML = `Vložte JSON`;
+            }
+        }
+
+        /**
+         * Gets all style set cookies.
+         *
+         * @returns {object}    dictionary containing pairs of: style set name and style set definition
+         */
+        function get_style_cookies() {
+            let cookie_list = document.cookie.split(';');
+            let cookie_dict = {}
+            for(let i = 0; i < cookie_list.length; i++) {
+                let cookie = cookie_list[i];
+                if (cookie.search('mm-style-') !== 1)
+                    continue;
+                cookie = cookie.substring(10);
+                let name = cookie.substring(0, cookie.search('='));
+                cookie_dict[name] = cookie.substring(cookie.search('=') + 1);
+            }
+            return cookie_dict;
+        }
+
+        /**
+         * Handles displaying od saved style sets in style set selection.
+         *
+         */
+        function add_saved_styles() {
+            let cookie_dict = get_style_cookies();
+            let select_element = document.getElementById('custom_saved');
+            select_element.innerHTML = ``;
+            for (const [key, value] of Object.entries(cookie_dict)) {
+                select_element.insertAdjacentHTML('beforeend', `<option value='` + value + `'>` + key + `</option>`);
+            }
+        }
+
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                close_modals();
+            }
+        });
+
+        let import_type_items = document.querySelectorAll('input[type="radio"][name="custom_style_type"]');
+        for (let i = 0; i < import_type_items.length; i++) {
+            import_type_items[i].addEventListener('click', (event) => {
+                custom_switch();
+            });
+        }
+
+        let ppi_items = document.querySelectorAll('input[type="radio"][name="ppi"]');
+        for (let i = 0; i < ppi_items.length; i++) {
+            ppi_items[i].addEventListener('change', (event) => {
+                let is_on = document.getElementById('ppi_custom').checked;
+             document.getElementById('ppi_custom_value').required = is_on;
+                document.getElementById('ppi_custom_value').disabled = !(is_on);
+            });
+        }
+
+        document.getElementById('size_x').addEventListener('change', (event) => {
+            limit_size('x');
+            calculate_size('y');
+            if (limit_size('y'))
+                calculate_size('x');
+        });
+        document.getElementById('size_y').addEventListener('change', (event) => {
+            limit_size('y');
+            calculate_size('x');
+            if (limit_size('x')) {
+                calculate_size('y');
+            }
+        });
+
+        document.getElementById('set_coordinates').addEventListener('click', (event) => {
+            set_coordinates();
+        });
+
+        let modal_buttons = document.getElementsByClassName('modal-icon');
+        for (let i = 0; i < modal_buttons.length; i++) {
+            modal_buttons[i].addEventListener('click', (event) => {
+                open_modal(modal_buttons[i].id);
+            });
+        }
+
+        let modal_close_buttons = document.getElementsByClassName('close-icon');
+        for (let i = 0; i < modal_close_buttons.length; i++) {
+            modal_close_buttons[i].addEventListener('click', (event) => {
+                close_modals();
+            });
+        }
+
+        let type_items = document.querySelectorAll('input[type="radio"][name="type"]');
+        for (let i = 0; i < type_items.length; i++) {
+            type_items[i].addEventListener('click', (event) => {
+                let element = document.getElementById('custom_file');
+                if (type_items[i].value === 'custom') {
+                    element.disabled = false;
+                    {#element.click();#}
+                } else {
+                    element.disabled = true;
+                }
+            });
+        }
+
+        document.getElementById('new-gpx-group').addEventListener('click', (event) => {
+            add_group();
+        });
+
+        document.getElementById('custom_file').addEventListener('change', (event) => {
+            custom_file();
+        });
+
+        document.getElementById('gpx_wrapper').addEventListener('change', (event) => {
+            if (event.target && (event.target.type === 'color')) {
+                change_color(event.target.id);
+            }
+            else if (event.target && (event.target.type === 'file')) {
+                add_files(event.target.id)
+            }
+        });
+        document.getElementById('gpx_wrapper').addEventListener('click', (event) => {
+            if (event.target && (event.target.classList.contains('cancel-button'))) {
+                remove_group(event.target.id.substring(7));
+            }
+        });
+
+        document.getElementById('use_custom').addEventListener('click', (event) => {
+            event.preventDefault();
+            custom_type_file();
+            close_modals();
+        })
+
+        document.getElementById('form').addEventListener('submit', (event) => {
+            send_form();
+            event.preventDefault();
+        });
+
+        document.getElementById('custom_saved_radio').addEventListener('click', add_saved_styles, false);
+
+    </script>
+{% endblock %}

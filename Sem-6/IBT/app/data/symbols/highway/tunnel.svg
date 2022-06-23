@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="11"
+   height="11"
+   version="1.1"
+   id="svg19"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs23" />
+  <g
+     id="g17"
+     transform="matrix(0.05228899,0,0,0.06005226,-11.335658,-9.7312387)">
+    <g
+       id="g786">
+      <path
+         fill="#ffffff"
+         fill-rule="evenodd"
+         stroke="#000000"
+         stroke-width="3.75"
+         id="path737-5"
+         d="m 225.59047,336.79543 193.14323,-0.006 V 260.688 c -0.0849,-55.47867 -47.84092,-90.21757 -96.7602,-90.21757 -48.91846,0 -94.96773,32.96937 -96.76001,90.21546 z"
+         style="fill:none;fill-opacity:1;stroke:#333333;stroke-width:16.8485;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         fill="#ffffff"
+         fill-rule="evenodd"
+         stroke="#000000"
+         stroke-width="3.75"
+         id="path737-5-9"
+         d="m 295.59969,302.83682 -55.4666,41.14735 165.211,0.12309 -35.9357,-41.27244 v -36.9314 c -0.0325,-26.92329 -18.28217,-43.78174 -36.97641,-43.78174 -18.69395,0 -36.29144,15.9997 -36.97634,43.78071 z"
+         style="fill:#333333;fill-opacity:1;stroke:#333333;stroke-width:2.54513;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <title
+       id="title15">Layer 1</title>
+  </g>
+</svg>
